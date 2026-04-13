@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>田中 健太 トレーナー | TIDA Personal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Hiragino Kaku Gothic ProN','Noto Sans JP','メイリオ',sans-serif; color: #1a1a2e; background: #f8fafc; line-height: 1.7; }
+    a { text-decoration: none; color: inherit; }
+    :root {
+      --c-primary:#0b6e4f;--c-primary-dark:#084d38;--c-accent:#ff6548;
+      --c-navy:#0f172a;--c-text:#1a1a2e;--c-muted:#64748b;
+      --c-border:#e2e8f0;--c-bg-light:#f8fafc;--c-bg-green:#f0faf5;
+      --radius-sm:8px;--radius-md:16px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);--shadow-md:0 4px 20px rgba(0,0,0,.10);--shadow-lg:0 8px 40px rgba(0,0,0,.14);
+    }
+    .container{max-width:1160px;margin:0 auto;padding:0 24px;}
+    .badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
+    .badge-popular{background:#fef3c7;color:#92400e;}
+    .badge-verified{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;}
+    .badge-cert{background:#faf5ff;color:#7e22ce;border:1px solid #e9d5ff;}
+    .badge-nda{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;}
+
+    /* HEADER */
+    header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--c-border);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+    .logo{font-size:22px;font-weight:900;color:var(--c-primary);letter-spacing:-1px;}
+    .logo span{color:var(--c-accent);}
+    nav{display:flex;align-items:center;gap:4px;}
+    .nav-link{font-size:14px;font-weight:600;color:var(--c-muted);padding:8px 14px;border-radius:8px;transition:all .15s;}
+    .nav-link:hover{color:var(--c-primary);background:var(--c-bg-green);}
+    .header-actions{display:flex;align-items:center;gap:10px;}
+    .btn-login{font-size:14px;font-weight:600;color:var(--c-muted);padding:8px 16px;}
+    .btn-register{background:var(--c-primary);color:#fff;font-size:14px;font-weight:700;padding:9px 20px;border-radius:8px;}
+
+    /* BREADCRUMB */
+    .breadcrumb{padding:16px 0 12px;font-size:13px;color:var(--c-muted);display:flex;gap:8px;flex-wrap:wrap;}
+    .breadcrumb a{color:var(--c-muted);transition:color .15s;}.breadcrumb a:hover{color:var(--c-primary);}
+
+    /* LAYOUT */
+    .detail-layout{display:grid;grid-template-columns:1fr 320px;gap:32px;padding-bottom:80px;align-items:start;}
+
+    /* MAIN */
+    .detail-main{}
+    .trainer-header{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);padding:32px;margin-bottom:24px;}
+    .trainer-hero{display:flex;gap:24px;align-items:flex-start;margin-bottom:24px;}
+    .trainer-big-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#6ee7b7,#059669);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 4px 20px rgba(11,110,79,.3);}
+    .trainer-hero-info h1{font-size:22px;font-weight:900;color:var(--c-navy);margin-bottom:6px;}
+    .trainer-hero-info .tagline{font-size:14px;color:var(--c-muted);margin-bottom:12px;}
+    .hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+    .stats-row{display:flex;gap:24px;flex-wrap:wrap;}
+    .stat-box{text-align:center;}
+    .stat-big{font-size:24px;font-weight:900;color:var(--c-navy);letter-spacing:-1px;line-height:1;}
+    .stat-small{font-size:12px;color:var(--c-muted);margin-top:3px;}
+    .trainer-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+    .tag{font-size:12px;font-weight:600;background:var(--c-bg-light);color:var(--c-muted);padding:4px 12px;border-radius:100px;border:1px solid var(--c-border);}
+
+    /* ANCHOR NAV */
+    .anchor-nav{display:flex;gap:0;border-bottom:2px solid var(--c-border);margin-bottom:24px;background:#fff;border-radius:var(--radius-md) var(--radius-md) 0 0;border:1px solid var(--c-border);overflow:hidden;}
+    .anchor-btn{flex:1;padding:14px 8px;font-size:14px;font-weight:700;color:var(--c-muted);background:none;border:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;font-family:inherit;text-align:center;}
+    .anchor-btn:hover{color:var(--c-primary);background:var(--c-bg-green);}
+    .anchor-btn.active{color:var(--c-primary);border-bottom-color:var(--c-primary);}
+
+    /* SECTIONS */
+    .section-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);padding:28px 32px;margin-bottom:20px;}
+    .section-card h2{font-size:18px;font-weight:900;color:var(--c-navy);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--c-border);}
+    .about-text{font-size:15px;color:var(--c-text);line-height:1.9;}
+    .about-text.collapsed{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+    .read-more{font-size:14px;font-weight:700;color:var(--c-primary);cursor:pointer;margin-top:12px;display:inline-flex;align-items:center;gap:4px;background:none;border:none;font-family:inherit;}
+
+    /* CAN DO */
+    .cando-list{display:flex;flex-direction:column;gap:10px;}
+    .cando-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--c-bg-green);border-radius:10px;}
+    .cando-check{color:var(--c-primary);font-size:16px;margin-top:2px;flex-shrink:0;}
+    .cando-text{font-size:14px;color:var(--c-text);font-weight:600;}
+
+    /* SKILLS */
+    .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+    .skill-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--c-bg-light);border-radius:10px;border:1px solid var(--c-border);}
+    .skill-name{font-size:14px;font-weight:700;color:var(--c-navy);}
+    .skill-years{font-size:12px;color:var(--c-muted);}
+    .skill-bar-wrap{flex:1;margin:0 12px;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;}
+    .skill-bar{height:100%;background:var(--c-primary);border-radius:3px;}
+
+    /* COURSES */
+    .courses-list{display:flex;flex-direction:column;gap:14px;}
+    .course-card{border:1.5px solid var(--c-border);border-radius:var(--radius-md);padding:20px 24px;transition:border-color .15s;}
+    .course-card:hover{border-color:var(--c-primary);}
+    .course-card.recommended{border-color:var(--c-primary);background:var(--c-bg-green);}
+    .course-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;}
+    .course-name{font-size:16px;font-weight:800;color:var(--c-navy);}
+    .course-rec-tag{font-size:11px;font-weight:700;background:var(--c-primary);color:#fff;padding:3px 10px;border-radius:100px;white-space:nowrap;}
+    .course-price-big{font-size:22px;font-weight:900;color:var(--c-primary);white-space:nowrap;}
+    .course-price-big span{font-size:13px;font-weight:400;color:var(--c-muted);}
+    .course-features{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
+    .cf{font-size:13px;color:var(--c-text);display:flex;align-items:center;gap:5px;font-weight:600;}
+    .course-desc{font-size:13px;color:var(--c-muted);line-height:1.8;}
+    .course-cta{margin-top:14px;display:flex;gap:10px;}
+    .btn-course-primary{background:var(--c-primary);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+    .btn-course-secondary{background:#fff;color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:8px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+    /* REVIEWS */
+    .review-summary{display:flex;gap:32px;align-items:center;padding:24px;background:var(--c-bg-green);border-radius:var(--radius-md);margin-bottom:24px;}
+    .review-big-score{text-align:center;}
+    .review-score-num{font-size:56px;font-weight:900;color:var(--c-primary);line-height:1;letter-spacing:-2px;}
+    .review-stars-big{font-size:20px;color:#f59e0b;margin-top:4px;}
+    .review-count{font-size:13px;color:var(--c-muted);margin-top:4px;}
+    .review-bars{flex:1;}
+    .rbar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+    .rbar-label{font-size:13px;font-weight:700;color:var(--c-text);width:24px;text-align:right;flex-shrink:0;}
+    .rbar-stars{color:#f59e0b;font-size:11px;flex-shrink:0;}
+    .rbar-track{flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
+    .rbar-fill{height:100%;background:#f59e0b;border-radius:4px;}
+    .rbar-num{font-size:12px;color:var(--c-muted);width:20px;flex-shrink:0;}
+    .reviews-list{display:flex;flex-direction:column;gap:18px;}
+    .review-item{border-bottom:1px solid var(--c-border);padding-bottom:18px;}
+    .review-item:last-child{border-bottom:none;padding-bottom:0;}
+    .review-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+    .review-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;}
+    .ra1{background:linear-gradient(135deg,#86efac,#16a34a)}
+    .ra2{background:linear-gradient(135deg,#93c5fd,#2563eb)}
+    .ra3{background:linear-gradient(135deg,#fca5a5,#dc2626)}
+    .ra4{background:linear-gradient(135deg,#fde68a,#d97706)}
+    .ra5{background:linear-gradient(135deg,#c4b5fd,#7c3aed)}
+    .review-user-info h4{font-size:14px;font-weight:700;color:var(--c-navy);}
+    .review-user-info p{font-size:12px;color:var(--c-muted);}
+    .review-stars-date{margin-left:auto;text-align:right;}
+    .review-stars{color:#f59e0b;font-size:13px;}
+    .review-date{font-size:12px;color:var(--c-muted);}
+    .review-text{font-size:14px;color:var(--c-text);line-height:1.8;}
+    .review-locked{background:linear-gradient(transparent,#f8fafc);padding:24px;text-align:center;margin-top:-40px;position:relative;}
+    .review-locked p{font-size:14px;color:var(--c-muted);margin-bottom:14px;}
+    .btn-unlock{background:var(--c-primary);color:#fff;border:none;border-radius:10px;padding:12px 32px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+    /* OTHER PLANS */
+    .other-plans{display:flex;flex-direction:column;gap:12px;}
+    .other-plan-row{display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--c-bg-light);border:1px solid var(--c-border);border-radius:10px;cursor:pointer;transition:all .15s;}
+    .other-plan-row:hover{border-color:var(--c-primary);background:var(--c-bg-green);}
+    .opr-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6ee7b7,#059669);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;flex-shrink:0;}
+    .opr-info{flex:1;}
+    .opr-info h4{font-size:14px;font-weight:700;color:var(--c-navy);line-height:1.3;}
+    .opr-info p{font-size:12px;color:var(--c-muted);margin-top:2px;}
+    .opr-price{font-size:15px;font-weight:900;color:var(--c-primary);white-space:nowrap;}
+    .opr-rating{font-size:12px;color:var(--c-muted);text-align:right;}
+
+    /* SIDEBAR */
+    .sidebar-sticky{position:sticky;top:80px;display:flex;flex-direction:column;gap:16px;}
+    .cta-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-md);overflow:hidden;}
+    .cta-card-header{background:linear-gradient(135deg,#0b6e4f,#064e36);color:#fff;padding:20px 24px;}
+    .cta-card-header h3{font-size:16px;font-weight:900;margin-bottom:6px;}
+    .cta-card-header p{font-size:13px;color:rgba(255,255,255,.75);}
+    .cta-card-body{padding:20px 24px;}
+    .cta-btn-main{width:100%;background:var(--c-accent);color:#fff;border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:all .15s;}
+    .cta-btn-main:hover{background:#e5502f;transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,101,72,.3);}
+    .cta-btn-sub{width:100%;background:var(--c-bg-green);color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:all .15s;}
+    .cta-btn-sub:hover{background:var(--c-primary);color:#fff;}
+    .cta-btn-ghost{width:100%;background:transparent;color:var(--c-muted);border:1.5px solid var(--c-border);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
+    .cta-btn-ghost:hover{background:var(--c-bg-light);color:var(--c-text);}
+
+    /* PROFILE CARD */
+    .profile-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);padding:24px;}
+    .profile-card-header{display:flex;gap:14px;align-items:center;margin-bottom:18px;}
+    .profile-mini-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#6ee7b7,#059669);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;flex-shrink:0;}
+    .profile-mini-info h4{font-size:15px;font-weight:800;color:var(--c-navy);}
+    .profile-mini-info p{font-size:12px;color:var(--c-muted);margin-top:3px;}
+    .trust-badges{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+    .trust-badge{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;}
+    .tb-verified{background:#f0fdf4;color:#16a34a;}
+    .tb-cert{background:#faf5ff;color:#7e22ce;}
+    .tb-nda{background:#eff6ff;color:#1d4ed8;}
+    .tb-response{background:#fff7ed;color:#c2410c;}
+    .trust-icon{font-size:16px;}
+    .schedule-info{padding:14px;background:var(--c-bg-light);border-radius:10px;border:1px solid var(--c-border);}
+    .schedule-info h5{font-size:13px;font-weight:700;color:var(--c-navy);margin-bottom:8px;}
+    .schedule-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+    .schedule-row .label{color:var(--c-muted);}
+    .schedule-row .val{font-weight:700;color:var(--c-text);}
+    .free-question-btn{width:100%;margin-top:14px;background:#fff;color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;}
+    .free-question-btn:hover{background:var(--c-bg-green);}
+
+    @media(max-width:960px){
+      .detail-layout{grid-template-columns:1fr;}
+      .sidebar-sticky{position:static;}
+      nav{display:none;}
+    }
+    @media(max-width:600px){
+      .trainer-hero{flex-direction:column;}
+      .stats-row{gap:16px;}
+      .skills-grid{grid-template-columns:1fr;}
+      .review-summary{flex-direction:column;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="tida_personal_top.html" class="logo">TIDA<span>.</span>Personal</a>
+      <nav>
+        <a href="tida_personal_trainers.html" class="nav-link">トレーナーを探す</a>
+        <a href="tida_personal_plans.html" class="nav-link">プランを見る</a>
+        <a href="tida_personal_quiz.html" class="nav-link">診断してみる</a>
+        <a href="#" class="nav-link">使い方</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#" class="btn-login">ログイン</a>
+        <a href="#" class="btn-register">無料登録</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="tida_personal_top.html">ホーム</a><span>›</span>
+    <a href="tida_personal_trainers.html">トレーナーを探す</a><span>›</span>
+    <span>田中 健太 トレーナー</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="detail-layout">
+
+    <!-- MAIN COLUMN -->
+    <main>
+
+      <!-- TRAINER HEADER -->
+      <div class="trainer-header">
+        <div class="trainer-hero">
+          <div class="trainer-big-avatar">田</div>
+          <div class="trainer-hero-info">
+            <h1>田中 健太 トレーナー</h1>
+            <div class="tagline">ダイエット・体脂肪管理の専門家 / 元スポーツトレーナー10年</div>
+            <div class="hero-badges">
+              <span class="badge badge-popular">🔥 人気</span>
+              <span class="badge badge-verified">✓ 本人確認済</span>
+              <span class="badge badge-cert">🏅 NSCA認定</span>
+              <span class="badge badge-nda">🔒 NDA締結済</span>
+            </div>
+            <div class="stats-row">
+              <div class="stat-box">
+                <div class="stat-big">4.9</div>
+                <div style="color:#f59e0b;font-size:14px;">★★★★★</div>
+                <div class="stat-small">86件のレビュー</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-big">230<span style="font-size:14px;font-weight:600;">名</span></div>
+                <div class="stat-small">累計指導実績</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-big">10<span style="font-size:14px;font-weight:600;">年</span></div>
+                <div class="stat-small">トレーナー経歴</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-big">92<span style="font-size:14px;font-weight:600;">%</span></div>
+                <div class="stat-small">継続率</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="trainer-tags">
+          <span class="tag">ダイエット</span><span class="tag">体脂肪管理</span><span class="tag">食事指導</span>
+          <span class="tag">代謝改善</span><span class="tag">オンライン対応</span><span class="tag">初心者歓迎</span>
+        </div>
+      </div>
+
+      <!-- ANCHOR NAV -->
+      <div class="anchor-nav">
+        <button class="anchor-btn active" onclick="setActive(this)">プラン説明</button>
+        <button class="anchor-btn" onclick="setActive(this)">コース一覧</button>
+        <button class="anchor-btn" onclick="setActive(this)">レビュー</button>
+        <button class="anchor-btn" onclick="setActive(this)">プロフィール</button>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="section-card" id="sec-about">
+        <h2>できること・プランの特徴</h2>
+        <div class="cando-list">
+          <div class="cando-item"><span class="cando-check">✅</span><span class="cando-text">科学的根拠に基づいた食事管理と運動プログラムの設計</span></div>
+          <div class="cando-item"><span class="cando-check">✅</span><span class="cando-text">体脂肪を落としながら筋肉量を維持するダイエット指導</span></div>
+          <div class="cando-item"><span class="cando-check">✅</span><span class="cando-text">リバウンドしない食習慣・生活習慣の定着サポート</span></div>
+          <div class="cando-item"><span class="cando-check">✅</span><span class="cando-text">毎週の進捗確認と目標設定の調整</span></div>
+          <div class="cando-item"><span class="cando-check">✅</span><span class="cando-text">器具なし・自宅トレーニングメニューの作成</span></div>
+          <div class="cando-item"><span class="cando-check">✅</span><span class="cando-text">スポーツ・競技向けのコンディショニング指導</span></div>
+        </div>
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--c-border);">
+          <h3 style="font-size:16px;font-weight:800;color:var(--c-navy);margin-bottom:14px;">プロフィール</h3>
+          <div class="about-text collapsed" id="aboutText">
+            元スポーツトレーナーとして10年のキャリアを積み、プロアスリートから一般の方まで延べ230名以上を指導してきました。<br><br>
+            NSCAパーソナルトレーナー認定を持ち、科学的根拠に基づいたトレーニング・栄養指導を得意としています。「頑張りすぎない、続けられる」ダイエットが私のテーマです。<br><br>
+            大手フィットネスクラブでのトレーナー経験後、独立。現在はオンラインを中心に、全国のクライアントのダイエット・体型改善をサポートしています。<br><br>
+            「3ヶ月で体重は落ちたけど1年後には戻っていた」という経験をお持ちの方を減らしたい、というのが私の使命です。単なる体重減少ではなく、本質的な体質改善を目指しています。
+          </div>
+          <button class="read-more" onclick="toggleAbout()">続きを読む ▼</button>
+        </div>
+      </div>
+
+      <!-- COURSES -->
+      <div class="section-card" id="sec-courses">
+        <h2>コースメニュー</h2>
+        <div class="courses-list">
+
+          <div class="course-card recommended">
+            <div class="course-header">
+              <div>
+                <div class="course-name">チャット＋週1ビデオ通話プラン <span class="course-rec-tag">おすすめ</span></div>
+                <div style="font-size:12px;color:var(--c-muted);margin-top:3px;">月額継続 / チャット・ビデオ通話</div>
+              </div>
+              <div style="text-align:right">
+                <div class="course-price-big">¥12,000<span>/月</span></div>
+              </div>
+            </div>
+            <div class="course-features">
+              <div class="cf">💬 チャットし放題</div>
+              <div class="cf">📹 週1回 60分ビデオ</div>
+              <div class="cf">🥗 食事プラン作成</div>
+              <div class="cf">📊 週次進捗チェック</div>
+            </div>
+            <p class="course-desc">最も人気のプランです。毎日チャットで質問し放題＋週1回のビデオセッションで、食事・運動を両輪でサポート。3ヶ月継続コースは特別価格になります。</p>
+            <div class="course-cta">
+              <button class="btn-course-primary">このコースで申し込む</button>
+              <button class="btn-course-secondary">まずは相談してみる</button>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-header">
+              <div>
+                <div class="course-name">チャットのみプラン</div>
+                <div style="font-size:12px;color:var(--c-muted);margin-top:3px;">月額継続 / チャット</div>
+              </div>
+              <div style="text-align:right">
+                <div class="course-price-big">¥8,000<span>/月</span></div>
+              </div>
+            </div>
+            <div class="course-features">
+              <div class="cf">💬 チャットし放題</div>
+              <div class="cf">📋 メニュー作成</div>
+              <div class="cf">📷 フォームチェック</div>
+            </div>
+            <p class="course-desc">テキストチャットでの質問・フィードバック無制限。お忙しい方や自分のペースで進めたい方に最適です。</p>
+            <div class="course-cta">
+              <button class="btn-course-primary">このコースで申し込む</button>
+              <button class="btn-course-secondary">まずは相談してみる</button>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-header">
+              <div>
+                <div class="course-name">お試し単発相談（1回）</div>
+                <div style="font-size:12px;color:var(--c-muted);margin-top:3px;">単発 / ビデオ通話 60分</div>
+              </div>
+              <div style="text-align:right">
+                <div class="course-price-big">¥3,000<span style="font-size:13px;font-weight:400;color:var(--c-muted);">（1回）</span></div>
+              </div>
+            </div>
+            <div class="course-features">
+              <div class="cf">📹 60分ビデオ通話</div>
+              <div class="cf">📋 現状分析</div>
+              <div class="cf">🗺 方針策定</div>
+            </div>
+            <p class="course-desc">まずはお試しで1回相談したい方向け。現状の体型・目標・生活スタイルを確認し、最適な方針をご提案します。月額プランに進む際は差額精算不要。</p>
+            <div class="course-cta">
+              <button class="btn-course-primary">このコースで申し込む</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- REVIEWS -->
+      <div class="section-card" id="sec-reviews">
+        <h2>レビュー</h2>
+        <div class="review-summary">
+          <div class="review-big-score">
+            <div class="review-score-num">4.9</div>
+            <div class="review-stars-big">★★★★★</div>
+            <div class="review-count">86件のレビュー</div>
+          </div>
+          <div class="review-bars">
+            <div class="rbar-row"><div class="rbar-label">5</div><div class="rbar-stars">★</div><div class="rbar-track"><div class="rbar-fill" style="width:88%"></div></div><div class="rbar-num">76</div></div>
+            <div class="rbar-row"><div class="rbar-label">4</div><div class="rbar-stars">★</div><div class="rbar-track"><div class="rbar-fill" style="width:10%;background:#94a3b8"></div></div><div class="rbar-num">8</div></div>
+            <div class="rbar-row"><div class="rbar-label">3</div><div class="rbar-stars">★</div><div class="rbar-track"><div class="rbar-fill" style="width:2%;background:#cbd5e1"></div></div><div class="rbar-num">2</div></div>
+            <div class="rbar-row"><div class="rbar-label">2</div><div class="rbar-stars">★</div><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div><div class="rbar-num">0</div></div>
+            <div class="rbar-row"><div class="rbar-label">1</div><div class="rbar-stars">★</div><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div><div class="rbar-num">0</div></div>
+          </div>
+        </div>
+
+        <div class="reviews-list">
+          <div class="review-item">
+            <div class="review-header">
+              <div class="review-avatar ra1">M</div>
+              <div class="review-user-info">
+                <h4>M.K さん</h4>
+                <p>ダイエット目的 / チャット＋週1ビデオプラン / 継続4ヶ月</p>
+              </div>
+              <div class="review-stars-date">
+                <div class="review-stars">★★★★★</div>
+                <div class="review-date">26/3/20</div>
+              </div>
+            </div>
+            <p class="review-text">田中トレーナーのおかげで4ヶ月で8kg落とすことができました！食事の指導が特に細かくて、「これはOK、これはNG」というのが毎回明確で迷わずに続けられました。毎日チャットで質問できるのが本当に心強かったです。</p>
+          </div>
+
+          <div class="review-item">
+            <div class="review-header">
+              <div class="review-avatar ra2">T</div>
+              <div class="review-user-info">
+                <h4>T.Y さん</h4>
+                <p>体脂肪減少目的 / チャット＋週1ビデオプラン / 継続6ヶ月</p>
+              </div>
+              <div class="review-stars-date">
+                <div class="review-stars">★★★★★</div>
+                <div class="review-date">26/2/14</div>
+              </div>
+            </div>
+            <p class="review-text">以前別のジムに通っていましたが月3万円以上かかっていたのに成果が出ませんでした。TIDA Personalで田中さんと出会ってから半額以下の費用で体脂肪率が8%下がりました。科学的な説明がしっかりあるので納得して取り組めます。</p>
+          </div>
+
+          <div class="review-item">
+            <div class="review-header">
+              <div class="review-avatar ra3">A</div>
+              <div class="review-user-info">
+                <h4>A.S さん</h4>
+                <p>ダイエット目的 / お試し→月額継続 / 継続3ヶ月</p>
+              </div>
+              <div class="review-stars-date">
+                <div class="review-stars">★★★★★</div>
+                <div class="review-date">26/1/8</div>
+              </div>
+            </div>
+            <p class="review-text">最初はお試し1回で様子を見ようと思っていましたが、即月額プランに変えました。それほど最初の相談から田中さんの分析と提案が的確だったからです。今は目標体重まで残り2kgのところまで来ています。</p>
+          </div>
+        </div>
+
+        <!-- LOCKED REVIEWS -->
+        <div style="position:relative;overflow:hidden;margin-top:10px;">
+          <div class="review-item" style="opacity:.3;pointer-events:none;">
+            <div class="review-header">
+              <div class="review-avatar ra4">K</div>
+              <div class="review-user-info"><h4>K.N さん</h4><p>健康維持目的</p></div>
+              <div class="review-stars-date"><div class="review-stars">★★★★★</div></div>
+            </div>
+            <p class="review-text">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+          </div>
+          <div class="review-locked">
+            <p>残り83件のレビューを読むには会員登録（無料）が必要です</p>
+            <button class="btn-unlock">無料登録してすべてのレビューを見る</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTHER PLANS BY THIS TRAINER -->
+      <div class="section-card">
+        <h2>このトレーナーの他のプラン</h2>
+        <div class="other-plans">
+          <div class="other-plan-row">
+            <div class="opr-avatar">田</div>
+            <div class="opr-info">
+              <h4>【競技向け🏆】スポーツパフォーマンス向上プログラム</h4>
+              <p>マラソン・球技・武道などの競技選手向け特化プラン</p>
+            </div>
+            <div style="text-align:right">
+              <div class="opr-price">¥18,000〜/月</div>
+              <div class="opr-rating">★4.8 (12件)</div>
+            </div>
+          </div>
+          <div class="other-plan-row">
+            <div class="opr-avatar">田</div>
+            <div class="opr-info">
+              <h4>【単発フォームチェック📹】自宅トレーニングのフォーム動画添削</h4>
+              <p>動画を送るだけでフォームの改善点をフィードバック</p>
+            </div>
+            <div style="text-align:right">
+              <div class="opr-price">¥2,000（1回）</div>
+              <div class="opr-rating">★5.0 (34件)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="sidebar-sticky">
+
+        <!-- 3-STEP CTA -->
+        <div class="cta-card">
+          <div class="cta-card-header">
+            <h3>田中 健太 トレーナーに相談する</h3>
+            <p>気になったら、まずはお気軽にご連絡ください</p>
+          </div>
+          <div class="cta-card-body">
+            <button class="cta-btn-main">🔥 いますぐ申し込む</button>
+            <button class="cta-btn-sub">💬 まずは無料で相談する</button>
+            <button class="cta-btn-ghost">🤍 気になる（お気に入り登録）</button>
+            <div style="margin-top:14px;padding:12px;background:var(--c-bg-light);border-radius:10px;font-size:12px;color:var(--c-muted);line-height:1.7;">
+              ✓ 登録・相談は完全無料<br>
+              ✓ 返信目安：24時間以内<br>
+              ✓ いつでもキャンセル可
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE CARD -->
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <div class="profile-mini-avatar">田</div>
+            <div class="profile-mini-info">
+              <h4>田中 健太</h4>
+              <p>累計指導 230名 / ★4.9 (86件)</p>
+            </div>
+          </div>
+
+          <div class="trust-badges">
+            <div class="trust-badge tb-verified"><span class="trust-icon">✅</span>本人確認済み</div>
+            <div class="trust-badge tb-cert"><span class="trust-icon">🏅</span>NSCA認定トレーナー</div>
+            <div class="trust-badge tb-nda"><span class="trust-icon">🔒</span>秘密保持契約（NDA）締結済</div>
+            <div class="trust-badge tb-response"><span class="trust-icon">⚡</span>返信スピード：24時間以内</div>
+          </div>
+
+          <div class="schedule-info">
+            <h5>📅 対応スケジュール</h5>
+            <div class="schedule-row"><span class="label">対応時間帯</span><span class="val">平日夜・週末</span></div>
+            <div class="schedule-row"><span class="label">形式</span><span class="val">オンライン（Zoom）</span></div>
+            <div class="schedule-row"><span class="label">言語</span><span class="val">日本語</span></div>
+            <div class="schedule-row"><span class="label">最終ログイン</span><span class="val">1日以内</span></div>
+          </div>
+
+          <button class="free-question-btn">❓ 事前に質問する（無料）</button>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<footer>
+  <div style="background:#0f172a;color:rgba(255,255,255,.6);padding:32px 0 24px;">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:12px;">
+        <span>© 2026 TIDA Personal</span>
+        <div style="display:flex;gap:20px;">
+          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">利用規約</a>
+          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">プライバシーポリシー</a>
+          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">お問い合わせ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function setActive(el){document.querySelectorAll('.anchor-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
+  let expanded=false;
+  function toggleAbout(){
+    const t=document.getElementById('aboutText');
+    const btn=document.querySelector('.read-more');
+    if(!expanded){t.classList.remove('collapsed');btn.textContent='▲ 閉じる';}
+    else{t.classList.add('collapsed');btn.textContent='続きを読む ▼';}
+    expanded=!expanded;
+  }
+</script>
+</body>
+</html>

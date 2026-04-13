@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プランを見る | TIDA Personal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Hiragino Kaku Gothic ProN','Noto Sans JP','メイリオ',sans-serif; color: #1a1a2e; background: #f8fafc; line-height: 1.7; }
+    a { text-decoration: none; color: inherit; }
+    :root {
+      --c-primary:#0b6e4f;--c-primary-dark:#084d38;--c-accent:#ff6548;
+      --c-navy:#0f172a;--c-text:#1a1a2e;--c-muted:#64748b;
+      --c-border:#e2e8f0;--c-bg-light:#f8fafc;--c-bg-green:#f0faf5;
+      --radius-sm:8px;--radius-md:16px;
+      --shadow-sm:0 1px 4px rgba(0,0,0,.06);--shadow-md:0 4px 20px rgba(0,0,0,.10);
+    }
+    .container{max-width:1160px;margin:0 auto;padding:0 24px;}
+    .badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;letter-spacing:.5px;}
+    .badge-popular{background:#fef3c7;color:#92400e;}
+    .badge-new{background:#dbeafe;color:#1e40af;}
+    .badge-hot{background:#fee2e2;color:#991b1b;}
+    .badge-cert{background:#faf5ff;color:#7e22ce;border:1px solid #e9d5ff;}
+
+    /* HEADER */
+    header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--c-border);}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+    .logo{font-size:22px;font-weight:900;color:var(--c-primary);letter-spacing:-1px;}
+    .logo span{color:var(--c-accent);}
+    nav{display:flex;align-items:center;gap:4px;}
+    .nav-link{font-size:14px;font-weight:600;color:var(--c-muted);padding:8px 14px;border-radius:8px;transition:all .15s;}
+    .nav-link:hover,.nav-link.active{color:var(--c-primary);background:var(--c-bg-green);}
+    .header-actions{display:flex;align-items:center;gap:10px;}
+    .btn-login{font-size:14px;font-weight:600;color:var(--c-muted);padding:8px 16px;}
+    .btn-register{background:var(--c-primary);color:#fff;font-size:14px;font-weight:700;padding:9px 20px;border-radius:8px;}
+
+    /* PAGE HERO */
+    .page-hero{background:linear-gradient(135deg,#0f172a,#0b4d37);color:#fff;padding:48px 0 40px;}
+    .page-hero h1{font-size:clamp(24px,3.5vw,36px);font-weight:900;letter-spacing:-.5px;margin-bottom:10px;}
+    .page-hero p{font-size:15px;color:rgba(255,255,255,.7);}
+    .type-tabs{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;}
+    .type-tab{padding:10px 24px;border-radius:100px;border:2px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.8);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;}
+    .type-tab:hover,.type-tab.active{background:#fff;color:var(--c-primary);border-color:#fff;}
+
+    /* BREADCRUMB */
+    .breadcrumb{padding:14px 0;font-size:13px;color:var(--c-muted);display:flex;gap:8px;}
+    .breadcrumb a{color:var(--c-muted);}.breadcrumb a:hover{color:var(--c-primary);}
+
+    /* MAIN LAYOUT */
+    .main-layout{display:grid;grid-template-columns:260px 1fr;gap:28px;padding:0 0 80px;align-items:start;}
+
+    /* SIDEBAR */
+    .sidebar{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);position:sticky;top:80px;}
+    .sidebar-header{padding:20px 20px 16px;border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center;}
+    .sidebar-header h3{font-size:15px;font-weight:800;color:var(--c-navy);}
+    .clear-btn{font-size:12px;font-weight:700;color:var(--c-accent);background:none;border:none;cursor:pointer;font-family:inherit;}
+    .filter-group{padding:16px 20px;border-bottom:1px solid var(--c-border);}
+    .filter-group:last-child{border-bottom:none;}
+    .filter-label{font-size:13px;font-weight:800;color:var(--c-navy);margin-bottom:10px;display:block;}
+    .check-list{display:flex;flex-direction:column;gap:8px;}
+    .check-item{display:flex;align-items:center;gap:9px;cursor:pointer;}
+    .check-item input{width:16px;height:16px;accent-color:var(--c-primary);cursor:pointer;flex-shrink:0;}
+    .check-item label{font-size:13px;color:var(--c-text);cursor:pointer;line-height:1.4;}
+    .filter-chips{display:flex;flex-wrap:wrap;gap:8px;}
+    .filter-chip{padding:6px 14px;border-radius:100px;border:1.5px solid var(--c-border);font-size:12px;font-weight:600;color:var(--c-muted);cursor:pointer;transition:all .15s;background:#fff;}
+    .filter-chip:hover,.filter-chip.active{border-color:var(--c-primary);background:var(--c-bg-green);color:var(--c-primary);}
+
+    /* CONTENT */
+    .content-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+    .results-count{font-size:15px;font-weight:700;color:var(--c-navy);}
+    .results-count span{color:var(--c-primary);}
+    .sort-bar{display:flex;gap:8px;align-items:center;}
+    .sort-label{font-size:13px;color:var(--c-muted);font-weight:600;}
+    .sort-btn{padding:7px 16px;border-radius:100px;border:1.5px solid var(--c-border);background:#fff;font-size:12px;font-weight:700;color:var(--c-muted);cursor:pointer;transition:all .15s;}
+    .sort-btn:hover,.sort-btn.active{background:var(--c-primary);color:#fff;border-color:var(--c-primary);}
+
+    /* PLAN CARDS */
+    .plans-grid{display:flex;flex-direction:column;gap:20px;}
+    .plan-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s;overflow:hidden;}
+    .plan-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+    .plan-card-inner{display:grid;grid-template-columns:1fr auto;gap:0;}
+    .plan-main{padding:24px 24px 20px;}
+    .plan-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+    .plan-title{font-size:17px;font-weight:900;color:var(--c-navy);line-height:1.4;margin-bottom:10px;}
+    .plan-trainer-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+    .mini-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;flex-shrink:0;}
+    .ma1{background:linear-gradient(135deg,#6ee7b7,#059669)}.ma2{background:linear-gradient(135deg,#93c5fd,#2563eb)}.ma3{background:linear-gradient(135deg,#fca5a5,#dc2626)}.ma4{background:linear-gradient(135deg,#fde68a,#d97706)}.ma5{background:linear-gradient(135deg,#c4b5fd,#7c3aed)}.ma6{background:linear-gradient(135deg,#99f6e4,#0d9488)}.ma7{background:linear-gradient(135deg,#fdba74,#ea580c)}.ma8{background:linear-gradient(135deg,#f9a8d4,#db2777)}
+    .trainer-mini h4{font-size:14px;font-weight:700;color:var(--c-navy);}
+    .trainer-mini p{font-size:12px;color:var(--c-muted);}
+    .plan-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+    .tag{font-size:11px;font-weight:600;background:var(--c-bg-light);color:var(--c-muted);padding:3px 10px;border-radius:100px;border:1px solid var(--c-border);}
+    .plan-desc{font-size:14px;color:var(--c-muted);line-height:1.8;margin-bottom:14px;}
+    .plan-features{display:flex;gap:16px;flex-wrap:wrap;}
+    .feat{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--c-text);font-weight:600;}
+    .feat-icon{font-size:16px;}
+
+    /* PLAN SIDE */
+    .plan-side{background:var(--c-bg-green);border-left:1px solid #a7f3d0;padding:24px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:200px;text-align:center;gap:12px;}
+    .plan-type-label{font-size:11px;font-weight:700;color:var(--c-muted);letter-spacing:.5px;background:#fff;border:1px solid var(--c-border);border-radius:100px;padding:3px 12px;}
+    .plan-price{font-size:28px;font-weight:900;color:var(--c-primary);letter-spacing:-1px;line-height:1;}
+    .plan-price .unit{font-size:13px;font-weight:400;color:var(--c-muted);}
+    .plan-price-note{font-size:12px;color:var(--c-muted);}
+    .rating{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;}
+    .stars{color:#f59e0b;}
+    .btn-plan-primary{width:100%;background:var(--c-primary);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
+    .btn-plan-primary:hover{background:var(--c-primary-dark);}
+    .btn-plan-secondary{width:100%;background:#fff;color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
+    .btn-plan-secondary:hover{background:var(--c-bg-green);}
+    .contracts-note{font-size:12px;color:var(--c-muted);}
+
+    /* COURSES EXPAND */
+    .courses-section{border-top:1px solid var(--c-border);padding:16px 24px;}
+    .courses-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:14px;font-weight:700;color:var(--c-navy);}
+    .courses-toggle .arrow{transition:transform .2s;color:var(--c-muted);}
+    .courses-list{margin-top:14px;display:flex;flex-direction:column;gap:10px;}
+    .course-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--c-bg-light);border-radius:10px;border:1px solid var(--c-border);}
+    .course-row.recommend{background:var(--c-bg-green);border-color:#a7f3d0;}
+    .course-info{flex:1;}
+    .course-name{font-size:14px;font-weight:700;color:var(--c-navy);}
+    .course-name .rec-tag{font-size:11px;font-weight:700;background:var(--c-primary);color:#fff;padding:2px 8px;border-radius:100px;margin-left:8px;}
+    .course-desc{font-size:12px;color:var(--c-muted);margin-top:3px;}
+    .course-price{font-size:16px;font-weight:900;color:var(--c-primary);white-space:nowrap;margin-left:16px;}
+    .course-type{font-size:11px;color:var(--c-muted);}
+
+    /* PAGINATION */
+    .pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:40px;}
+    .page-btn{width:40px;height:40px;border-radius:10px;border:1.5px solid var(--c-border);background:#fff;font-size:14px;font-weight:700;color:var(--c-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+    .page-btn:hover{border-color:var(--c-primary);color:var(--c-primary);}
+    .page-btn.active{background:var(--c-primary);color:#fff;border-color:var(--c-primary);}
+
+    /* FOOTER */
+    footer{background:var(--c-navy);color:rgba(255,255,255,.6);padding:32px 0 24px;}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:12px;}
+    .footer-links{display:flex;gap:20px;}
+    .footer-links a{color:rgba(255,255,255,.4);font-size:12px;}
+
+    @media(max-width:900px){
+      .main-layout{grid-template-columns:1fr;}
+      .sidebar{position:static;}
+      .plan-card-inner{grid-template-columns:1fr;}
+      .plan-side{border-left:none;border-top:1px solid #a7f3d0;flex-direction:row;flex-wrap:wrap;justify-content:space-between;}
+      nav{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="tida_personal_top.html" class="logo">TIDA<span>.</span>Personal</a>
+      <nav>
+        <a href="tida_personal_trainers.html" class="nav-link">トレーナーを探す</a>
+        <a href="tida_personal_plans.html" class="nav-link active">プランを見る</a>
+        <a href="tida_personal_quiz.html" class="nav-link">診断してみる</a>
+        <a href="#" class="nav-link">使い方</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#" class="btn-login">ログイン</a>
+        <a href="#" class="btn-register">無料登録</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>📋 プランを見る</h1>
+    <p>単発から月額・期間限定プログラムまで。自分のペースと予算に合わせて選べます</p>
+    <div class="type-tabs">
+      <button class="type-tab active">すべて</button>
+      <button class="type-tab">単発（1回〜）</button>
+      <button class="type-tab">月額継続</button>
+      <button class="type-tab">期間プログラム</button>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="tida_personal_top.html">ホーム</a><span>›</span>
+    <span>プラン一覧</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="main-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3>絞り込み</h3>
+        <button class="clear-btn">クリア</button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">専門ジャンル</span>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" /><label>ダイエット・体脂肪管理</label></label>
+          <label class="check-item"><input type="checkbox" /><label>筋力アップ・ボディメイク</label></label>
+          <label class="check-item"><input type="checkbox" /><label>産後ボディメイク</label></label>
+          <label class="check-item"><input type="checkbox" /><label>姿勢矯正・腰痛改善</label></label>
+          <label class="check-item"><input type="checkbox" /><label>競技向け・スポーツ</label></label>
+          <label class="check-item"><input type="checkbox" /><label>食事管理・栄養指導</label></label>
+          <label class="check-item"><input type="checkbox" /><label>健康維持・シニア向け</label></label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">プラン形式</span>
+        <div class="filter-chips">
+          <button class="filter-chip">単発（1回）</button>
+          <button class="filter-chip active">月額継続</button>
+          <button class="filter-chip">期間固定</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">料金（月額）</span>
+        <div class="filter-chips" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <button class="filter-chip">〜5,000円</button>
+          <button class="filter-chip active">〜10,000円</button>
+          <button class="filter-chip">〜20,000円</button>
+          <button class="filter-chip">〜30,000円</button>
+          <button class="filter-chip">30,000円〜</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">コミュニケーション</span>
+        <div class="filter-chips">
+          <button class="filter-chip active">チャット</button>
+          <button class="filter-chip">ビデオ通話</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">トレーナー情報</span>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" /><label>本人確認済</label></label>
+          <label class="check-item"><input type="checkbox" checked /><label>資格認定済</label></label>
+          <label class="check-item"><input type="checkbox" /><label>最終ログイン30日以内</label></label>
+        </div>
+      </div>
+
+      <button style="margin:16px 20px 20px;width:calc(100% - 40px);background:var(--c-primary);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">
+        この条件で検索する
+      </button>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <div class="content-header">
+        <div class="results-count"><span>342プラン</span> が見つかりました</div>
+        <div class="sort-bar">
+          <span class="sort-label">並び替え：</span>
+          <button class="sort-btn active">おすすめ</button>
+          <button class="sort-btn">評価順</button>
+          <button class="sort-btn">価格が安い順</button>
+          <button class="sort-btn">新着</button>
+        </div>
+      </div>
+
+      <div class="plans-grid">
+
+        <!-- Plan 1 -->
+        <div class="plan-card">
+          <div class="plan-card-inner">
+            <div class="plan-main">
+              <div class="plan-badges">
+                <span class="badge badge-popular">🔥 人気No.1</span>
+                <span class="badge badge-cert">🏅 NSCA認定</span>
+              </div>
+              <h2 class="plan-title">【ダイエット特化🔥】科学的メソッドで3ヶ月で-5kg達成！食事管理＋運動プログラム完全サポート</h2>
+              <div class="plan-trainer-row">
+                <div class="mini-avatar ma1">田</div>
+                <div class="trainer-mini">
+                  <h4>田中 健太 トレーナー</h4>
+                  <p>累計指導 230名 / NSCA認定 / 本人確認済</p>
+                </div>
+              </div>
+              <div class="plan-tags">
+                <span class="tag">ダイエット</span><span class="tag">食事指導</span><span class="tag">体脂肪管理</span><span class="tag">オンライン</span>
+              </div>
+              <p class="plan-desc">科学的根拠に基づいた食事管理と運動プログラムを組み合わせ、無理なく3ヶ月で-5kgを目指すプランです。週1回のビデオ通話＋チャットし放題で、毎日の食事や運動の疑問を即解決します。</p>
+              <div class="plan-features">
+                <div class="feat"><span class="feat-icon">💬</span>チャットし放題</div>
+                <div class="feat"><span class="feat-icon">📹</span>週1回ビデオ通話</div>
+                <div class="feat"><span class="feat-icon">🥗</span>食事プラン作成</div>
+                <div class="feat"><span class="feat-icon">📊</span>毎週進捗チェック</div>
+              </div>
+            </div>
+            <div class="plan-side">
+              <div class="plan-type-label">月額継続プラン</div>
+              <div>
+                <div class="plan-price">¥12,000<span class="unit">/月</span></div>
+                <div class="plan-price-note">単発 ¥3,000〜</div>
+              </div>
+              <div class="rating"><span class="stars">★★★★★</span> 4.9 <span style="font-size:12px;color:var(--c-muted);">(86件)</span></div>
+              <button class="btn-plan-primary">いますぐ申し込む</button>
+              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <div class="contracts-note">累計 230名 が契約済み</div>
+            </div>
+          </div>
+          <div class="courses-section">
+            <div class="courses-toggle" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none';this.querySelector('.arrow').style.transform=this.nextElementSibling.style.display==='flex'?'rotate(180deg)':''">
+              <span>コースメニューを見る（3コース）</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="courses-list" style="display:none;">
+              <div class="course-row recommend">
+                <div class="course-info">
+                  <div class="course-name">チャット＋週1ビデオ通話プラン <span class="rec-tag">おすすめ</span></div>
+                  <div class="course-desc">毎日チャット質問可能 + 週1回60分のビデオセッション</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="course-price">¥12,000</div>
+                  <div class="course-type">月額</div>
+                </div>
+              </div>
+              <div class="course-row">
+                <div class="course-info">
+                  <div class="course-name">チャットのみプラン</div>
+                  <div class="course-desc">テキストチャットでの質問・フィードバック無制限</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="course-price">¥8,000</div>
+                  <div class="course-type">月額</div>
+                </div>
+              </div>
+              <div class="course-row">
+                <div class="course-info">
+                  <div class="course-name">お試し単発相談</div>
+                  <div class="course-desc">60分のビデオ通話1回 / 現状分析＋方針策定</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="course-price">¥3,000</div>
+                  <div class="course-type">単発</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 2 -->
+        <div class="plan-card">
+          <div class="plan-card-inner">
+            <div class="plan-main">
+              <div class="plan-badges">
+                <span class="badge badge-popular">🔥 人気</span>
+              </div>
+              <h2 class="plan-title">【産後ボディメイク👶】忙しいママでも続けられる！産後6ヶ月から安心して始められるオンラインプログラム</h2>
+              <div class="plan-trainer-row">
+                <div class="mini-avatar ma2">山</div>
+                <div class="trainer-mini">
+                  <h4>山田 美咲 トレーナー</h4>
+                  <p>累計指導 180名 / NESTA認定 / 女性専門</p>
+                </div>
+              </div>
+              <div class="plan-tags">
+                <span class="tag">産後ケア</span><span class="tag">体型回復</span><span class="tag">骨盤矯正</span><span class="tag">オンライン</span>
+              </div>
+              <p class="plan-desc">産後の体型・体力回復を専門に指導するプランです。骨盤底筋トレーニングから始め、無理なく体型を戻します。授乳中・育児中でも自宅でできるメニューが中心。</p>
+              <div class="plan-features">
+                <div class="feat"><span class="feat-icon">💬</span>チャット相談無制限</div>
+                <div class="feat"><span class="feat-icon">📹</span>月2回ビデオ</div>
+                <div class="feat"><span class="feat-icon">🤱</span>授乳期対応</div>
+              </div>
+            </div>
+            <div class="plan-side">
+              <div class="plan-type-label">月額継続プラン</div>
+              <div>
+                <div class="plan-price">¥8,000<span class="unit">/月</span></div>
+                <div class="plan-price-note">単発 ¥2,500〜</div>
+              </div>
+              <div class="rating"><span class="stars">★★★★★</span> 5.0 <span style="font-size:12px;color:var(--c-muted);">(62件)</span></div>
+              <button class="btn-plan-primary">いますぐ申し込む</button>
+              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <div class="contracts-note">累計 180名 が契約済み</div>
+            </div>
+          </div>
+          <div class="courses-section">
+            <div class="courses-toggle" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none';">
+              <span>コースメニューを見る（2コース）</span><span class="arrow">▼</span>
+            </div>
+            <div class="courses-list" style="display:none;">
+              <div class="course-row recommend">
+                <div class="course-info">
+                  <div class="course-name">月額フルサポートプラン <span class="rec-tag">おすすめ</span></div>
+                  <div class="course-desc">月2回ビデオ通話＋チャット無制限</div>
+                </div>
+                <div style="text-align:right"><div class="course-price">¥8,000</div><div class="course-type">月額</div></div>
+              </div>
+              <div class="course-row">
+                <div class="course-info">
+                  <div class="course-name">お試し相談（1回）</div>
+                  <div class="course-desc">産後の現状確認と今後の方針を一緒に決めるセッション</div>
+                </div>
+                <div style="text-align:right"><div class="course-price">¥2,500</div><div class="course-type">単発</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 3 -->
+        <div class="plan-card">
+          <div class="plan-card-inner">
+            <div class="plan-main">
+              <div class="plan-badges">
+                <span class="badge badge-hot">🏆 実績No.1</span>
+                <span class="badge badge-cert">🏅 NSCA-CSCS</span>
+              </div>
+              <h2 class="plan-title">【筋力アップ💪】3ヶ月で見た目が変わる！競技経験トレーナーによるパーソナル筋トレプログラム</h2>
+              <div class="plan-trainer-row">
+                <div class="mini-avatar ma3">鈴</div>
+                <div class="trainer-mini">
+                  <h4>鈴木 大輔 トレーナー</h4>
+                  <p>累計指導 310名 / NSCA-CSCS / 元競技選手</p>
+                </div>
+              </div>
+              <div class="plan-tags">
+                <span class="tag">筋力アップ</span><span class="tag">ボディメイク</span><span class="tag">競技向け</span><span class="tag">フォーム指導</span>
+              </div>
+              <p class="plan-desc">競技アスリート経験とNSCA-CSCS資格を持つトレーナーが、あなたの目的・体力・環境に合わせたプログラムを設計。初心者から競技者まで幅広く対応します。</p>
+              <div class="plan-features">
+                <div class="feat"><span class="feat-icon">📹</span>週2回ビデオ指導</div>
+                <div class="feat"><span class="feat-icon">📋</span>メニュー作成</div>
+                <div class="feat"><span class="feat-icon">💬</span>チャット質問</div>
+                <div class="feat"><span class="feat-icon">📈</span>月次レポート</div>
+              </div>
+            </div>
+            <div class="plan-side">
+              <div class="plan-type-label">月額継続プラン</div>
+              <div>
+                <div class="plan-price">¥15,000<span class="unit">/月</span></div>
+                <div class="plan-price-note">単発 ¥4,000〜</div>
+              </div>
+              <div class="rating"><span class="stars">★★★★★</span> 4.8 <span style="font-size:12px;color:var(--c-muted);">(124件)</span></div>
+              <button class="btn-plan-primary">いますぐ申し込む</button>
+              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <div class="contracts-note">累計 310名 が契約済み</div>
+            </div>
+          </div>
+          <div class="courses-section">
+            <div class="courses-toggle" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'flex':'none';">
+              <span>コースメニューを見る（4コース）</span><span class="arrow">▼</span>
+            </div>
+            <div class="courses-list" style="display:none;">
+              <div class="course-row recommend">
+                <div class="course-info">
+                  <div class="course-name">プレミアムプラン（週2回） <span class="rec-tag">おすすめ</span></div>
+                  <div class="course-desc">週2回60分ビデオ指導＋チャット無制限＋月次レポート</div>
+                </div>
+                <div style="text-align:right"><div class="course-price">¥15,000</div><div class="course-type">月額</div></div>
+              </div>
+              <div class="course-row">
+                <div class="course-info">
+                  <div class="course-name">スタンダードプラン（週1回）</div>
+                  <div class="course-desc">週1回60分ビデオ指導＋チャット質問</div>
+                </div>
+                <div style="text-align:right"><div class="course-price">¥10,000</div><div class="course-type">月額</div></div>
+              </div>
+              <div class="course-row">
+                <div class="course-info">
+                  <div class="course-name">メニュー作成プラン</div>
+                  <div class="course-desc">3ヶ月分のトレーニングメニュー作成（1回完結）</div>
+                </div>
+                <div style="text-align:right"><div class="course-price">¥8,000</div><div class="course-type">単発</div></div>
+              </div>
+              <div class="course-row">
+                <div class="course-info">
+                  <div class="course-name">お試しセッション（1回）</div>
+                  <div class="course-desc">60分・現状分析＋メニュー提案</div>
+                </div>
+                <div style="text-align:right"><div class="course-price">¥4,000</div><div class="course-type">単発</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 4 -->
+        <div class="plan-card">
+          <div class="plan-card-inner">
+            <div class="plan-main">
+              <div class="plan-badges">
+                <span class="badge badge-new">✨ NEW</span>
+                <span class="badge badge-cert">🏅 管理栄養士</span>
+              </div>
+              <h2 class="plan-title">【食事管理×運動🥗】管理栄養士×トレーナーがW指導！リバウンドしない本質的なダイエット</h2>
+              <div class="plan-trainer-row">
+                <div class="mini-avatar ma4">佐</div>
+                <div class="trainer-mini">
+                  <h4>佐藤 ゆり トレーナー</h4>
+                  <p>累計指導 95名 / 管理栄養士 / 食事管理専門</p>
+                </div>
+              </div>
+              <div class="plan-tags">
+                <span class="tag">食事管理</span><span class="tag">栄養指導</span><span class="tag">ダイエット</span><span class="tag">リバウンド防止</span>
+              </div>
+              <p class="plan-desc">管理栄養士の資格を持つトレーナーが、食事と運動を同時に最適化。単なるカロリー制限ではなく、体質改善から根本的にアプローチします。</p>
+              <div class="plan-features">
+                <div class="feat"><span class="feat-icon">🥗</span>毎日の食事チェック</div>
+                <div class="feat"><span class="feat-icon">📊</span>栄養バランス分析</div>
+                <div class="feat"><span class="feat-icon">💬</span>チャット相談無制限</div>
+              </div>
+            </div>
+            <div class="plan-side">
+              <div class="plan-type-label">月額継続プラン</div>
+              <div>
+                <div class="plan-price">¥10,000<span class="unit">/月</span></div>
+                <div class="plan-price-note">単発 ¥3,500〜</div>
+              </div>
+              <div class="rating"><span class="stars">★★★★★</span> 5.0 <span style="font-size:12px;color:var(--c-muted);">(28件)</span></div>
+              <button class="btn-plan-primary">いますぐ申し込む</button>
+              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <div class="contracts-note">累計 95名 が契約済み</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pagination">
+        <button class="page-btn">‹</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span style="color:var(--c-muted)">...</span>
+        <button class="page-btn">29</button>
+        <button class="page-btn">›</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 TIDA Personal</span>
+      <div class="footer-links">
+        <a href="#">利用規約</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.sort-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.sort-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+  document.querySelectorAll('.filter-chip').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('active')));
+  document.querySelectorAll('.type-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.type-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+</script>
+</body>
+</html>

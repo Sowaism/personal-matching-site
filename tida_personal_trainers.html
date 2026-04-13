@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>トレーナーを探す | TIDA Personal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Hiragino Kaku Gothic ProN','Noto Sans JP','メイリオ',sans-serif; color: #1a1a2e; background: #f8fafc; line-height: 1.7; }
+    a { text-decoration: none; color: inherit; }
+    :root {
+      --c-primary: #0b6e4f; --c-primary-dark: #084d38; --c-accent: #ff6548;
+      --c-navy: #0f172a; --c-text: #1a1a2e; --c-muted: #64748b;
+      --c-border: #e2e8f0; --c-bg-light: #f8fafc; --c-bg-green: #f0faf5;
+      --radius-sm: 8px; --radius-md: 16px;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,.06); --shadow-md: 0 4px 20px rgba(0,0,0,.10);
+    }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; letter-spacing: .5px; }
+    .badge-popular { background: #fef3c7; color: #92400e; }
+    .badge-new { background: #dbeafe; color: #1e40af; }
+    .badge-recommend { background: #dcfce7; color: #166534; }
+    .badge-verified { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .badge-cert { background: #faf5ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--c-border); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-size: 22px; font-weight: 900; color: var(--c-primary); letter-spacing: -1px; }
+    .logo span { color: var(--c-accent); }
+    nav { display: flex; align-items: center; gap: 4px; }
+    .nav-link { font-size: 14px; font-weight: 600; color: var(--c-muted); padding: 8px 14px; border-radius: 8px; transition: all .15s; }
+    .nav-link:hover, .nav-link.active { color: var(--c-primary); background: var(--c-bg-green); }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-login { font-size: 14px; font-weight: 600; color: var(--c-muted); padding: 8px 16px; }
+    .btn-register { background: var(--c-primary); color: #fff; font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 8px; }
+    .btn-register:hover { background: var(--c-primary-dark); }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, #0f172a, #0b4d37); color: #fff; padding: 48px 0 40px; }
+    .page-hero h1 { font-size: clamp(24px, 3.5vw, 36px); font-weight: 900; letter-spacing: -.5px; margin-bottom: 10px; }
+    .page-hero p { font-size: 15px; color: rgba(255,255,255,.7); }
+    .hero-search { margin-top: 24px; display: flex; gap: 12px; max-width: 600px; }
+    .search-input {
+      flex: 1; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.25);
+      border-radius: 10px; padding: 13px 18px; font-size: 15px; color: #fff;
+      font-family: inherit; outline: none; transition: border-color .15s;
+    }
+    .search-input::placeholder { color: rgba(255,255,255,.5); }
+    .search-input:focus { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.15); }
+    .btn-search { background: var(--c-accent); color: #fff; border: none; border-radius: 10px; padding: 13px 24px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
+
+    /* BREADCRUMB */
+    .breadcrumb { padding: 14px 0; font-size: 13px; color: var(--c-muted); display: flex; gap: 8px; align-items: center; }
+    .breadcrumb a { color: var(--c-muted); } .breadcrumb a:hover { color: var(--c-primary); }
+    .breadcrumb span { color: #94a3b8; }
+
+    /* MAIN LAYOUT */
+    .main-layout { display: grid; grid-template-columns: 280px 1fr; gap: 28px; padding: 0 0 80px; align-items: start; }
+
+    /* SIDEBAR */
+    .sidebar { background: #fff; border-radius: var(--radius-md); border: 1px solid var(--c-border); box-shadow: var(--shadow-sm); position: sticky; top: 80px; }
+    .sidebar-header { padding: 20px 20px 16px; border-bottom: 1px solid var(--c-border); display: flex; justify-content: space-between; align-items: center; }
+    .sidebar-header h3 { font-size: 15px; font-weight: 800; color: var(--c-navy); }
+    .clear-btn { font-size: 12px; font-weight: 700; color: var(--c-accent); cursor: pointer; background: none; border: none; font-family: inherit; }
+    .filter-group { padding: 18px 20px; border-bottom: 1px solid var(--c-border); }
+    .filter-group:last-child { border-bottom: none; }
+    .filter-label { font-size: 13px; font-weight: 800; color: var(--c-navy); margin-bottom: 12px; display: block; }
+    .check-list { display: flex; flex-direction: column; gap: 8px; }
+    .check-item { display: flex; align-items: center; gap: 9px; cursor: pointer; }
+    .check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--c-primary); border-radius: 4px; cursor: pointer; flex-shrink: 0; }
+    .check-item label { font-size: 13px; color: var(--c-text); cursor: pointer; line-height: 1.4; }
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-chip { padding: 6px 14px; border-radius: 100px; border: 1.5px solid var(--c-border); font-size: 12px; font-weight: 600; color: var(--c-muted); cursor: pointer; transition: all .15s; background: #fff; }
+    .filter-chip:hover, .filter-chip.active { border-color: var(--c-primary); background: var(--c-bg-green); color: var(--c-primary); }
+    .price-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .sidebar-search-btn { margin: 16px 20px 20px; width: calc(100% - 40px); background: var(--c-primary); color: #fff; border: none; border-radius: 10px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
+
+    /* CONTENT */
+    .content-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .results-count { font-size: 15px; font-weight: 700; color: var(--c-navy); }
+    .results-count span { color: var(--c-primary); }
+    .sort-bar { display: flex; gap: 8px; align-items: center; }
+    .sort-label { font-size: 13px; color: var(--c-muted); font-weight: 600; }
+    .sort-btn { padding: 7px 16px; border-radius: 100px; border: 1.5px solid var(--c-border); background: #fff; font-size: 12px; font-weight: 700; color: var(--c-muted); cursor: pointer; transition: all .15s; }
+    .sort-btn:hover, .sort-btn.active { background: var(--c-primary); color: #fff; border-color: var(--c-primary); }
+
+    /* ACTIVE FILTERS */
+    .active-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .af-chip { display: flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--c-bg-green); border: 1px solid #a7f3d0; border-radius: 100px; font-size: 12px; font-weight: 700; color: var(--c-primary); }
+    .af-chip button { background: none; border: none; cursor: pointer; color: var(--c-primary); font-size: 14px; line-height: 1; padding: 0; }
+
+    /* TRAINER CARDS */
+    .trainers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .trainer-card { background: #fff; border-radius: var(--radius-md); border: 1px solid var(--c-border); box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s; overflow: hidden; }
+    .trainer-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .card-top { padding: 20px 18px 14px; }
+    .card-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; min-height: 22px; }
+    .card-profile { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .avatar { width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: #fff; }
+    .av1{background:linear-gradient(135deg,#6ee7b7,#059669)}.av2{background:linear-gradient(135deg,#93c5fd,#2563eb)}.av3{background:linear-gradient(135deg,#fca5a5,#dc2626)}.av4{background:linear-gradient(135deg,#fde68a,#d97706)}.av5{background:linear-gradient(135deg,#c4b5fd,#7c3aed)}.av6{background:linear-gradient(135deg,#99f6e4,#0d9488)}.av7{background:linear-gradient(135deg,#fdba74,#ea580c)}.av8{background:linear-gradient(135deg,#f9a8d4,#db2777)}.av9{background:linear-gradient(135deg,#a5b4fc,#4f46e5)}.av10{background:linear-gradient(135deg,#86efac,#16a34a)}.av11{background:linear-gradient(135deg,#67e8f9,#0891b2)}.av12{background:linear-gradient(135deg,#d8b4fe,#9333ea)}
+    .profile-info h3 { font-size: 14px; font-weight: 800; color: var(--c-navy); line-height: 1.3; }
+    .profile-info .sub { font-size: 12px; color: var(--c-muted); margin-top: 3px; }
+    .rating { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .stars { color: #f59e0b; } .reviews { font-size: 12px; font-weight: 400; color: var(--c-muted); }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .tag { font-size: 11px; font-weight: 600; background: var(--c-bg-light); color: var(--c-muted); padding: 3px 10px; border-radius: 100px; border: 1px solid var(--c-border); }
+    .desc { font-size: 13px; color: var(--c-muted); line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-bottom { padding: 12px 18px 16px; border-top: 1px solid var(--c-border); display: flex; align-items: center; justify-content: space-between; }
+    .price { font-size: 17px; font-weight: 900; color: var(--c-primary); letter-spacing: -.5px; }
+    .price span { font-size: 12px; font-weight: 400; color: var(--c-muted); margin-left: 2px; }
+    .contracts { font-size: 11px; color: var(--c-muted); margin-top: 2px; }
+    .btn-card { font-size: 13px; font-weight: 700; color: var(--c-primary); background: var(--c-bg-green); border: 1.5px solid var(--c-primary); padding: 8px 16px; border-radius: 8px; transition: all .15s; cursor: pointer; }
+    .btn-card:hover { background: var(--c-primary); color: #fff; }
+
+    /* PAGINATION */
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 40px; }
+    .page-btn { width: 40px; height: 40px; border-radius: 10px; border: 1.5px solid var(--c-border); background: #fff; font-size: 14px; font-weight: 700; color: var(--c-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+    .page-btn:hover { border-color: var(--c-primary); color: var(--c-primary); }
+    .page-btn.active { background: var(--c-primary); color: #fff; border-color: var(--c-primary); }
+    .page-dots { color: var(--c-muted); font-size: 14px; }
+
+    /* RECRUIT BANNER */
+    .recruit-banner { background: linear-gradient(90deg, #f0faf5, #e0f7ee); border: 1.5px solid #a7f3d0; border-radius: var(--radius-md); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 40px; }
+    .recruit-banner-text h3 { font-size: 18px; font-weight: 900; color: var(--c-navy); }
+    .recruit-banner-text p { font-size: 14px; color: var(--c-muted); margin-top: 6px; }
+    .btn-recruit { background: var(--c-primary); color: #fff; border: none; border-radius: 10px; padding: 14px 28px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
+
+    /* FOOTER */
+    footer { background: var(--c-navy); color: rgba(255,255,255,.6); padding: 40px 0 24px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 12px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: rgba(255,255,255,.4); font-size: 12px; }
+
+    @media(max-width:900px){
+      .main-layout{grid-template-columns:1fr;}
+      .sidebar{position:static;}
+      .trainers-grid{grid-template-columns:1fr;}
+      nav{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="tida_personal_top.html" class="logo">TIDA<span>.</span>Personal</a>
+      <nav>
+        <a href="tida_personal_trainers.html" class="nav-link active">トレーナーを探す</a>
+        <a href="tida_personal_plans.html" class="nav-link">プランを見る</a>
+        <a href="tida_personal_quiz.html" class="nav-link">診断してみる</a>
+        <a href="#" class="nav-link">使い方</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#" class="btn-login">ログイン</a>
+        <a href="#" class="btn-register">無料登録</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>🔍 トレーナーを探す</h1>
+    <p>XXX名のプロトレーナーから、目標・専門・料金で絞り込んで最適な1人を見つけよう</p>
+    <div class="hero-search">
+      <input class="search-input" type="text" placeholder="ダイエット、産後ケア、NSCA認定...など" />
+      <button class="btn-search">検索</button>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="breadcrumb">
+    <a href="tida_personal_top.html">ホーム</a><span>›</span>
+    <span>トレーナー一覧</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="main-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3>絞り込み</h3>
+        <button class="clear-btn">クリア</button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">専門ジャンル</span>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" checked /><label>ダイエット・体脂肪管理</label></label>
+          <label class="check-item"><input type="checkbox" /><label>筋力アップ・ボディメイク</label></label>
+          <label class="check-item"><input type="checkbox" /><label>産後ボディメイク</label></label>
+          <label class="check-item"><input type="checkbox" /><label>姿勢矯正・腰痛改善</label></label>
+          <label class="check-item"><input type="checkbox" /><label>競技向け・スポーツ</label></label>
+          <label class="check-item"><input type="checkbox" /><label>食事管理・栄養指導</label></label>
+          <label class="check-item"><input type="checkbox" /><label>健康維持・シニア向け</label></label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">トレーニング形式</span>
+        <div class="filter-chips">
+          <button class="filter-chip active">オンライン</button>
+          <button class="filter-chip">対面</button>
+          <button class="filter-chip">どちらも可</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">月額料金</span>
+        <div class="price-chips">
+          <button class="filter-chip">〜5,000円</button>
+          <button class="filter-chip active">〜10,000円</button>
+          <button class="filter-chip">〜20,000円</button>
+          <button class="filter-chip">〜30,000円</button>
+          <button class="filter-chip">30,000円〜</button>
+          <button class="filter-chip">単発のみ</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">対応時間帯</span>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" /><label>平日 朝（〜9時）</label></label>
+          <label class="check-item"><input type="checkbox" /><label>平日 日中</label></label>
+          <label class="check-item"><input type="checkbox" checked /><label>平日 夜（18時〜）</label></label>
+          <label class="check-item"><input type="checkbox" /><label>土曜日</label></label>
+          <label class="check-item"><input type="checkbox" /><label>日曜・祝日</label></label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">トレーナー情報</span>
+        <div class="check-list">
+          <label class="check-item"><input type="checkbox" /><label>本人確認済</label></label>
+          <label class="check-item"><input type="checkbox" /><label>資格認定済（NSCA/NESTA等）</label></label>
+          <label class="check-item"><input type="checkbox" /><label>NDA締結済</label></label>
+          <label class="check-item"><input type="checkbox" /><label>最終ログイン30日以内</label></label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">返信スピード</span>
+        <div class="filter-chips">
+          <button class="filter-chip active">24時間以内</button>
+          <button class="filter-chip">2日以内</button>
+          <button class="filter-chip">1週間以内</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">性別</span>
+        <div class="filter-chips">
+          <button class="filter-chip">指定なし</button>
+          <button class="filter-chip">男性</button>
+          <button class="filter-chip">女性</button>
+        </div>
+      </div>
+
+      <button class="sidebar-search-btn">この条件で検索する</button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <div class="content-header">
+        <div class="results-count"><span>127名</span> のトレーナーが見つかりました</div>
+        <div class="sort-bar">
+          <span class="sort-label">並び替え：</span>
+          <button class="sort-btn active">おすすめ</button>
+          <button class="sort-btn">評価順</button>
+          <button class="sort-btn">実績数順</button>
+          <button class="sort-btn">新着</button>
+        </div>
+      </div>
+
+      <div class="active-filters">
+        <div class="af-chip">ダイエット <button>×</button></div>
+        <div class="af-chip">オンライン <button>×</button></div>
+        <div class="af-chip">〜10,000円 <button>×</button></div>
+        <div class="af-chip">平日夜 <button>×</button></div>
+        <div class="af-chip">24時間以内 <button>×</button></div>
+      </div>
+
+      <div class="trainers-grid">
+
+        <!-- Card 1 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-popular">🔥 人気</span>
+              <span class="badge badge-verified">✓ 本人確認済</span>
+              <span class="badge badge-cert">🏅 NSCA認定</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av1">田</div>
+              <div class="profile-info">
+                <h3>田中 健太 トレーナー</h3>
+                <div class="sub">指導実績 230名 / オンライン対応</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 4.9 <span class="reviews">（86件）</span></div>
+            <div class="tags"><span class="tag">ダイエット</span><span class="tag">体脂肪管理</span><span class="tag">食事指導</span><span class="tag">+1</span></div>
+            <p class="desc">科学的根拠に基づいたダイエットプログラムで、無理なく続けられる体づくりをサポートします。元スポーツトレーナー歴10年。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥12,000<span>/月〜</span></div><div class="contracts">単発 ¥3,000〜 / 累計指導230名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-popular">🔥 人気</span>
+              <span class="badge badge-cert">🏅 NESTA認定</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av2">山</div>
+              <div class="profile-info">
+                <h3>山田 美咲 トレーナー</h3>
+                <div class="sub">指導実績 180名 / 女性専門</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 5.0 <span class="reviews">（62件）</span></div>
+            <div class="tags"><span class="tag">産後ケア</span><span class="tag">姿勢矯正</span><span class="tag">ヨガ</span></div>
+            <p class="desc">産後の体型・体力回復を専門に指導。忙しいママでも続けられるオンラインプログラムが大好評。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥8,000<span>/月〜</span></div><div class="contracts">単発 ¥2,500〜 / 累計指導180名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-recommend">⭐ おすすめ</span>
+              <span class="badge badge-verified">✓ 本人確認済</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av3">鈴</div>
+              <div class="profile-info">
+                <h3>鈴木 大輔 トレーナー</h3>
+                <div class="sub">指導実績 310名 / NSCA-CSCS</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 4.8 <span class="reviews">（124件）</span></div>
+            <div class="tags"><span class="tag">筋力アップ</span><span class="tag">競技向け</span><span class="tag">フォーム</span><span class="tag">+1</span></div>
+            <p class="desc">競技経験10年のアスリートとしての知見を活かし、筋力・パフォーマンス向上を徹底サポート。初心者からアスリートまで対応。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥15,000<span>/月〜</span></div><div class="contracts">単発 ¥4,000〜 / 累計指導310名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-new">✨ NEW</span>
+              <span class="badge badge-cert">🏅 管理栄養士</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av4">佐</div>
+              <div class="profile-info">
+                <h3>佐藤 ゆり トレーナー</h3>
+                <div class="sub">指導実績 95名 / 食事管理専門</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 5.0 <span class="reviews">（28件）</span></div>
+            <div class="tags"><span class="tag">食事管理</span><span class="tag">栄養指導</span><span class="tag">ダイエット</span></div>
+            <p class="desc">管理栄養士×パーソナルトレーナーの二刀流。食事と運動を同時に最適化し、リバウンドのない体づくりを実現します。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥10,000<span>/月〜</span></div><div class="contracts">単発 ¥3,500〜 / 累計指導95名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-popular">🔥 人気</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av5">中</div>
+              <div class="profile-info">
+                <h3>中村 隆太 トレーナー</h3>
+                <div class="sub">指導実績 415名 / JATI認定</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 4.7 <span class="reviews">（188件）</span></div>
+            <div class="tags"><span class="tag">健康維持</span><span class="tag">シニア向け</span><span class="tag">腰痛改善</span><span class="tag">+1</span></div>
+            <p class="desc">50代〜70代のシニア層への指導を得意とし、無理なく続けられるペースで健康寿命を延ばすプログラムを提供しています。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥7,000<span>/月〜</span></div><div class="contracts">単発 ¥2,000〜 / 累計指導415名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-recommend">⭐ おすすめ</span>
+              <span class="badge badge-cert">🏅 ヨガ指導士</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av6">伊</div>
+              <div class="profile-info">
+                <h3>伊藤 恵 トレーナー</h3>
+                <div class="sub">指導実績 270名 / 姿勢改善専門</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 4.9 <span class="reviews">（101件）</span></div>
+            <div class="tags"><span class="tag">姿勢矯正</span><span class="tag">ヨガ</span><span class="tag">ピラティス</span></div>
+            <p class="desc">デスクワーカーの姿勢改善を得意とし、肩こり・腰痛・猫背改善に特化。在宅勤務の方に特に好評。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥9,000<span>/月〜</span></div><div class="contracts">単発 ¥2,800〜 / 累計指導270名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-new">✨ NEW</span>
+              <span class="badge badge-verified">✓ 本人確認済</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av7">木</div>
+              <div class="profile-info">
+                <h3>木村 洋一 トレーナー</h3>
+                <div class="sub">指導実績 45名 / ランニング専門</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 5.0 <span class="reviews">（14件）</span></div>
+            <div class="tags"><span class="tag">マラソン</span><span class="tag">競技向け</span><span class="tag">ランニング</span></div>
+            <p class="desc">元実業団ランナーが、フルマラソン・ハーフのタイム短縮を科学的にサポート。サブ4・サブ3.5を目指す方に最適。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥13,000<span>/月〜</span></div><div class="contracts">単発 ¥4,500〜 / 累計指導45名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="trainer-card">
+          <div class="card-top">
+            <div class="card-badges">
+              <span class="badge badge-popular">🔥 人気</span>
+              <span class="badge badge-cert">🏅 NSCA認定</span>
+            </div>
+            <div class="card-profile">
+              <div class="avatar av8">松</div>
+              <div class="profile-info">
+                <h3>松本 亜美 トレーナー</h3>
+                <div class="sub">指導実績 198名 / 女性向けボディメイク</div>
+              </div>
+            </div>
+            <div class="rating"><span class="stars">★★★★★</span> 4.9 <span class="reviews">（77件）</span></div>
+            <div class="tags"><span class="tag">ボディメイク</span><span class="tag">ヒップアップ</span><span class="tag">引き締め</span></div>
+            <p class="desc">女性らしいシルエット作りに特化。ヒップアップ・くびれ・二の腕引き締めなど、女性が求めるパーツ別メニューが充実。</p>
+          </div>
+          <div class="card-bottom">
+            <div><div class="price">¥11,000<span>/月〜</span></div><div class="contracts">単発 ¥3,200〜 / 累計指導198名</div></div>
+            <a href="tida_personal_trainer_detail.html" class="btn-card">詳細を見る</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="pagination">
+        <button class="page-btn">‹</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span class="page-dots">...</span>
+        <button class="page-btn">16</button>
+        <button class="page-btn">›</button>
+      </div>
+
+      <!-- RECRUIT BANNER -->
+      <div class="recruit-banner">
+        <div class="recruit-banner-text">
+          <h3>🙋 希望に合うトレーナーが見つからない？</h3>
+          <p>条件を書いて募集するだけで、トレーナーからオファーが届きます。探すより断然早い！</p>
+        </div>
+        <button class="btn-recruit">トレーナーを募集する →</button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 TIDA Personal</span>
+      <div class="footer-links">
+        <a href="#">利用規約</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.sort-btn').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.sort-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+  }));
+  document.querySelectorAll('.filter-chip').forEach(b => b.addEventListener('click', () => b.classList.toggle('active')));
+</script>
+</body>
+</html>
