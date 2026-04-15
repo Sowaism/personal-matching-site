@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIDA Personal — デザインプレビュー</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'メイリオ', sans-serif;
+      background: #fafafa;
+      color: #1a1a2e;
+      line-height: 1.7;
+      min-height: 100vh;
+      padding: 48px 20px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #059669;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      color: #0a0a1a;
+    }
+    .lead {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 32px;
+    }
+    ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    a.card {
+      display: block;
+      padding: 20px 22px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .2s, background .2s, transform .1s;
+    }
+    a.card:hover { border-color: #34d399; background: #ecfdf5; }
+    a.card:active { transform: scale(0.99); }
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .card-title { font-size: 17px; font-weight: 700; color: #0a0a1a; }
+    .card-arrow { color: #9ca3af; font-size: 18px; }
+    a.card:hover .card-arrow { color: #10b981; }
+    .card-desc { font-size: 14px; color: #555; margin-bottom: 8px; }
+    .card-path { font-size: 11px; color: #9ca3af; font-family: 'SF Mono', Menlo, Consolas, monospace; }
+    footer {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">TIDA Personal / Preview</p>
+    <h1>デザインプレビュー一覧</h1>
+    <p class="lead">下記のリンクから各ページのモックアップをご確認いただけます。デザイン・文言に関するフィードバックをお待ちしております。</p>
+
+    <ul>
+      <li>
+        <a class="card" href="/tida_personal_top.html">
+          <div class="card-head">
+            <span class="card-title">トップページ</span>
+            <span class="card-arrow">→</span>
+          </div>
+          <div class="card-desc">ランディングページ：ヒーロー、診断導線、トレーナー紹介、FAQ まで</div>
+          <div class="card-path">/tida_personal_top.html</div>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="/tida_personal_quiz.html">
+          <div class="card-head">
+            <span class="card-title">目標診断クイズ</span>
+            <span class="card-arrow">→</span>
+          </div>
+          <div class="card-desc">Kaorium 風グラデーション UI で目標に合うトレーナーを診断</div>
+          <div class="card-path">/tida_personal_quiz.html</div>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="/tida_personal_trainers.html">
+          <div class="card-head">
+            <span class="card-title">トレーナー一覧</span>
+            <span class="card-arrow">→</span>
+          </div>
+          <div class="card-desc">在籍プロトレーナーのカード一覧と絞り込み</div>
+          <div class="card-path">/tida_personal_trainers.html</div>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="/tida_personal_trainer_detail.html">
+          <div class="card-head">
+            <span class="card-title">トレーナー詳細</span>
+            <span class="card-arrow">→</span>
+          </div>
+          <div class="card-desc">プロフィール、実績、レビュー、予約導線</div>
+          <div class="card-path">/tida_personal_trainer_detail.html</div>
+        </a>
+      </li>
+      <li>
+        <a class="card" href="/tida_personal_plans.html">
+          <div class="card-head">
+            <span class="card-title">プラン一覧</span>
+            <span class="card-arrow">→</span>
+          </div>
+          <div class="card-desc">料金プランと特典の比較</div>
+          <div class="card-path">/tida_personal_plans.html</div>
+        </a>
+      </li>
+    </ul>
+
+    <footer>各ページは静的 HTML のモックアップです。リンク内ナビゲーションは未接続の状態があります。</footer>
+  </div>
+</body>
+</html>
