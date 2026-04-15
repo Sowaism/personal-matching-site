@@ -178,16 +178,20 @@
       color: var(--coral);
       font-size: 16px;
       font-weight: 800;
-      padding: 18px 52px;
-      border-radius: 60px;
+      padding: 9px 64px 9px 9px;
+      border-radius: 999px;
       border: none;
       cursor: pointer;
       box-shadow: 0 8px 32px rgba(0,0,0,0.18);
       transition: transform 0.2s, box-shadow 0.2s;
       letter-spacing: 0.02em;
       font-family: inherit;
+      position: relative;
     }
     .btn-start:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,0,0,0.22); }
+    .btn-start .start-badge { display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; border-radius:999px; font-size:11px; font-weight:900; line-height:1.1; background: var(--coral); color:#fff; flex-shrink:0; letter-spacing:.04em; }
+    .btn-start .start-label { flex:1; text-align:center; padding: 0 6px 0 2px; }
+    .btn-start .start-arrow { position:absolute; right:8px; top:50%; transform:translateY(-50%); width:42px; height:42px; border-radius:50%; background: var(--coral); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px !important; }
 
     /* ── QUESTION ── */
     .q-inner {
@@ -303,8 +307,8 @@
       color: var(--green);
       font-size: 15px;
       font-weight: 800;
-      padding: 15px 40px;
-      border-radius: 60px;
+      padding: 8px 54px 8px 8px;
+      border-radius: 999px;
       border: none;
       cursor: pointer;
       box-shadow: 0 6px 24px rgba(0,0,0,0.14);
@@ -312,7 +316,10 @@
       pointer-events: none;
       transition: transform 0.2s, box-shadow 0.2s, opacity 0.25s;
       font-family: inherit;
+      position: relative;
     }
+    .btn-next .next-label { padding: 0 10px 0 16px; flex: 1; text-align: center; }
+    .btn-next .next-arrow { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px !important; }
     .btn-next.ready { opacity: 1; pointer-events: all; }
     .btn-next.ready:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.2); }
 
@@ -415,24 +422,34 @@
     .trainer-card-btn:hover { opacity: 0.87; }
 
     .results-cta { display: flex; flex-direction: column; gap: 11px; }
-    .btn-cta-primary {
-      display: block; width: 100%; text-align: center;
-      padding: 18px; border-radius: 60px;
-      background: white; color: var(--green);
-      font-size: 16px; font-weight: 800;
-      text-decoration: none; box-shadow: 0 8px 28px rgba(0,0,0,0.15);
-      transition: transform 0.2s, box-shadow 0.2s;
+    .btn-cta-primary, .btn-cta-secondary {
+      display: flex; align-items: center; width: 100%;
+      padding: 9px 60px 9px 9px; border-radius: 999px;
+      font-size: 15px; font-weight: 800;
+      text-decoration: none; position: relative;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      border: 2px solid transparent;
     }
+    .btn-cta-primary { background: white; color: var(--green); box-shadow: 0 8px 28px rgba(0,0,0,0.15); }
     .btn-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
-    .btn-cta-secondary {
-      display: block; width: 100%; text-align: center;
-      padding: 16px; border-radius: 60px;
-      background: rgba(255,255,255,0.18); color: white;
-      font-size: 14px; font-weight: 700;
-      text-decoration: none; border: 1.5px solid rgba(255,255,255,0.35);
-      transition: background 0.2s;
+    .btn-cta-secondary { background: rgba(255,255,255,0.12); color: white; border-color: rgba(255,255,255,0.35); font-size: 14px; }
+    .btn-cta-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    .btn-cta-primary .cta-badge, .btn-cta-secondary .cta-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 7px 13px; border-radius: 999px; font-size: 11px; font-weight: 900;
+      line-height: 1.1; flex-shrink: 0; white-space: nowrap; letter-spacing: .04em;
     }
-    .btn-cta-secondary:hover { background: rgba(255,255,255,0.28); }
+    .btn-cta-primary .cta-badge { background: var(--green); color: #fff; }
+    .btn-cta-secondary .cta-badge { background: rgba(255,255,255,0.22); color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+    .btn-cta-primary .cta-label, .btn-cta-secondary .cta-label { flex: 1; text-align: center; padding-right: 4px; }
+    .btn-cta-primary .cta-arrow, .btn-cta-secondary .cta-arrow {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 19px !important;
+    }
+    .btn-cta-primary .cta-arrow { background: var(--green); color: #fff; }
+    .btn-cta-secondary .cta-arrow { background: rgba(255,255,255,0.22); color: #fff; }
 
     /* Responsive */
     @media (max-width: 480px) {
@@ -478,10 +495,9 @@
     </div>
   </div>
   <button class="btn-start" onclick="startQuiz()">
-    診断をはじめる
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-    </svg>
+    <span class="start-badge">90秒</span>
+    <span class="start-label">診断をはじめる</span>
+    <span class="material-icons start-arrow">arrow_forward</span>
   </button>
 </div>
 
@@ -582,10 +598,8 @@
       </div>
     </div>
     <button class="btn-next" id="q6-next" onclick="nextStep()">
-      次へ
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-      </svg>
+      <span class="next-label">次へ</span>
+      <span class="material-icons next-arrow">arrow_forward</span>
     </button>
   </div>
 </div>
@@ -664,8 +678,16 @@
     </div>
 
     <div class="results-cta">
-      <a href="tida_personal_trainers.html" class="btn-cta-primary">全トレーナーを見る</a>
-      <a href="tida_personal_top.html" class="btn-cta-secondary">トップページへ戻る</a>
+      <a href="tida_personal_trainers.html" class="btn-cta-primary">
+        <span class="cta-badge">XXX名</span>
+        <span class="cta-label">全トレーナーを見る</span>
+        <span class="material-icons cta-arrow">arrow_forward</span>
+      </a>
+      <a href="tida_personal_top.html" class="btn-cta-secondary">
+        <span class="cta-badge">HOME</span>
+        <span class="cta-label">トップページへ戻る</span>
+        <span class="material-icons cta-arrow">arrow_forward</span>
+      </a>
     </div>
   </div>
 </div>

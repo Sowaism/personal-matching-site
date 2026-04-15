@@ -73,47 +73,39 @@
     .btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-weight: 700;
-      border-radius: var(--radius-sm);
+      gap: 10px;
+      font-weight: 800;
+      border-radius: 999px;
       cursor: pointer;
-      border: none;
+      border: 2px solid transparent;
       transition: all .2s ease;
       font-family: inherit;
       letter-spacing: .3px;
+      position: relative;
+      padding: 9px 56px 9px 9px;
     }
-    .btn-primary {
-      background: var(--c-primary);
-      color: #fff;
-      padding: 16px 32px;
-      font-size: 16px;
-    }
-    .btn-primary:hover { background: var(--c-primary-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-    .btn-accent {
-      background: var(--c-accent);
-      color: #fff;
-      padding: 16px 32px;
-      font-size: 16px;
-    }
-    .btn-accent:hover { background: #e5502f; transform: translateY(-1px); box-shadow: var(--shadow-md); }
-    .btn-outline {
-      background: transparent;
-      color: var(--c-primary);
-      border: 2px solid var(--c-primary);
-      padding: 14px 28px;
-      font-size: 15px;
-    }
-    .btn-outline:hover { background: var(--c-bg-green); }
-    .btn-ghost {
-      background: transparent;
-      color: var(--c-muted);
-      padding: 12px 20px;
-      font-size: 14px;
-      border: 1px solid var(--c-border);
-    }
-    .btn-ghost:hover { background: var(--c-bg-light); color: var(--c-text); }
-    .btn-lg { padding: 18px 40px; font-size: 17px; border-radius: 12px; }
+    .btn-primary { background: var(--c-primary); color: #fff; font-size: 15px; box-shadow: 0 4px 16px rgba(11,110,79,.28); }
+    .btn-primary:hover { background: var(--c-primary-dark); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(11,110,79,.38); }
+    .btn-accent { background: var(--c-accent); color: #fff; font-size: 15px; box-shadow: 0 4px 16px rgba(255,101,72,.28); }
+    .btn-accent:hover { background: #e5502f; transform: translateY(-1px); box-shadow: 0 8px 22px rgba(255,101,72,.4); }
+    .btn-outline { background: #fff; color: var(--c-primary); border-color: var(--c-primary); font-size: 14px; }
+    .btn-outline:hover { background: var(--c-bg-green); transform: translateY(-1px); }
+    .btn-ghost { background: #fff; color: var(--c-muted); border-color: var(--c-border); font-size: 13px; }
+    .btn-ghost:hover { background: var(--c-bg-light); color: var(--c-text); border-color: var(--c-muted); }
+    .btn-lg { font-size: 16px; padding: 12px 64px 12px 12px; }
+    /* pill internal parts */
+    .btn .btn-badge { display: inline-flex; align-items: center; justify-content: center; padding: 7px 13px; border-radius: 999px; font-size: 11px; font-weight: 900; line-height: 1.1; flex-shrink: 0; white-space: nowrap; letter-spacing: .04em; }
+    .btn-primary .btn-badge { background: #fff; color: var(--c-primary); }
+    .btn-accent .btn-badge { background: #fff; color: var(--c-accent); }
+    .btn-outline .btn-badge { background: var(--c-primary); color: #fff; }
+    .btn-ghost .btn-badge { background: var(--c-bg-light); color: var(--c-muted); border: 1px solid var(--c-border); }
+    .btn .btn-label { flex: 1; text-align: center; padding-right: 4px; font-weight: inherit; }
+    .btn .btn-arrow { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 18px !important; }
+    .btn-lg .btn-arrow { width: 42px; height: 42px; right: 10px; font-size: 20px !important; }
+    .btn-primary .btn-arrow { background: #fff; color: var(--c-primary); }
+    .btn-accent .btn-arrow { background: #fff; color: var(--c-accent); }
+    .btn-outline .btn-arrow { background: var(--c-primary); color: #fff; }
+    .btn-ghost .btn-arrow { background: var(--c-bg-light); color: var(--c-muted); }
 
     /* ===== HEADER ===== */
     header {
@@ -724,27 +716,14 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    .btn-white {
-      background: #fff;
-      color: var(--c-primary);
-      font-size: 17px;
-      font-weight: 800;
-      padding: 18px 44px;
-      border-radius: 12px;
-      transition: all .2s;
-    }
-    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.25); }
-    .btn-outline-white {
-      background: transparent;
-      color: #fff;
-      border: 2px solid rgba(255,255,255,.5);
-      font-size: 15px;
-      font-weight: 700;
-      padding: 16px 32px;
-      border-radius: 12px;
-      transition: all .2s;
-    }
-    .btn-outline-white:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+    .btn-white { background: #fff; color: var(--c-primary); font-size: 16px; box-shadow: 0 6px 20px rgba(0,0,0,.18); }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,.28); }
+    .btn-white .btn-badge { background: var(--c-accent); color: #fff; }
+    .btn-white .btn-arrow { background: var(--c-accent); color: #fff; }
+    .btn-outline-white { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); font-size: 14px; }
+    .btn-outline-white:hover { background: rgba(255,255,255,.1); border-color: #fff; transform: translateY(-1px); }
+    .btn-outline-white .btn-badge { background: rgba(255,255,255,.2); color: #fff; border: 1px solid rgba(255,255,255,.4); }
+    .btn-outline-white .btn-arrow { background: rgba(255,255,255,.2); color: #fff; }
     .final-cta-note {
       font-size: 13px;
       color: rgba(255,255,255,.5);
@@ -892,9 +871,15 @@
           XXX名の現役プロトレーナーから、あなただけのプランで個別指導を受けよう。
         </p>
         <div class="hero-cta-group">
-          <a href="#" class="btn btn-accent btn-lg">無料ではじめる（登録30秒）</a>
-          <a href="#" class="btn btn-outline-white btn-lg" style="color:#fff;border-color:rgba(255,255,255,.45);">
-            90秒の診断でトレーナーを探す →
+          <a href="#" class="btn btn-accent btn-lg">
+            <span class="btn-badge">登録30秒</span>
+            <span class="btn-label">無料ではじめる</span>
+            <span class="material-icons btn-arrow">arrow_forward</span>
+          </a>
+          <a href="#" class="btn btn-outline-white btn-lg">
+            <span class="btn-badge">90秒</span>
+            <span class="btn-label">診断でトレーナーを探す</span>
+            <span class="material-icons btn-arrow">arrow_forward</span>
           </a>
         </div>
         <div class="hero-stats">
@@ -966,8 +951,10 @@
         <h3><span class="material-icons">track_changes</span> どのトレーナーがいいか迷ったら…</h3>
         <p>目標・生活スタイル・予算を答えるだけ。90秒であなたにぴったりの3名をご提案します。</p>
       </div>
-      <a href="#" class="btn btn-accent" style="white-space:nowrap; padding:16px 36px; font-size:15px; border-radius:10px;">
-        無料診断をはじめる →
+      <a href="#" class="btn btn-accent" style="white-space:nowrap;">
+        <span class="btn-badge">無料</span>
+        <span class="btn-label">診断をはじめる</span>
+        <span class="material-icons btn-arrow">arrow_forward</span>
       </a>
     </div>
   </div>
@@ -1057,8 +1044,10 @@
     </div>
 
     <div class="goals-cta">
-      <a href="#" class="btn btn-primary" style="padding:16px 40px;font-size:15px;border-radius:10px;">
-        すべてのトレーナーを見る →
+      <a href="#" class="btn btn-primary">
+        <span class="btn-badge">XXX名</span>
+        <span class="btn-label">すべてのトレーナーを見る</span>
+        <span class="material-icons btn-arrow">arrow_forward</span>
       </a>
       <p class="goals-cta-note">現在 XXX名 が登録中 · 無料で閲覧できます</p>
     </div>
@@ -1481,8 +1470,16 @@
     <h2>1週間調べても見つからなかった答えが、<br>プロのトレーナーなら30秒で解決することもあります</h2>
     <p>登録無料 · クレジットカード不要 · いつでも解約可能</p>
     <div class="final-cta-buttons">
-      <a href="#" class="btn btn-white btn-lg">無料で登録する（30秒）</a>
-      <a href="#" class="btn btn-outline-white btn-lg">まずは診断でトレーナーを探す</a>
+      <a href="#" class="btn btn-white btn-lg">
+        <span class="btn-badge">30秒</span>
+        <span class="btn-label">無料で登録する</span>
+        <span class="material-icons btn-arrow">arrow_forward</span>
+      </a>
+      <a href="#" class="btn btn-outline-white btn-lg">
+        <span class="btn-badge">無料</span>
+        <span class="btn-label">診断でトレーナーを探す</span>
+        <span class="material-icons btn-arrow">arrow_forward</span>
+      </a>
     </div>
     <p class="final-cta-note">すでに会員の方は <a href="#" style="color:#86efac;text-decoration:underline;">こちらからログイン</a></p>
   </div>

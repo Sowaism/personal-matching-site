@@ -153,12 +153,22 @@
     .cta-card-header h3{font-size:16px;font-weight:900;margin-bottom:6px;}
     .cta-card-header p{font-size:13px;color:rgba(255,255,255,.75);}
     .cta-card-body{padding:20px 24px;}
-    .cta-btn-main{width:100%;background:var(--c-accent);color:#fff;border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:all .15s;}
-    .cta-btn-main:hover{background:#e5502f;transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,101,72,.3);}
-    .cta-btn-sub{width:100%;background:var(--c-bg-green);color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:all .15s;}
-    .cta-btn-sub:hover{background:var(--c-primary);color:#fff;}
-    .cta-btn-ghost{width:100%;background:transparent;color:var(--c-muted);border:1.5px solid var(--c-border);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
-    .cta-btn-ghost:hover{background:var(--c-bg-light);color:var(--c-text);}
+    .cta-btn-main,.cta-btn-sub,.cta-btn-ghost{width:100%;display:flex;align-items:center;gap:10px;padding:9px 56px 9px 9px;border-radius:999px;font-family:inherit;font-weight:800;cursor:pointer;position:relative;transition:transform .15s,box-shadow .15s,background .15s,border-color .15s;margin-bottom:12px;border:2px solid transparent;}
+    .cta-btn-main{background:var(--c-accent);color:#fff;font-size:15px;box-shadow:0 4px 16px rgba(255,101,72,.28);}
+    .cta-btn-main:hover{background:#e5502f;transform:translateY(-1px);box-shadow:0 8px 22px rgba(255,101,72,.38);}
+    .cta-btn-sub{background:#fff;color:var(--c-primary);border-color:var(--c-primary);font-size:14px;}
+    .cta-btn-sub:hover{background:var(--c-bg-green);transform:translateY(-1px);}
+    .cta-btn-ghost{background:#fff;color:var(--c-muted);border-color:var(--c-border);font-size:13px;}
+    .cta-btn-ghost:hover{background:var(--c-bg-light);color:var(--c-text);border-color:var(--c-muted);}
+    .cta-badge{display:inline-flex;align-items:center;justify-content:center;padding:7px 13px;border-radius:999px;font-size:11px;font-weight:900;line-height:1.1;flex-shrink:0;white-space:nowrap;letter-spacing:.02em;}
+    .cta-btn-main .cta-badge{background:#fff;color:var(--c-accent);}
+    .cta-btn-sub .cta-badge{background:var(--c-primary);color:#fff;}
+    .cta-btn-ghost .cta-badge{background:var(--c-bg-light);color:var(--c-muted);border:1px solid var(--c-border);}
+    .cta-label{flex:1;text-align:center;font-weight:inherit;padding-right:4px;}
+    .cta-arrow{position:absolute !important;right:8px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px !important;}
+    .cta-btn-main .cta-arrow{background:#fff;color:var(--c-accent);}
+    .cta-btn-sub .cta-arrow{background:var(--c-primary);color:#fff;}
+    .cta-btn-ghost .cta-arrow{background:var(--c-bg-light);color:var(--c-muted);}
 
     /* PROFILE CARD */
     .profile-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);padding:24px;}
@@ -555,9 +565,21 @@
             <p>気になったら、まずはお気軽にご連絡ください</p>
           </div>
           <div class="cta-card-body">
-            <button class="cta-btn-main"><span class="material-icons">local_fire_department</span> いますぐ申し込む</button>
-            <button class="cta-btn-sub"><span class="material-icons">chat</span> まずは無料で相談する</button>
-            <button class="cta-btn-ghost"><span class="material-icons">favorite_border</span> 気になる（お気に入り登録）</button>
+            <button class="cta-btn-main">
+              <span class="cta-badge">カンタン2分</span>
+              <span class="cta-label">いますぐ申し込む</span>
+              <span class="material-icons cta-arrow">arrow_forward</span>
+            </button>
+            <button class="cta-btn-sub">
+              <span class="cta-badge">無料</span>
+              <span class="cta-label">まずは相談する</span>
+              <span class="material-icons cta-arrow">arrow_forward</span>
+            </button>
+            <button class="cta-btn-ghost">
+              <span class="cta-badge"><span class="material-icons" style="font-size:12px;">favorite_border</span></span>
+              <span class="cta-label">気になるに追加</span>
+              <span class="material-icons cta-arrow">arrow_forward</span>
+            </button>
             <div style="margin-top:14px;padding:12px;background:var(--c-bg-light);border-radius:10px;font-size:12px;color:var(--c-muted);line-height:1.7;">
               <span class="material-icons" style="font-size:11px;">check</span> 登録・相談は完全無料<br>
               <span class="material-icons" style="font-size:11px;">check</span> 返信目安：24時間以内<br>

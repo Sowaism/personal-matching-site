@@ -103,10 +103,18 @@
     .plan-price-note{font-size:12px;color:var(--c-muted);}
     .rating{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;}
     .stars{color:#f59e0b;}
-    .btn-plan-primary{width:100%;background:var(--c-primary);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
-    .btn-plan-primary:hover{background:var(--c-primary-dark);}
-    .btn-plan-secondary{width:100%;background:#fff;color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
-    .btn-plan-secondary:hover{background:var(--c-bg-green);}
+    .btn-plan-primary,.btn-plan-secondary{width:100%;display:flex;align-items:center;gap:10px;padding:9px 52px 9px 9px;border-radius:999px;font-family:inherit;font-weight:800;cursor:pointer;position:relative;transition:all .15s;border:2px solid transparent;margin-bottom:10px;}
+    .btn-plan-primary{background:var(--c-primary);color:#fff;font-size:14px;box-shadow:0 4px 14px rgba(11,110,79,.25);}
+    .btn-plan-primary:hover{background:var(--c-primary-dark);transform:translateY(-1px);}
+    .btn-plan-secondary{background:#fff;color:var(--c-primary);border-color:var(--c-primary);font-size:13px;}
+    .btn-plan-secondary:hover{background:var(--c-bg-green);transform:translateY(-1px);}
+    .btn-plan-primary .plan-badge,.btn-plan-secondary .plan-badge{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:999px;font-size:10.5px;font-weight:900;line-height:1.1;flex-shrink:0;white-space:nowrap;letter-spacing:.04em;}
+    .btn-plan-primary .plan-badge{background:#fff;color:var(--c-primary);}
+    .btn-plan-secondary .plan-badge{background:var(--c-primary);color:#fff;}
+    .btn-plan-primary .plan-label,.btn-plan-secondary .plan-label{flex:1;text-align:center;padding-right:4px;}
+    .btn-plan-primary .plan-arrow,.btn-plan-secondary .plan-arrow{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px !important;}
+    .btn-plan-primary .plan-arrow{background:#fff;color:var(--c-primary);}
+    .btn-plan-secondary .plan-arrow{background:var(--c-primary);color:#fff;}
     .contracts-note{font-size:12px;color:var(--c-muted);}
 
     /* COURSES EXPAND */
@@ -300,8 +308,16 @@
                 <div class="plan-price-note">単発 ¥3,000〜</div>
               </div>
               <div class="rating"><span class="stars"><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span></span> 4.9 <span style="font-size:12px;color:var(--c-muted);">(86件)</span></div>
-              <button class="btn-plan-primary">いますぐ申し込む</button>
-              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <button class="btn-plan-primary">
+                <span class="plan-badge">カンタン2分</span>
+                <span class="plan-label">いますぐ申し込む</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
+              <button class="btn-plan-secondary">
+                <span class="plan-badge">無料</span>
+                <span class="plan-label">まずは相談する</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
               <div class="contracts-note">累計 230名 が契約済み</div>
             </div>
           </div>
@@ -377,8 +393,16 @@
                 <div class="plan-price-note">単発 ¥2,500〜</div>
               </div>
               <div class="rating"><span class="stars"><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span></span> 5.0 <span style="font-size:12px;color:var(--c-muted);">(62件)</span></div>
-              <button class="btn-plan-primary">いますぐ申し込む</button>
-              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <button class="btn-plan-primary">
+                <span class="plan-badge">カンタン2分</span>
+                <span class="plan-label">いますぐ申し込む</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
+              <button class="btn-plan-secondary">
+                <span class="plan-badge">無料</span>
+                <span class="plan-label">まずは相談する</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
               <div class="contracts-note">累計 180名 が契約済み</div>
             </div>
           </div>
@@ -439,8 +463,16 @@
                 <div class="plan-price-note">単発 ¥4,000〜</div>
               </div>
               <div class="rating"><span class="stars"><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span></span> 4.8 <span style="font-size:12px;color:var(--c-muted);">(124件)</span></div>
-              <button class="btn-plan-primary">いますぐ申し込む</button>
-              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <button class="btn-plan-primary">
+                <span class="plan-badge">カンタン2分</span>
+                <span class="plan-label">いますぐ申し込む</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
+              <button class="btn-plan-secondary">
+                <span class="plan-badge">無料</span>
+                <span class="plan-label">まずは相談する</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
               <div class="contracts-note">累計 310名 が契約済み</div>
             </div>
           </div>
@@ -514,8 +546,16 @@
                 <div class="plan-price-note">単発 ¥3,500〜</div>
               </div>
               <div class="rating"><span class="stars"><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span><span class="material-icons" style="font-size:inherit;color:inherit;">star</span></span> 5.0 <span style="font-size:12px;color:var(--c-muted);">(28件)</span></div>
-              <button class="btn-plan-primary">いますぐ申し込む</button>
-              <button class="btn-plan-secondary">まずは無料で相談する</button>
+              <button class="btn-plan-primary">
+                <span class="plan-badge">カンタン2分</span>
+                <span class="plan-label">いますぐ申し込む</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
+              <button class="btn-plan-secondary">
+                <span class="plan-badge">無料</span>
+                <span class="plan-label">まずは相談する</span>
+                <span class="material-icons plan-arrow">arrow_forward</span>
+              </button>
               <div class="contracts-note">累計 95名 が契約済み</div>
             </div>
           </div>
