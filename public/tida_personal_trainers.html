@@ -97,6 +97,11 @@
     .filter-chip:hover { border-color: var(--c-primary); color: var(--c-primary); transform: translateY(-1px); }
     .filter-chip.active { background: linear-gradient(135deg,var(--c-primary),var(--c-primary-dark)); color: #fff; border-color: transparent; box-shadow: 0 4px 14px rgba(11,110,79,.28); }
     .filter-chip.active .material-icons { color: #fff; }
+    .filter-chip .chip-count { margin-left: 4px; background: #f1f5f9; color: var(--c-muted); font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 100px; }
+    .filter-chip.active .chip-count { background: rgba(255,255,255,.25); color: #fff; }
+    .filter-chip.dim { opacity: .45; }
+    .check-item.dim { opacity: .45; }
+    .rating-option.dim { opacity: .45; }
     .price-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     /* PRICE RANGE SLIDER */
@@ -269,31 +274,31 @@
   <div class="main-layout">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="filter-sidebar">
       <div class="sidebar-header">
-        <h3><span class="material-icons">tune</span> 絞り込み <span class="filter-count">5</span></h3>
-        <button class="clear-btn"><span class="material-icons">refresh</span>クリア</button>
+        <h3><span class="material-icons">tune</span> 絞り込み <span class="filter-count" id="filter-count">0</span></h3>
+        <button class="clear-btn" id="clear-all-btn"><span class="material-icons">refresh</span>クリア</button>
       </div>
 
       <div class="filter-group">
         <span class="filter-label"><span class="material-icons">fitness_center</span> 専門ジャンル</span>
         <div class="check-list">
-          <div class="check-item selected" onclick="this.classList.toggle('selected')"><input type="checkbox" checked /><span class="check-box"></span><span class="check-label">ダイエット・体脂肪管理</span><span class="hit-count">45</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">筋力アップ・ボディメイク</span><span class="hit-count">38</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">産後ボディメイク</span><span class="hit-count">22</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">姿勢矯正・腰痛改善</span><span class="hit-count">18</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">競技向け・スポーツ</span><span class="hit-count">14</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">食事管理・栄養指導</span><span class="hit-count">31</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">健康維持・シニア向け</span><span class="hit-count">9</span></div>
+          <div class="check-item selected" data-group="genre" data-value="diet"><span class="check-box"></span><span class="check-label">ダイエット・体脂肪管理</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="genre" data-value="muscle"><span class="check-box"></span><span class="check-label">筋力アップ・ボディメイク</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="genre" data-value="postnatal"><span class="check-box"></span><span class="check-label">産後ボディメイク</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="genre" data-value="posture"><span class="check-box"></span><span class="check-label">姿勢矯正・腰痛改善</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="genre" data-value="sport"><span class="check-box"></span><span class="check-label">競技向け・スポーツ</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="genre" data-value="nutrition"><span class="check-box"></span><span class="check-label">食事管理・栄養指導</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="genre" data-value="senior"><span class="check-box"></span><span class="check-label">健康維持・シニア向け</span><span class="hit-count">—</span></div>
         </div>
       </div>
 
       <div class="filter-group">
         <span class="filter-label"><span class="material-icons">laptop</span> 受講スタイル</span>
         <div class="filter-chips">
-          <button class="filter-chip active"><span class="material-icons">videocam</span>オンライン</button>
-          <button class="filter-chip"><span class="material-icons">place</span>対面</button>
-          <button class="filter-chip"><span class="material-icons">swap_horiz</span>どちらも</button>
+          <button class="filter-chip active" data-group="style" data-value="online"><span class="material-icons">videocam</span>オンライン<span class="chip-count">—</span></button>
+          <button class="filter-chip" data-group="style" data-value="offline"><span class="material-icons">place</span>対面<span class="chip-count">—</span></button>
+          <button class="filter-chip" data-group="style" data-value="any"><span class="material-icons">swap_horiz</span>どちらも<span class="chip-count">—</span></button>
         </div>
       </div>
 
@@ -324,20 +329,20 @@
       <div class="filter-group">
         <span class="filter-label"><span class="material-icons">star</span> 評価</span>
         <div class="rating-options">
-          <div class="rating-option" onclick="document.querySelectorAll('.rating-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">
+          <div class="rating-option" data-group="rating" data-value="5">
             <span class="rating-stars-row"><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span></span>
             <span class="rating-option-label">5.0 のみ</span>
-            <span class="hit-count">12</span>
+            <span class="hit-count">—</span>
           </div>
-          <div class="rating-option selected" onclick="document.querySelectorAll('.rating-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">
+          <div class="rating-option selected" data-group="rating" data-value="4">
             <span class="rating-stars-row"><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons dim">star</span></span>
             <span class="rating-option-label">4.0 以上</span>
-            <span class="hit-count">78</span>
+            <span class="hit-count">—</span>
           </div>
-          <div class="rating-option" onclick="document.querySelectorAll('.rating-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">
+          <div class="rating-option" data-group="rating" data-value="3">
             <span class="rating-stars-row"><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons dim">star</span><span class="material-icons dim">star</span></span>
             <span class="rating-option-label">3.0 以上</span>
-            <span class="hit-count">115</span>
+            <span class="hit-count">—</span>
           </div>
         </div>
       </div>
@@ -345,47 +350,47 @@
       <div class="filter-group">
         <span class="filter-label"><span class="material-icons">schedule</span> 対応時間帯</span>
         <div class="check-list">
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">平日 朝（〜9時）</span><span class="hit-count">24</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">平日 日中</span><span class="hit-count">41</span></div>
-          <div class="check-item selected" onclick="this.classList.toggle('selected')"><input type="checkbox" checked /><span class="check-box"></span><span class="check-label">平日 夜（18時〜）</span><span class="hit-count">89</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">土曜日</span><span class="hit-count">67</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">日曜・祝日</span><span class="hit-count">52</span></div>
+          <div class="check-item" data-group="timeslot" data-value="morning"><span class="check-box"></span><span class="check-label">平日 朝（〜9時）</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="timeslot" data-value="daytime"><span class="check-box"></span><span class="check-label">平日 日中</span><span class="hit-count">—</span></div>
+          <div class="check-item selected" data-group="timeslot" data-value="weeknight"><span class="check-box"></span><span class="check-label">平日 夜（18時〜）</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="timeslot" data-value="saturday"><span class="check-box"></span><span class="check-label">土曜日</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="timeslot" data-value="sunday"><span class="check-box"></span><span class="check-label">日曜・祝日</span><span class="hit-count">—</span></div>
         </div>
       </div>
 
       <div class="filter-group">
         <span class="filter-label"><span class="material-icons">verified</span> 信頼・認証</span>
         <div class="check-list">
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">本人確認済</span><span class="hit-count">120</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">NSCA/NESTA 認定</span><span class="hit-count">63</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">NDA 締結済</span><span class="hit-count">98</span></div>
-          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">30日以内ログイン</span><span class="hit-count">105</span></div>
+          <div class="check-item" data-group="trust" data-value="verified"><span class="check-box"></span><span class="check-label">本人確認済</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="trust" data-value="certified"><span class="check-box"></span><span class="check-label">NSCA/NESTA 認定</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="trust" data-value="nda"><span class="check-box"></span><span class="check-label">NDA 締結済</span><span class="hit-count">—</span></div>
+          <div class="check-item" data-group="trust" data-value="active"><span class="check-box"></span><span class="check-label">30日以内ログイン</span><span class="hit-count">—</span></div>
         </div>
       </div>
 
       <div class="filter-group">
         <span class="filter-label"><span class="material-icons">bolt</span> 返信スピード</span>
         <div class="filter-chips">
-          <button class="filter-chip active"><span class="material-icons">bolt</span>24時間以内</button>
-          <button class="filter-chip">2日以内</button>
-          <button class="filter-chip">1週間以内</button>
+          <button class="filter-chip active" data-group="responseSpeed" data-value="24h"><span class="material-icons">bolt</span>24時間以内<span class="chip-count">—</span></button>
+          <button class="filter-chip" data-group="responseSpeed" data-value="2d">2日以内<span class="chip-count">—</span></button>
+          <button class="filter-chip" data-group="responseSpeed" data-value="1w">1週間以内<span class="chip-count">—</span></button>
         </div>
       </div>
 
       <div class="filter-group">
         <span class="filter-label"><span class="material-icons">person</span> トレーナー性別</span>
         <div class="filter-chips">
-          <button class="filter-chip active">指定なし</button>
-          <button class="filter-chip"><span class="material-icons">male</span>男性</button>
-          <button class="filter-chip"><span class="material-icons">female</span>女性</button>
+          <button class="filter-chip active" data-group="gender" data-value="any">指定なし<span class="chip-count">—</span></button>
+          <button class="filter-chip" data-group="gender" data-value="male"><span class="material-icons">male</span>男性<span class="chip-count">—</span></button>
+          <button class="filter-chip" data-group="gender" data-value="female"><span class="material-icons">female</span>女性<span class="chip-count">—</span></button>
         </div>
       </div>
 
       <div class="sidebar-apply">
-        <button class="sidebar-search-btn">
-          <span class="apply-badge">127名</span>
-          <span class="apply-label">この条件で検索</span>
-          <span class="material-icons apply-arrow">arrow_forward</span>
+        <button class="sidebar-search-btn" id="apply-btn">
+          <span class="apply-badge" id="apply-count">—</span>
+          <span class="apply-label">絞り込み結果を見る</span>
+          <span class="material-icons apply-arrow">arrow_downward</span>
         </button>
         <button class="save-search"><span class="material-icons">bookmark_border</span>この条件を保存する</button>
       </div>
@@ -396,7 +401,7 @@
       <div class="content-header">
         <div class="results-count">
           <span class="material-icons">groups</span>
-          <strong>127名</strong>のトレーナーがヒット
+          <strong id="results-count">—</strong>のトレーナーがヒット
         </div>
         <div class="sort-bar">
           <span class="sort-label">並び順</span>
@@ -649,11 +654,193 @@
 </footer>
 
 <script>
-  document.querySelectorAll('.sort-btn').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.sort-btn').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-  }));
-  document.querySelectorAll('.filter-chip').forEach(b => b.addEventListener('click', () => b.classList.toggle('active')));
+(function() {
+  // ===== Deterministic trainer dataset (127 trainers) =====
+  function prng(seed) {
+    return function() {
+      seed = (seed * 9301 + 49297) % 233280;
+      return seed / 233280;
+    };
+  }
+  const rand = prng(42);
+  const GENRES = ['diet','muscle','postnatal','posture','sport','nutrition','senior'];
+  const TIMESLOTS = ['morning','daytime','weeknight','saturday','sunday'];
+  const RESPONSE = ['24h','24h','24h','24h','2d','2d','1w'];
+
+  const TRAINERS = [];
+  for (let i = 0; i < 127; i++) {
+    const t = { genres: [], timeslots: [], trust: [] };
+    const nG = 1 + Math.floor(rand() * 3);
+    for (let j = 0; j < nG; j++) {
+      const g = GENRES[Math.floor(rand() * GENRES.length)];
+      if (!t.genres.includes(g)) t.genres.push(g);
+    }
+    const sr = rand();
+    t.style = sr < 0.55 ? 'online' : (sr < 0.85 ? 'both' : 'offline');
+    t.price = 3000 + Math.floor(rand() * 47000);
+    t.rating = 3 + Math.pow(rand(), 0.35) * 2;
+    const nS = 1 + Math.floor(rand() * 3);
+    for (let j = 0; j < nS; j++) {
+      const ts = TIMESLOTS[Math.floor(rand() * TIMESLOTS.length)];
+      if (!t.timeslots.includes(ts)) t.timeslots.push(ts);
+    }
+    if (rand() < 0.92) t.trust.push('verified');
+    if (rand() < 0.50) t.trust.push('certified');
+    if (rand() < 0.75) t.trust.push('nda');
+    if (rand() < 0.80) t.trust.push('active');
+    t.responseSpeed = RESPONSE[Math.floor(rand() * RESPONSE.length)];
+    t.gender = rand() < 0.5 ? 'male' : 'female';
+    TRAINERS.push(t);
+  }
+
+  // ===== Match logic per group =====
+  function matchesGroup(t, group, v) {
+    switch (group) {
+      case 'genre':
+        if (!v || v.length === 0) return true;
+        return t.genres.some(g => v.includes(g));
+      case 'style':
+        if (!v || v === 'any') return true;
+        if (v === 'online') return t.style === 'online' || t.style === 'both';
+        if (v === 'offline') return t.style === 'offline' || t.style === 'both';
+        return true;
+      case 'rating':
+        if (!v) return true;
+        return t.rating >= parseFloat(v);
+      case 'timeslot':
+        if (!v || v.length === 0) return true;
+        return t.timeslots.some(x => v.includes(x));
+      case 'trust':
+        if (!v || v.length === 0) return true;
+        return v.every(x => t.trust.includes(x));
+      case 'responseSpeed':
+        if (!v || v === '1w') return true;
+        if (v === '2d') return t.responseSpeed === '24h' || t.responseSpeed === '2d';
+        if (v === '24h') return t.responseSpeed === '24h';
+        return true;
+      case 'gender':
+        if (!v || v === 'any') return true;
+        return t.gender === v;
+    }
+    return true;
+  }
+
+  function matchesAll(t, state) {
+    return Object.keys(state).every(g => matchesGroup(t, g, state[g]));
+  }
+
+  function count(state) {
+    let n = 0;
+    for (let i = 0; i < TRAINERS.length; i++) if (matchesAll(TRAINERS[i], state)) n++;
+    return n;
+  }
+
+  // ===== Read current state =====
+  function readState() {
+    return {
+      genre: Array.from(document.querySelectorAll('.check-item.selected[data-group="genre"]')).map(e => e.dataset.value),
+      style: document.querySelector('.filter-chip.active[data-group="style"]')?.dataset.value || 'any',
+      rating: document.querySelector('.rating-option.selected[data-group="rating"]')?.dataset.value || null,
+      timeslot: Array.from(document.querySelectorAll('.check-item.selected[data-group="timeslot"]')).map(e => e.dataset.value),
+      trust: Array.from(document.querySelectorAll('.check-item.selected[data-group="trust"]')).map(e => e.dataset.value),
+      responseSpeed: document.querySelector('.filter-chip.active[data-group="responseSpeed"]')?.dataset.value || '1w',
+      gender: document.querySelector('.filter-chip.active[data-group="gender"]')?.dataset.value || 'any',
+    };
+  }
+
+  // ===== Update UI =====
+  function update() {
+    const state = readState();
+    const total = count(state);
+
+    document.getElementById('apply-count').textContent = total + '名';
+    document.getElementById('results-count').textContent = total + '名';
+
+    const activeCount =
+      state.genre.length +
+      (state.style !== 'any' ? 1 : 0) +
+      (state.rating ? 1 : 0) +
+      state.timeslot.length +
+      state.trust.length +
+      (state.responseSpeed !== '1w' ? 1 : 0) +
+      (state.gender !== 'any' ? 1 : 0);
+    document.getElementById('filter-count').textContent = activeCount;
+
+    // Compute count for each option: if this option were the sole value in its group
+    document.querySelectorAll('[data-group][data-value]').forEach(el => {
+      const g = el.dataset.group;
+      const v = el.dataset.value;
+      const testState = { ...state };
+      if (g === 'genre' || g === 'timeslot' || g === 'trust') {
+        testState[g] = [v];
+      } else {
+        testState[g] = v;
+      }
+      const n = count(testState);
+      const slot = el.querySelector('.hit-count') || el.querySelector('.chip-count');
+      if (slot) slot.textContent = n;
+      const isActive = el.classList.contains('selected') || el.classList.contains('active');
+      el.classList.toggle('dim', n === 0 && !isActive);
+    });
+
+    // Sync active-filters bar visibility
+    const afBar = document.querySelector('.active-filters');
+    if (afBar) afBar.style.display = activeCount > 0 ? '' : 'none';
+  }
+
+  // ===== Bind events =====
+  function bind() {
+    document.querySelectorAll('.check-item[data-group]').forEach(el => {
+      el.addEventListener('click', () => { el.classList.toggle('selected'); update(); });
+    });
+    document.querySelectorAll('.filter-chip[data-group]').forEach(el => {
+      el.addEventListener('click', () => {
+        const g = el.dataset.group;
+        document.querySelectorAll(`.filter-chip[data-group="${g}"]`).forEach(s => s.classList.remove('active'));
+        el.classList.add('active');
+        update();
+      });
+    });
+    document.querySelectorAll('.rating-option[data-group]').forEach(el => {
+      el.addEventListener('click', () => {
+        const already = el.classList.contains('selected');
+        document.querySelectorAll('.rating-option[data-group="rating"]').forEach(s => s.classList.remove('selected'));
+        if (!already) el.classList.add('selected');
+        update();
+      });
+    });
+    document.getElementById('clear-all-btn').addEventListener('click', () => {
+      document.querySelectorAll('.check-item.selected[data-group]').forEach(e => e.classList.remove('selected'));
+      document.querySelectorAll('.rating-option.selected[data-group]').forEach(e => e.classList.remove('selected'));
+      const defaults = { style: 'any', responseSpeed: '1w', gender: 'any' };
+      Object.keys(defaults).forEach(g => {
+        document.querySelectorAll(`.filter-chip[data-group="${g}"]`).forEach(s => s.classList.remove('active'));
+        const def = document.querySelector(`.filter-chip[data-group="${g}"][data-value="${defaults[g]}"]`);
+        if (def) def.classList.add('active');
+      });
+      update();
+    });
+    document.querySelector('.af-clear-all')?.addEventListener('click', () => {
+      document.getElementById('clear-all-btn').click();
+    });
+    document.querySelectorAll('.af-chip button').forEach(b => {
+      b.addEventListener('click', () => b.closest('.af-chip').remove());
+    });
+    document.querySelectorAll('.sort-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.sort-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+      });
+    });
+    // Apply button: scroll to results
+    document.getElementById('apply-btn').addEventListener('click', () => {
+      document.querySelector('.trainers-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  bind();
+  update();
+})();
 </script>
 </body>
 </html>
