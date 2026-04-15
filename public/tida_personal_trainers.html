@@ -60,37 +60,104 @@
     /* MAIN LAYOUT */
     .main-layout { display: grid; grid-template-columns: 280px 1fr; gap: 28px; padding: 0 0 80px; align-items: start; }
 
-    /* SIDEBAR */
-    .sidebar { background: #fff; border-radius: var(--radius-md); border: 1px solid var(--c-border); box-shadow: var(--shadow-sm); position: sticky; top: 80px; }
-    .sidebar-header { padding: 20px 20px 16px; border-bottom: 1px solid var(--c-border); display: flex; justify-content: space-between; align-items: center; }
-    .sidebar-header h3 { font-size: 15px; font-weight: 800; color: var(--c-navy); }
-    .clear-btn { font-size: 12px; font-weight: 700; color: var(--c-accent); cursor: pointer; background: none; border: none; font-family: inherit; }
-    .filter-group { padding: 18px 20px; border-bottom: 1px solid var(--c-border); }
-    .filter-group:last-child { border-bottom: none; }
-    .filter-label { font-size: 13px; font-weight: 800; color: var(--c-navy); margin-bottom: 12px; display: block; }
-    .check-list { display: flex; flex-direction: column; gap: 8px; }
-    .check-item { display: flex; align-items: center; gap: 9px; cursor: pointer; }
-    .check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--c-primary); border-radius: 4px; cursor: pointer; flex-shrink: 0; }
-    .check-item label { font-size: 13px; color: var(--c-text); cursor: pointer; line-height: 1.4; }
+    /* SIDEBAR — RICH FILTER */
+    .sidebar { background: linear-gradient(180deg,#ffffff,#fafbfe); border-radius: 20px; border: 1px solid #e8ecf2; box-shadow: 0 12px 40px rgba(15,23,42,.06); position: sticky; top: 80px; overflow: hidden; }
+    .sidebar-header { padding: 20px 22px 18px; background: linear-gradient(135deg,#0b6e4f 0%,#053824 100%); color: #fff; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
+    .sidebar-header::after { content: ''; position: absolute; right: -30px; top: -30px; width: 120px; height: 120px; background: radial-gradient(circle,rgba(255,101,72,.35),transparent 60%); }
+    .sidebar-header h3 { font-size: 15px; font-weight: 900; display: inline-flex; align-items: center; gap: 10px; letter-spacing: .3px; position: relative; z-index: 1; }
+    .sidebar-header h3 .material-icons { font-size: 20px; background: rgba(255,255,255,.18); padding: 6px; border-radius: 10px; }
+    .sidebar-header h3 .filter-count { background: #ff6548; color: #fff; font-size: 11px; font-weight: 900; padding: 3px 9px; border-radius: 100px; margin-left: 2px; box-shadow: 0 2px 8px rgba(255,101,72,.4); }
+    .clear-btn { font-size: 12px; font-weight: 800; color: #fff; background: rgba(255,255,255,.15); padding: 7px 14px; border-radius: 100px; border: 1px solid rgba(255,255,255,.25); cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; position: relative; z-index: 1; transition: all .15s; }
+    .clear-btn:hover { background: rgba(255,255,255,.28); }
+    .clear-btn .material-icons { font-size: 13px; }
+
+    .filter-group { padding: 20px 22px; border-bottom: 1px solid #f0f2f7; }
+    .filter-group:last-of-type { border-bottom: none; }
+    .filter-label { font-size: 11px; font-weight: 900; color: var(--c-navy); margin-bottom: 14px; display: inline-flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: .12em; }
+    .filter-label .material-icons { font-size: 16px; color: var(--c-primary); background: var(--c-bg-green); padding: 7px; border-radius: 10px; border: 1px solid #d1f5e3; }
+
+    .check-list { display: flex; flex-direction: column; gap: 2px; }
+    .check-item { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 9px 10px; border-radius: 10px; transition: background .15s; }
+    .check-item:hover { background: var(--c-bg-green); }
+    .check-item.selected { background: var(--c-bg-green); }
+    .check-item input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
+    .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #cbd5e1; background: #fff; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; transition: all .15s; position: relative; }
+    .check-item.selected .check-box { background: var(--c-primary); border-color: var(--c-primary); box-shadow: 0 2px 8px rgba(11,110,79,.25); }
+    .check-box::after { content: ''; width: 5px; height: 10px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg) scale(0); transition: transform .15s; margin-bottom: 2px; }
+    .check-item.selected .check-box::after { transform: rotate(45deg) scale(1); }
+    .check-item .check-label { font-size: 13px; color: var(--c-text); cursor: pointer; line-height: 1.3; font-weight: 600; flex: 1; min-width: 0; }
+    .check-item.selected .check-label { color: var(--c-primary); font-weight: 800; }
+    .check-item .hit-count { font-size: 11px; color: var(--c-muted); font-weight: 700; background: #f1f5f9; padding: 3px 9px; border-radius: 100px; flex-shrink: 0; transition: all .15s; }
+    .check-item:hover .hit-count { background: #fff; }
+    .check-item.selected .hit-count { background: #fff; color: var(--c-primary); }
+
     .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .filter-chip { padding: 6px 14px; border-radius: 100px; border: 1.5px solid var(--c-border); font-size: 12px; font-weight: 600; color: var(--c-muted); cursor: pointer; transition: all .15s; background: #fff; }
-    .filter-chip:hover, .filter-chip.active { border-color: var(--c-primary); background: var(--c-bg-green); color: var(--c-primary); }
+    .filter-chip { padding: 8px 16px; border-radius: 100px; border: 1.5px solid var(--c-border); font-size: 12px; font-weight: 700; color: var(--c-muted); cursor: pointer; transition: all .15s; background: #fff; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; }
+    .filter-chip .material-icons { font-size: 13px; }
+    .filter-chip:hover { border-color: var(--c-primary); color: var(--c-primary); transform: translateY(-1px); }
+    .filter-chip.active { background: linear-gradient(135deg,var(--c-primary),var(--c-primary-dark)); color: #fff; border-color: transparent; box-shadow: 0 4px 14px rgba(11,110,79,.28); }
+    .filter-chip.active .material-icons { color: #fff; }
     .price-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .sidebar-search-btn { margin: 16px 20px 20px; width: calc(100% - 40px); background: var(--c-primary); color: #fff; border: none; border-radius: 10px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
+
+    /* PRICE RANGE SLIDER */
+    .price-range { padding-top: 4px; }
+    .price-range-display { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+    .price-range-label { font-size: 11px; color: var(--c-muted); font-weight: 700; }
+    .price-range-value { font-size: 15px; font-weight: 900; color: var(--c-primary); letter-spacing: -.3px; }
+    .price-range-value small { font-size: 11px; color: var(--c-muted); font-weight: 600; }
+    .price-slider { position: relative; height: 6px; background: #e2e8f0; border-radius: 3px; margin: 6px 12px 10px; }
+    .price-slider-fill { position: absolute; height: 100%; background: linear-gradient(90deg,var(--c-primary),#10b981); border-radius: 3px; left: 8%; right: 32%; }
+    .price-slider-thumb { position: absolute; width: 22px; height: 22px; background: #fff; border: 3px solid var(--c-primary); border-radius: 50%; top: 50%; transform: translate(-50%,-50%); cursor: grab; box-shadow: 0 3px 10px rgba(11,110,79,.3); transition: transform .15s; }
+    .price-slider-thumb:hover { transform: translate(-50%,-50%) scale(1.1); }
+    .price-slider-thumb.t1 { left: 8%; }
+    .price-slider-thumb.t2 { left: 68%; }
+    .price-tick-labels { display: flex; justify-content: space-between; padding: 0 6px; font-size: 10px; color: var(--c-muted); font-weight: 700; }
+
+    /* RATING FILTER */
+    .rating-options { display: flex; flex-direction: column; gap: 2px; }
+    .rating-option { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; cursor: pointer; transition: background .15s; }
+    .rating-option:hover { background: var(--c-bg-green); }
+    .rating-option.selected { background: var(--c-bg-green); }
+    .rating-stars-row { color: #f59e0b; font-size: 14px; display: flex; gap: 2px; }
+    .rating-stars-row .material-icons { font-size: 16px; }
+    .rating-stars-row .dim { color: #e2e8f0; }
+    .rating-option-label { font-size: 12px; color: var(--c-text); font-weight: 700; }
+    .rating-option .hit-count { font-size: 11px; color: var(--c-muted); font-weight: 700; background: #f1f5f9; padding: 3px 9px; border-radius: 100px; margin-left: auto; }
+    .rating-option.selected .hit-count { background: #fff; color: var(--c-primary); }
+
+    /* APPLY CTA */
+    .sidebar-apply { padding: 18px 22px 22px; background: linear-gradient(180deg,rgba(255,255,255,0),#ffffff 40%); border-top: 1px solid #f0f2f7; position: sticky; bottom: 0; backdrop-filter: blur(8px); }
+    .sidebar-search-btn { width: 100%; display: flex; align-items: center; gap: 10px; padding: 11px 54px 11px 11px; border-radius: 999px; background: linear-gradient(135deg,var(--c-primary),var(--c-primary-dark)); color: #fff; border: none; font-family: inherit; font-weight: 800; font-size: 14px; cursor: pointer; position: relative; box-shadow: 0 6px 20px rgba(11,110,79,.35); transition: all .15s; }
+    .sidebar-search-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(11,110,79,.45); }
+    .sidebar-search-btn .apply-badge { background: #fff; color: var(--c-primary); padding: 6px 11px; border-radius: 100px; font-size: 11px; font-weight: 900; flex-shrink: 0; letter-spacing: .03em; }
+    .sidebar-search-btn .apply-label { flex: 1; text-align: center; padding-right: 4px; }
+    .sidebar-search-btn .apply-arrow { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; background: #fff; color: var(--c-primary); display: flex; align-items: center; justify-content: center; font-size: 18px !important; }
+    .save-search { margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; background: none; border: 1.5px dashed #cbd5e1; padding: 9px; border-radius: 10px; font-size: 12px; font-weight: 700; color: var(--c-muted); cursor: pointer; font-family: inherit; transition: all .15s; }
+    .save-search:hover { border-color: var(--c-primary); color: var(--c-primary); background: var(--c-bg-green); }
+    .save-search .material-icons { font-size: 14px; }
 
     /* CONTENT */
-    .content-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
-    .results-count { font-size: 15px; font-weight: 700; color: var(--c-navy); }
-    .results-count span { color: var(--c-primary); }
-    .sort-bar { display: flex; gap: 8px; align-items: center; }
-    .sort-label { font-size: 13px; color: var(--c-muted); font-weight: 600; }
-    .sort-btn { padding: 7px 16px; border-radius: 100px; border: 1.5px solid var(--c-border); background: #fff; font-size: 12px; font-weight: 700; color: var(--c-muted); cursor: pointer; transition: all .15s; }
-    .sort-btn:hover, .sort-btn.active { background: var(--c-primary); color: #fff; border-color: var(--c-primary); }
+    .content-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 14px; padding: 16px 20px; background: #fff; border-radius: 14px; border: 1px solid var(--c-border); box-shadow: 0 2px 10px rgba(15,23,42,.04); }
+    .results-count { font-size: 14px; font-weight: 700; color: var(--c-muted); display: inline-flex; align-items: center; gap: 8px; }
+    .results-count strong { font-size: 20px; font-weight: 900; color: var(--c-primary); letter-spacing: -.5px; }
+    .results-count .material-icons { color: var(--c-primary); background: var(--c-bg-green); padding: 6px; border-radius: 10px; font-size: 16px; }
+    .sort-bar { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .sort-label { font-size: 12px; color: var(--c-muted); font-weight: 700; margin-right: 2px; }
+    .sort-btn { padding: 7px 14px; border-radius: 100px; border: 1.5px solid var(--c-border); background: #fff; font-size: 12px; font-weight: 700; color: var(--c-muted); cursor: pointer; transition: all .15s; font-family: inherit; }
+    .sort-btn:hover { border-color: var(--c-primary); color: var(--c-primary); }
+    .sort-btn.active { background: linear-gradient(135deg,var(--c-primary),var(--c-primary-dark)); color: #fff; border-color: transparent; box-shadow: 0 3px 10px rgba(11,110,79,.25); }
 
-    /* ACTIVE FILTERS */
-    .active-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-    .af-chip { display: flex; align-items: center; gap: 6px; padding: 5px 12px; background: var(--c-bg-green); border: 1px solid #a7f3d0; border-radius: 100px; font-size: 12px; font-weight: 700; color: var(--c-primary); }
-    .af-chip button { background: none; border: none; cursor: pointer; color: var(--c-primary); font-size: 14px; line-height: 1; padding: 0; }
+    /* ACTIVE FILTERS BAR */
+    .active-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; padding: 14px 18px; background: linear-gradient(90deg,rgba(11,110,79,.05),rgba(11,110,79,.02)); border-radius: 14px; border: 1px dashed rgba(11,110,79,.25); }
+    .af-label { font-size: 11px; font-weight: 900; color: var(--c-primary); letter-spacing: .08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; margin-right: 4px; }
+    .af-label .material-icons { font-size: 14px; }
+    .af-chip { display: inline-flex; align-items: center; gap: 4px; padding: 5px 5px 5px 12px; background: #fff; border: 1px solid rgba(11,110,79,.2); border-radius: 100px; font-size: 12px; font-weight: 800; color: var(--c-primary); box-shadow: 0 2px 6px rgba(11,110,79,.08); transition: all .15s; }
+    .af-chip:hover { transform: translateY(-1px); border-color: var(--c-primary); }
+    .af-chip button { background: var(--c-bg-green); border: none; cursor: pointer; color: var(--c-primary); font-size: 13px; line-height: 1; padding: 0; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; transition: all .15s; }
+    .af-chip button:hover { background: var(--c-primary); color: #fff; }
+    .af-chip button .material-icons { font-size: 13px !important; }
+    .af-clear-all { background: none; border: none; color: var(--c-muted); padding: 5px 10px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit; text-decoration: underline; margin-left: auto; }
+    .af-clear-all:hover { color: var(--c-accent); }
 
     /* TRAINER CARDS */
     .trainers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
@@ -142,6 +209,20 @@
       .trainers-grid{grid-template-columns:1fr;}
       nav{display:none;}
     }
+    @media(max-width:600px){
+      .container{padding:0 16px;}
+      .page-hero{padding:32px 0 28px;}
+      .hero-search{flex-direction:column;gap:10px;}
+      .btn-search{width:100%;}
+      .sidebar{border-radius:16px;}
+      .sidebar-header{padding:18px 18px 16px;}
+      .filter-group{padding:18px 18px;}
+      .content-header{padding:14px 16px;border-radius:12px;}
+      .results-count strong{font-size:18px;}
+      .sort-btn{padding:6px 12px;font-size:11px;}
+      .active-filters{padding:12px 14px;gap:6px;}
+      .af-label{font-size:10px;}
+    }
   </style>
     <style>.material-icons{font-size:1em;vertical-align:middle;line-height:1;display:inline-flex;align-items:center;}</style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -190,105 +271,150 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h3>絞り込み</h3>
-        <button class="clear-btn">クリア</button>
+        <h3><span class="material-icons">tune</span> 絞り込み <span class="filter-count">5</span></h3>
+        <button class="clear-btn"><span class="material-icons">refresh</span>クリア</button>
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">専門ジャンル</span>
+        <span class="filter-label"><span class="material-icons">fitness_center</span> 専門ジャンル</span>
         <div class="check-list">
-          <label class="check-item"><input type="checkbox" checked /><label>ダイエット・体脂肪管理</label></label>
-          <label class="check-item"><input type="checkbox" /><label>筋力アップ・ボディメイク</label></label>
-          <label class="check-item"><input type="checkbox" /><label>産後ボディメイク</label></label>
-          <label class="check-item"><input type="checkbox" /><label>姿勢矯正・腰痛改善</label></label>
-          <label class="check-item"><input type="checkbox" /><label>競技向け・スポーツ</label></label>
-          <label class="check-item"><input type="checkbox" /><label>食事管理・栄養指導</label></label>
-          <label class="check-item"><input type="checkbox" /><label>健康維持・シニア向け</label></label>
+          <div class="check-item selected" onclick="this.classList.toggle('selected')"><input type="checkbox" checked /><span class="check-box"></span><span class="check-label">ダイエット・体脂肪管理</span><span class="hit-count">45</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">筋力アップ・ボディメイク</span><span class="hit-count">38</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">産後ボディメイク</span><span class="hit-count">22</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">姿勢矯正・腰痛改善</span><span class="hit-count">18</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">競技向け・スポーツ</span><span class="hit-count">14</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">食事管理・栄養指導</span><span class="hit-count">31</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">健康維持・シニア向け</span><span class="hit-count">9</span></div>
         </div>
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">トレーニング形式</span>
+        <span class="filter-label"><span class="material-icons">laptop</span> 受講スタイル</span>
         <div class="filter-chips">
-          <button class="filter-chip active">オンライン</button>
-          <button class="filter-chip">対面</button>
-          <button class="filter-chip">どちらも可</button>
+          <button class="filter-chip active"><span class="material-icons">videocam</span>オンライン</button>
+          <button class="filter-chip"><span class="material-icons">place</span>対面</button>
+          <button class="filter-chip"><span class="material-icons">swap_horiz</span>どちらも</button>
         </div>
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">月額料金</span>
-        <div class="price-chips">
-          <button class="filter-chip">〜5,000円</button>
-          <button class="filter-chip active">〜10,000円</button>
-          <button class="filter-chip">〜20,000円</button>
-          <button class="filter-chip">〜30,000円</button>
-          <button class="filter-chip">30,000円〜</button>
-          <button class="filter-chip">単発のみ</button>
+        <span class="filter-label"><span class="material-icons">payments</span> 月額料金</span>
+        <div class="price-range">
+          <div class="price-range-display">
+            <div>
+              <div class="price-range-label">最小</div>
+              <div class="price-range-value">¥3,000<small>/月</small></div>
+            </div>
+            <div style="text-align:right;">
+              <div class="price-range-label">最大</div>
+              <div class="price-range-value">¥20,000<small>/月</small></div>
+            </div>
+          </div>
+          <div class="price-slider">
+            <div class="price-slider-fill"></div>
+            <div class="price-slider-thumb t1"></div>
+            <div class="price-slider-thumb t2"></div>
+          </div>
+          <div class="price-tick-labels">
+            <span>¥0</span><span>¥15k</span><span>¥30k</span><span>¥50k+</span>
+          </div>
         </div>
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">対応時間帯</span>
+        <span class="filter-label"><span class="material-icons">star</span> 評価</span>
+        <div class="rating-options">
+          <div class="rating-option" onclick="document.querySelectorAll('.rating-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">
+            <span class="rating-stars-row"><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span></span>
+            <span class="rating-option-label">5.0 のみ</span>
+            <span class="hit-count">12</span>
+          </div>
+          <div class="rating-option selected" onclick="document.querySelectorAll('.rating-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">
+            <span class="rating-stars-row"><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons dim">star</span></span>
+            <span class="rating-option-label">4.0 以上</span>
+            <span class="hit-count">78</span>
+          </div>
+          <div class="rating-option" onclick="document.querySelectorAll('.rating-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">
+            <span class="rating-stars-row"><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons dim">star</span><span class="material-icons dim">star</span></span>
+            <span class="rating-option-label">3.0 以上</span>
+            <span class="hit-count">115</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label"><span class="material-icons">schedule</span> 対応時間帯</span>
         <div class="check-list">
-          <label class="check-item"><input type="checkbox" /><label>平日 朝（〜9時）</label></label>
-          <label class="check-item"><input type="checkbox" /><label>平日 日中</label></label>
-          <label class="check-item"><input type="checkbox" checked /><label>平日 夜（18時〜）</label></label>
-          <label class="check-item"><input type="checkbox" /><label>土曜日</label></label>
-          <label class="check-item"><input type="checkbox" /><label>日曜・祝日</label></label>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">平日 朝（〜9時）</span><span class="hit-count">24</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">平日 日中</span><span class="hit-count">41</span></div>
+          <div class="check-item selected" onclick="this.classList.toggle('selected')"><input type="checkbox" checked /><span class="check-box"></span><span class="check-label">平日 夜（18時〜）</span><span class="hit-count">89</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">土曜日</span><span class="hit-count">67</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">日曜・祝日</span><span class="hit-count">52</span></div>
         </div>
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">トレーナー情報</span>
+        <span class="filter-label"><span class="material-icons">verified</span> 信頼・認証</span>
         <div class="check-list">
-          <label class="check-item"><input type="checkbox" /><label>本人確認済</label></label>
-          <label class="check-item"><input type="checkbox" /><label>資格認定済（NSCA/NESTA等）</label></label>
-          <label class="check-item"><input type="checkbox" /><label>NDA締結済</label></label>
-          <label class="check-item"><input type="checkbox" /><label>最終ログイン30日以内</label></label>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">本人確認済</span><span class="hit-count">120</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">NSCA/NESTA 認定</span><span class="hit-count">63</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">NDA 締結済</span><span class="hit-count">98</span></div>
+          <div class="check-item" onclick="this.classList.toggle('selected')"><input type="checkbox" /><span class="check-box"></span><span class="check-label">30日以内ログイン</span><span class="hit-count">105</span></div>
         </div>
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">返信スピード</span>
+        <span class="filter-label"><span class="material-icons">bolt</span> 返信スピード</span>
         <div class="filter-chips">
-          <button class="filter-chip active">24時間以内</button>
+          <button class="filter-chip active"><span class="material-icons">bolt</span>24時間以内</button>
           <button class="filter-chip">2日以内</button>
           <button class="filter-chip">1週間以内</button>
         </div>
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">性別</span>
+        <span class="filter-label"><span class="material-icons">person</span> トレーナー性別</span>
         <div class="filter-chips">
-          <button class="filter-chip">指定なし</button>
-          <button class="filter-chip">男性</button>
-          <button class="filter-chip">女性</button>
+          <button class="filter-chip active">指定なし</button>
+          <button class="filter-chip"><span class="material-icons">male</span>男性</button>
+          <button class="filter-chip"><span class="material-icons">female</span>女性</button>
         </div>
       </div>
 
-      <button class="sidebar-search-btn">この条件で検索する</button>
+      <div class="sidebar-apply">
+        <button class="sidebar-search-btn">
+          <span class="apply-badge">127名</span>
+          <span class="apply-label">この条件で検索</span>
+          <span class="material-icons apply-arrow">arrow_forward</span>
+        </button>
+        <button class="save-search"><span class="material-icons">bookmark_border</span>この条件を保存する</button>
+      </div>
     </aside>
 
     <!-- MAIN CONTENT -->
     <main>
       <div class="content-header">
-        <div class="results-count"><span>127名</span> のトレーナーが見つかりました</div>
+        <div class="results-count">
+          <span class="material-icons">groups</span>
+          <strong>127名</strong>のトレーナーがヒット
+        </div>
         <div class="sort-bar">
-          <span class="sort-label">並び替え：</span>
+          <span class="sort-label">並び順</span>
           <button class="sort-btn active">おすすめ</button>
           <button class="sort-btn">評価順</button>
-          <button class="sort-btn">実績数順</button>
+          <button class="sort-btn">実績数</button>
           <button class="sort-btn">新着</button>
         </div>
       </div>
 
       <div class="active-filters">
-        <div class="af-chip">ダイエット <button>×</button></div>
-        <div class="af-chip">オンライン <button>×</button></div>
-        <div class="af-chip">〜10,000円 <button>×</button></div>
-        <div class="af-chip">平日夜 <button>×</button></div>
-        <div class="af-chip">24時間以内 <button>×</button></div>
+        <span class="af-label"><span class="material-icons">filter_alt</span>適用中</span>
+        <div class="af-chip">ダイエット<button><span class="material-icons">close</span></button></div>
+        <div class="af-chip">オンライン<button><span class="material-icons">close</span></button></div>
+        <div class="af-chip">¥3,000〜¥20,000<button><span class="material-icons">close</span></button></div>
+        <div class="af-chip">平日夜<button><span class="material-icons">close</span></button></div>
+        <div class="af-chip">24時間以内<button><span class="material-icons">close</span></button></div>
+        <button class="af-clear-all">すべて解除</button>
       </div>
 
       <div class="trainers-grid">
