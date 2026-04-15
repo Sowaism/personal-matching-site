@@ -181,15 +181,71 @@
     .free-question-btn:hover{background:var(--c-bg-green);}
 
     @media(max-width:960px){
-      .detail-layout{grid-template-columns:1fr;}
+      .detail-layout{grid-template-columns:1fr;gap:20px;}
       .sidebar-sticky{position:static;}
       nav{display:none;}
     }
     @media(max-width:600px){
-      .trainer-hero{flex-direction:column;}
-      .stats-row{gap:16px;}
+      .container{padding:0 16px;}
+      .header-inner{height:56px;}
+      .logo{font-size:18px;}
+      .btn-login{display:none;}
+      .btn-register{font-size:13px;padding:8px 14px;}
+      .breadcrumb{font-size:11px;padding:12px 0 10px;}
+
+      .trainer-header{padding:20px 16px;margin-bottom:16px;}
+      .trainer-hero{flex-direction:column;gap:16px;align-items:center;text-align:center;margin-bottom:16px;}
+      .trainer-big-avatar{width:80px;height:80px;font-size:30px;}
+      .trainer-hero-info{width:100%;}
+      .trainer-hero-info h1{font-size:19px;}
+      .trainer-hero-info .tagline{font-size:13px;}
+      .hero-badges{justify-content:center;}
+      .stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 12px;}
+      .stat-big{font-size:20px;}
+      .trainer-tags{justify-content:center;}
+
+      .anchor-nav{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;}
+      .anchor-btn{font-size:12px;padding:12px 10px;white-space:nowrap;flex:none;}
+
+      .section-card{padding:20px 16px;margin-bottom:16px;}
+      .section-card h2{font-size:16px;margin-bottom:16px;padding-bottom:12px;}
+      .cando-item{padding:10px 12px;}
+      .cando-text{font-size:13px;}
       .skills-grid{grid-template-columns:1fr;}
-      .review-summary{flex-direction:column;}
+
+      .course-card{padding:16px;}
+      .course-header{flex-direction:column;align-items:flex-start;gap:6px;}
+      .course-header > div[style*="text-align:right"]{text-align:left !important;}
+      .course-name{font-size:15px;}
+      .course-price-big{font-size:20px;}
+      .course-features{gap:8px 12px;margin-bottom:12px;}
+      .cf{font-size:12px;}
+      .course-desc{font-size:12.5px;}
+      .course-cta{flex-direction:column;gap:8px;}
+      .btn-course-primary,.btn-course-secondary{width:100%;padding:12px;}
+
+      .review-summary{flex-direction:column;padding:20px 16px;gap:20px;}
+      .review-score-num{font-size:44px;}
+      .review-bars{width:100%;}
+      .review-header{flex-wrap:wrap;gap:10px;}
+      .review-user-info{flex:1 1 auto;min-width:0;}
+      .review-user-info h4{font-size:13px;}
+      .review-user-info p{font-size:11px;}
+      .review-stars-date{margin-left:0;text-align:right;}
+      .review-text{font-size:13px;}
+
+      .other-plan-row{flex-wrap:wrap;padding:12px;gap:12px;}
+      .opr-info{flex:1 1 60%;min-width:0;}
+      .opr-info h4{font-size:13px;}
+      .opr-info p{font-size:11px;}
+      .opr-price{font-size:14px;}
+      .opr-rating{font-size:11px;}
+
+      .cta-card-header{padding:16px 20px;}
+      .cta-card-header h3{font-size:15px;}
+      .cta-card-body{padding:16px 20px;}
+      .cta-btn-main{font-size:14px;padding:13px;}
+      .profile-card{padding:18px 16px;}
     }
   </style>
     <style>.material-icons{font-size:1em;vertical-align:middle;line-height:1;display:inline-flex;align-items:center;}</style>
