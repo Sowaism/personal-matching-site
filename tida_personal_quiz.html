@@ -558,36 +558,13 @@
 <div class="screen" id="q6-screen">
   <div class="q-inner">
     <div class="q-number">Q6</div>
-    <h2 class="q-text">気になることは<br>ありますか？</h2>
-    <p class="q-sub">複数選択できます</p>
-    <div class="options-list" id="q6-options">
-      <div class="option-pill" onclick="toggleMulti(this)">
-        <div class="option-letter">A</div>
-        <div class="option-text">怪我が心配・体に不安がある</div>
-        <div class="check-icon"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="option-pill" onclick="toggleMulti(this)">
-        <div class="option-letter">B</div>
-        <div class="option-text">続けられるか不安</div>
-        <div class="check-icon"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="option-pill" onclick="toggleMulti(this)">
-        <div class="option-letter">C</div>
-        <div class="option-text">食事管理も一緒にサポートしてほしい</div>
-        <div class="check-icon"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
-      <div class="option-pill" onclick="toggleMulti(this)">
-        <div class="option-letter">D</div>
-        <div class="option-text">特になし</div>
-        <div class="check-icon"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div>
+    <h2 class="q-text">一番気になることは<br>何ですか？</h2>
+    <div class="options-list">
+      <div class="option-pill" onclick="selectOption(6,'A',this)"><div class="option-letter">A</div><div class="option-text">怪我が心配・体に不安がある</div></div>
+      <div class="option-pill" onclick="selectOption(6,'B',this)"><div class="option-letter">B</div><div class="option-text">続けられるか不安</div></div>
+      <div class="option-pill" onclick="selectOption(6,'C',this)"><div class="option-letter">C</div><div class="option-text">食事管理も一緒にサポートしてほしい</div></div>
+      <div class="option-pill" onclick="selectOption(6,'D',this)"><div class="option-letter">D</div><div class="option-text">特になし</div></div>
     </div>
-    <button class="btn-next" id="q6-next" onclick="nextStep()">
-      次へ
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-      </svg>
-    </button>
   </div>
 </div>
 
@@ -736,12 +713,6 @@
     el.closest('.options-list').querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
     el.classList.add('selected');
     setTimeout(() => nextStep(), 310);
-  }
-
-  function toggleMulti(el) {
-    el.classList.toggle('multi-selected');
-    const any = document.querySelectorAll('#q6-options .multi-selected').length > 0;
-    document.getElementById('q6-next').classList.toggle('ready', any);
   }
 
   function showLoading() {
