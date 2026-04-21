@@ -244,6 +244,26 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
+    .hero-trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 18px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,.9);
+      letter-spacing: .3px;
+    }
+    .hero-trust-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .hero-trust-row .material-icons {
+      font-size: 16px;
+      color: #fecaca;
+    }
     .stat-item {
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.15);
@@ -883,13 +903,12 @@
       <div class="hero-left">
         <div class="hero-eyebrow"><span class="material-icons">emoji_events</span> No.1 パーソナルトレーナーマッチング</div>
         <h1 class="hero-title">
-          あなたの目標に合う、<br>
-          <em>プロのトレーナー</em>と<br>
-          オンラインで出会う
+          <em>127人のプロ</em>から、<br>
+          あなたに合う1人を。
         </h1>
         <p class="hero-desc">
-          ダイエット・筋トレ・産後ボディメイクまで。<br>
-          XXX名の現役プロトレーナーから、あなただけのプランで個別指導を受けよう。
+          資格・専門・料金で絞り込んで選べる、パーソナルトレーナーのマッチングサイト。<br>
+          ダイエット・筋トレ・産後ケアまで、本当に合う1人が見つかります。
         </p>
         <div class="hero-cta-group">
           <a href="#" class="btn btn-accent btn-lg">無料ではじめる（登録30秒）</a>
@@ -897,18 +916,23 @@
             90秒の診断でトレーナーを探す →
           </a>
         </div>
+        <div class="hero-trust-row">
+          <span><span class="material-icons">check</span>入会金なし</span>
+          <span><span class="material-icons">check</span>オンライン対応</span>
+          <span><span class="material-icons">check</span>営業カウンセリング不要</span>
+        </div>
         <div class="hero-stats">
           <div class="stat-item">
-            <div class="stat-num">XXX<span>名</span></div>
+            <div class="stat-num">127<span>名</span></div>
             <div class="stat-label">登録<br>トレーナー数</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num">X<span>万人+</span></div>
-            <div class="stat-label">累計<br>利用者数</div>
+            <div class="stat-num">¥8,000<span>〜</span></div>
+            <div class="stat-label">月額プランの<br>最低価格</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num">¥X,XXX<span>〜</span></div>
-            <div class="stat-label">月額プランの<br>最低価格</div>
+            <div class="stat-num">4.8<span>/5</span></div>
+            <div class="stat-label">トレーナー<br>平均評価</div>
           </div>
         </div>
       </div>
