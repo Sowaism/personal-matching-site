@@ -153,11 +153,11 @@
         <a href="tida_personal_trainers.html" class="nav-link active">トレーナーを探す</a>
         <a href="tida_personal_plans.html" class="nav-link">プランを見る</a>
         <a href="tida_personal_quiz.html" class="nav-link">診断してみる</a>
-        <a href="#" class="nav-link">使い方</a>
+        <a href="#" class="nav-link" data-pending="true">使い方</a>
       </nav>
       <div class="header-actions">
-        <a href="#" class="btn-login">ログイン</a>
-        <a href="#" class="btn-register">無料登録</a>
+        <a href="#" class="btn-login" data-pending="true">ログイン</a>
+        <a href="#" class="btn-register" data-pending="true">無料登録</a>
       </div>
     </div>
   </div>
@@ -513,18 +513,248 @@
     <div class="footer-bottom">
       <span>© 2026 TIDA Personal</span>
       <div class="footer-links">
-        <a href="#">利用規約</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a>
+        <a href="#" data-pending="true">利用規約</a><a href="#" data-pending="true">プライバシーポリシー</a><a href="#" data-pending="true">お問い合わせ</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-  document.querySelectorAll('.sort-btn').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.sort-btn').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-  }));
-  document.querySelectorAll('.filter-chip').forEach(b => b.addEventListener('click', () => b.classList.toggle('active')));
+(function () {
+  const cards = Array.from(document.querySelectorAll('.trainer-card'));
+  const grid = cards.length ? cards[0].parentElement : null;
+  const resultsCountEl = document.querySelector('.results-count span');
+  const activeFiltersEl = document.querySelector('.active-filters');
+  const heroSearchInput = document.querySelector('.hero-search .search-input');
+  const heroSearchBtn = document.querySelector('.btn-search');
+  const sidebarSearchBtn = document.querySelector('.sidebar-search-btn');
+  const clearBtn = document.querySelector('.clear-btn');
+
+  // Index filter-groups by their label text
+  const groups = {};
+  document.querySelectorAll('.sidebar .filter-group').forEach(g => {
+    const lbl = g.querySelector('.filter-label');
+    if (lbl) groups[lbl.textContent.trim()] = g;
+  });
+
+  const goalToCategory = {
+    diet: 'ダイエット・体脂肪管理',
+    muscle: '筋力アップ・ボディメイク',
+    postpartum: '産後ボディメイク',
+    posture: '姿勢矯正・腰痛改善',
+    sport: '競技向け・スポーツ',
+    nutrition: '食事管理・栄養指導',
+    health: '健康維持・シニア向け',
+    senior: '健康維持・シニア向け',
+  };
+  const categoryKeywords = {
+    'ダイエット・体脂肪管理': ['ダイエット', '体脂肪'],
+    '筋力アップ・ボディメイク': ['筋力', 'ボディメイク', '筋肉'],
+    '産後ボディメイク': ['産後'],
+    '姿勢矯正・腰痛改善': ['姿勢', '腰痛'],
+    '競技向け・スポーツ': ['競技', 'スポーツ'],
+    '食事管理・栄養指導': ['食事', '栄養'],
+    '健康維持・シニア向け': ['健康', 'シニア'],
+  };
+
+  function priceLabelToMax(label) {
+    if (!label) return Infinity;
+    // '〜5,000円' / '〜30,000円' set a cap; '30,000円〜' / '単発のみ' / etc. do not
+    if (label.charAt(0) === '〜') {
+      const m = label.match(/(\d[\d,]*)/);
+      if (m) return parseInt(m[1].replace(/,/g, ''), 10);
+    }
+    return Infinity;
+  }
+
+  function extract(card) {
+    const priceText = (card.querySelector('.price') || {}).textContent || '';
+    const priceMatch = priceText.match(/¥([0-9,]+)/);
+    const price = priceMatch ? parseInt(priceMatch[1].replace(/,/g, ''), 10) : 0;
+
+    const ratingText = (card.querySelector('.rating') || {}).textContent || '';
+    const ratingMatch = ratingText.match(/([0-9]\.[0-9])/);
+    const rating = ratingMatch ? parseFloat(ratingMatch[1]) : 0;
+
+    const subText = (card.querySelector('.sub') || {}).textContent || '';
+    const contractsMatch = subText.match(/(\d+)名/);
+    const contracts = contractsMatch ? parseInt(contractsMatch[1], 10) : 0;
+
+    const tagTexts = Array.from(card.querySelectorAll('.tag')).map(t => t.textContent.trim());
+    return {
+      card,
+      price, rating, contracts, tagTexts,
+      isNew: !!card.querySelector('.badge-new'),
+      isPopular: !!card.querySelector('.badge-popular'),
+      isRecommend: !!card.querySelector('.badge-recommend'),
+      allText: card.textContent.toLowerCase(),
+    };
+  }
+  const data = cards.map(extract);
+
+  function getActiveCategories() {
+    const g = groups['専門ジャンル'];
+    if (!g) return [];
+    return Array.from(g.querySelectorAll('input[type="checkbox"]:checked'))
+      .map(cb => {
+        const label = cb.closest('label.check-item') || cb.parentElement;
+        const inner = label.querySelector('label');
+        return (inner ? inner.textContent : label.textContent).trim();
+      });
+  }
+  function getActiveChip(groupLabel) {
+    const g = groups[groupLabel];
+    if (!g) return null;
+    const c = g.querySelector('.filter-chip.active');
+    return c ? c.textContent.trim() : null;
+  }
+  function getSearch() {
+    const v = heroSearchInput ? heroSearchInput.value.trim().toLowerCase() : '';
+    return v;
+  }
+
+  function matchesFilters(d, st) {
+    if (st.categories.length > 0) {
+      const ok = st.categories.some(cat => {
+        const kws = categoryKeywords[cat] || [cat];
+        return d.tagTexts.some(tag => kws.some(kw => tag.indexOf(kw) >= 0));
+      });
+      if (!ok) return false;
+    }
+    const max = priceLabelToMax(st.priceLabel);
+    if (d.price > max) return false;
+    if (st.search && d.allText.indexOf(st.search) < 0) return false;
+    return true;
+  }
+
+  function rebuildActiveChips(st) {
+    if (!activeFiltersEl) return;
+    activeFiltersEl.innerHTML = '';
+    st.categories.forEach(cat => addChip(cat, 'cat', cat));
+    if (st.style) addChip(st.style, 'style');
+    if (st.priceLabel) addChip(st.priceLabel, 'price');
+    if (st.search) addChip('「' + st.search + '」', 'search');
+  }
+  function addChip(text, type, value) {
+    const chip = document.createElement('div');
+    chip.className = 'af-chip';
+    const btn = '<button data-clear="' + type + '"' + (value ? ' data-value="' + value.replace(/"/g, '&quot;') + '"' : '') + '>×</button>';
+    chip.innerHTML = text + ' ' + btn;
+    activeFiltersEl.appendChild(chip);
+  }
+
+  function applyFilters() {
+    const state = {
+      categories: getActiveCategories(),
+      style: getActiveChip('トレーニング形式'),
+      priceLabel: getActiveChip('月額料金'),
+      search: getSearch(),
+    };
+    let visible = 0;
+    data.forEach(d => {
+      const ok = matchesFilters(d, state);
+      d.card.style.display = ok ? '' : 'none';
+      if (ok) visible++;
+    });
+    if (resultsCountEl) resultsCountEl.textContent = visible + '名';
+    rebuildActiveChips(state);
+  }
+
+  function applySort(criterion) {
+    if (!grid) return;
+    const sorted = data.slice().sort((a, b) => {
+      switch (criterion) {
+        case '評価順': return b.rating - a.rating;
+        case '実績数順': return b.contracts - a.contracts;
+        case '新着': return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0) || b.contracts - a.contracts;
+        default: {
+          const score = d => (d.isRecommend ? 2 : 0) + (d.isPopular ? 1 : 0) + d.rating;
+          return score(b) - score(a);
+        }
+      }
+    });
+    sorted.forEach(d => grid.appendChild(d.card));
+  }
+
+  document.querySelectorAll('.sidebar .filter-group').forEach(group => {
+    group.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', applyFilters);
+    });
+    group.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const wasActive = chip.classList.contains('active');
+        group.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        if (!wasActive) chip.classList.add('active');
+        applyFilters();
+      });
+    });
+  });
+
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applySort(btn.textContent.trim());
+    });
+  });
+
+  if (heroSearchInput) heroSearchInput.addEventListener('input', applyFilters);
+  if (heroSearchBtn) heroSearchBtn.addEventListener('click', e => { e.preventDefault(); applyFilters(); });
+  if (sidebarSearchBtn) sidebarSearchBtn.addEventListener('click', e => { e.preventDefault(); applyFilters(); });
+
+  document.body.addEventListener('click', e => {
+    const btn = e.target.closest('.af-chip button');
+    if (!btn) return;
+    const type = btn.dataset.clear;
+    const value = btn.dataset.value;
+    if (type === 'cat') {
+      const g = groups['専門ジャンル'];
+      if (g) {
+        g.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          const inner = (cb.closest('label.check-item') || cb.parentElement).querySelector('label');
+          const txt = (inner ? inner.textContent : '').trim();
+          if (txt === value) cb.checked = false;
+        });
+      }
+    } else if (type === 'style') {
+      const g = groups['トレーニング形式'];
+      if (g) g.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    } else if (type === 'price') {
+      const g = groups['月額料金'];
+      if (g) g.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    } else if (type === 'search' && heroSearchInput) {
+      heroSearchInput.value = '';
+    }
+    applyFilters();
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      document.querySelectorAll('.sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('.sidebar .filter-chip').forEach(c => c.classList.remove('active'));
+      if (heroSearchInput) heroSearchInput.value = '';
+      applyFilters();
+    });
+  }
+
+  // Read goal=... query param and prefill the matching category checkbox
+  const params = new URLSearchParams(location.search);
+  const goal = params.get('goal');
+  if (goal && goalToCategory[goal]) {
+    const target = goalToCategory[goal];
+    const g = groups['専門ジャンル'];
+    if (g) {
+      g.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        const inner = (cb.closest('label.check-item') || cb.parentElement).querySelector('label');
+        const txt = (inner ? inner.textContent : '').trim();
+        cb.checked = (txt === target);
+      });
+    }
+  }
+
+  applyFilters();
+})();
 </script>
+<script src="./public/site.js"></script>
 </body>
 </html>

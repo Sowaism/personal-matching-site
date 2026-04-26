@@ -156,11 +156,11 @@
         <a href="tida_personal_trainers.html" class="nav-link">トレーナーを探す</a>
         <a href="tida_personal_plans.html" class="nav-link active">プランを見る</a>
         <a href="tida_personal_quiz.html" class="nav-link">診断してみる</a>
-        <a href="#" class="nav-link">使い方</a>
+        <a href="#" class="nav-link" data-pending="true">使い方</a>
       </nav>
       <div class="header-actions">
-        <a href="#" class="btn-login">ログイン</a>
-        <a href="#" class="btn-register">無料登録</a>
+        <a href="#" class="btn-login" data-pending="true">ログイン</a>
+        <a href="#" class="btn-register" data-pending="true">無料登録</a>
       </div>
     </div>
   </div>
@@ -541,16 +541,104 @@
     <div class="footer-bottom">
       <span>© 2026 TIDA Personal</span>
       <div class="footer-links">
-        <a href="#">利用規約</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a>
+        <a href="#" data-pending="true">利用規約</a><a href="#" data-pending="true">プライバシーポリシー</a><a href="#" data-pending="true">お問い合わせ</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-  document.querySelectorAll('.sort-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.sort-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
-  document.querySelectorAll('.filter-chip').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('active')));
-  document.querySelectorAll('.type-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.type-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+(function () {
+  const cards = Array.from(document.querySelectorAll('.plan-card'));
+  const grid = cards.length ? cards[0].parentElement : null;
+  const resultsCountEl = document.querySelector('.results-count span');
+
+  const tabTypeMap = {
+    'すべて': null,
+    '単発（1回〜）': '単発',
+    '月額継続': '月額',
+    '期間プログラム': '期間',
+  };
+
+  function extract(card) {
+    const typeLabel = (card.querySelector('.plan-type-label') || {}).textContent || '';
+    const priceText = (card.querySelector('.plan-price') || {}).textContent || '';
+    const priceMatch = priceText.match(/¥([0-9,]+)/);
+    const price = priceMatch ? parseInt(priceMatch[1].replace(/,/g, ''), 10) : 0;
+    const ratingText = (card.querySelector('.rating') || {}).textContent || '';
+    const ratingMatch = ratingText.match(/([0-9]\.[0-9])/);
+    const rating = ratingMatch ? parseFloat(ratingMatch[1]) : 0;
+    return { card, typeLabel, price, rating };
+  }
+  const data = cards.map(extract);
+
+  function applyFilters() {
+    const tab = (document.querySelector('.type-tab.active') || {}).textContent || 'すべて';
+    const filter = tabTypeMap[tab.trim()];
+    let visible = 0;
+    data.forEach(d => {
+      const ok = !filter || d.typeLabel.indexOf(filter) >= 0;
+      d.card.style.display = ok ? '' : 'none';
+      if (ok) visible++;
+    });
+    if (resultsCountEl) resultsCountEl.textContent = visible + '件';
+  }
+
+  function applySort(criterion) {
+    if (!grid) return;
+    const sorted = data.slice().sort((a, b) => {
+      switch (criterion) {
+        case '評価順': return b.rating - a.rating;
+        case '価格が安い順': return a.price - b.price;
+        case '新着': return 0;
+        default: return b.rating - a.rating;
+      }
+    });
+    sorted.forEach(d => grid.appendChild(d.card));
+  }
+
+  document.querySelectorAll('.type-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.type-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applySort(btn.textContent.trim());
+    });
+  });
+
+  document.querySelectorAll('.sidebar .filter-chip').forEach(chip => {
+    const g = chip.closest('.filter-group');
+    chip.addEventListener('click', () => {
+      const wasActive = chip.classList.contains('active');
+      if (g) g.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      if (!wasActive) chip.classList.add('active');
+    });
+  });
+
+  // Booking actions are auth-gated — defer to the shared pending toast
+  document.querySelectorAll('.btn-plan-primary, .btn-plan-secondary').forEach(b => {
+    b.setAttribute('data-pending', 'true');
+  });
+
+  // Plan cards lead to the trainer detail page
+  cards.forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', e => {
+      if (e.target.closest('button, a')) return;
+      location.href = 'tida_personal_trainer_detail.html';
+    });
+  });
+
+  applyFilters();
+})();
 </script>
+<script src="./public/site.js"></script>
 </body>
 </html>

@@ -603,7 +603,7 @@
   </div>
   <div class="loading-steps">
     <div class="loading-step" id="ls1"><div class="step-dot"></div><div class="step-label">目標・スタイルを分析中</div></div>
-    <div class="loading-step" id="ls2"><div class="step-dot"></div><div class="step-label">XXX名のトレーナーを照合中</div></div>
+    <div class="loading-step" id="ls2"><div class="step-dot"></div><div class="step-label">127名のトレーナーを照合中</div></div>
     <div class="loading-step" id="ls3"><div class="step-dot"></div><div class="step-label">おすすめトレーナーを選定中</div></div>
   </div>
 </div>
@@ -719,9 +719,20 @@
     if (currentStep > 1) goToStep(currentStep - 1);
   }
 
+  const ANSWERS_KEY = 'tida.quiz.answers';
+  const answers = (function () {
+    try { return JSON.parse(sessionStorage.getItem(ANSWERS_KEY) || '{}'); }
+    catch (_) { return {}; }
+  })();
+  function persistAnswers() {
+    try { sessionStorage.setItem(ANSWERS_KEY, JSON.stringify(answers)); } catch (_) { /* ignore */ }
+  }
+
   function selectOption(qNum, letter, el) {
     el.closest('.options-list').querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
     el.classList.add('selected');
+    answers['q' + qNum] = letter;
+    persistAnswers();
     setTimeout(() => nextStep(), 310);
   }
 
@@ -736,12 +747,19 @@
     }, 80);
   }
 
+  const Q1_GOAL_MAP = { A: 'diet', B: 'muscle', C: 'health', D: 'sport' };
   function showResults() {
     goToStep(9);
     setTimeout(() => {
       document.querySelectorAll('.match-bar-fill').forEach(b => { b.style.width = b.dataset.pct + '%'; });
     }, 380);
+    const goal = Q1_GOAL_MAP[answers.q1];
+    if (goal) {
+      const link = document.querySelector('.btn-cta-primary');
+      if (link) link.href = 'tida_personal_trainers.html?goal=' + encodeURIComponent(goal);
+    }
   }
 </script>
+<script src="./public/site.js"></script>
 </body>
 </html>

@@ -205,11 +205,11 @@
         <a href="tida_personal_trainers.html" class="nav-link">トレーナーを探す</a>
         <a href="tida_personal_plans.html" class="nav-link">プランを見る</a>
         <a href="tida_personal_quiz.html" class="nav-link">診断してみる</a>
-        <a href="#" class="nav-link">使い方</a>
+        <a href="#" class="nav-link" data-pending="true">使い方</a>
       </nav>
       <div class="header-actions">
-        <a href="#" class="btn-login">ログイン</a>
-        <a href="#" class="btn-register">無料登録</a>
+        <a href="#" class="btn-login" data-pending="true">ログイン</a>
+        <a href="#" class="btn-register" data-pending="true">無料登録</a>
       </div>
     </div>
   </div>
@@ -549,9 +549,9 @@
       <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:12px;">
         <span>© 2026 TIDA Personal</span>
         <div style="display:flex;gap:20px;">
-          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">利用規約</a>
-          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">プライバシーポリシー</a>
-          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">お問い合わせ</a>
+          <a href="#" data-pending="true" style="color:rgba(255,255,255,.4);font-size:12px;">利用規約</a>
+          <a href="#" data-pending="true" style="color:rgba(255,255,255,.4);font-size:12px;">プライバシーポリシー</a>
+          <a href="#" data-pending="true" style="color:rgba(255,255,255,.4);font-size:12px;">お問い合わせ</a>
         </div>
       </div>
     </div>
@@ -559,15 +559,83 @@
 </footer>
 
 <script>
-  function setActive(el){document.querySelectorAll('.anchor-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
-  let expanded=false;
-  function toggleAbout(){
-    const t=document.getElementById('aboutText');
-    const btn=document.querySelector('.read-more');
-    if(!expanded){t.classList.remove('collapsed');btn.textContent='▲ 閉じる';}
-    else{t.classList.add('collapsed');btn.textContent='続きを読む ▼';}
-    expanded=!expanded;
+(function () {
+  const anchorTargets = {
+    'プラン説明': 'sec-about',
+    'コース一覧': 'sec-courses',
+    'レビュー': 'sec-reviews',
+    'プロフィール': 'sec-profile',
+  };
+
+  // Tag the trainer-header so the プロフィール anchor has a destination
+  const trainerHeader = document.querySelector('.trainer-header');
+  if (trainerHeader && !trainerHeader.id) trainerHeader.id = 'sec-profile';
+
+  const anchorBtns = Array.from(document.querySelectorAll('.anchor-btn'));
+  function setActive(btn) {
+    anchorBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
   }
+
+  anchorBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = anchorTargets[btn.textContent.trim()];
+      const el = id ? document.getElementById(id) : null;
+      setActive(btn);
+      if (el) {
+        const offset = 72;
+        const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+  // Strip legacy onclick handlers; the listener above handles everything now
+  anchorBtns.forEach(b => b.removeAttribute('onclick'));
+
+  // Read-more toggle for the about block
+  const aboutText = document.getElementById('aboutText');
+  const readMoreBtn = document.querySelector('.read-more');
+  if (aboutText && readMoreBtn) {
+    readMoreBtn.removeAttribute('onclick');
+    let expanded = false;
+    readMoreBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      aboutText.classList.toggle('collapsed', !expanded);
+      readMoreBtn.textContent = expanded ? '▲ 閉じる' : '続きを読む ▼';
+    });
+  }
+
+  // Course CTAs, review unlock, sidebar CTAs and the free-question button
+  // all require auth/booking — defer them via the shared pending toast
+  document.querySelectorAll(
+    '.btn-course-primary, .btn-course-secondary, .btn-unlock, ' +
+    '.cta-btn-main, .cta-btn-sub, .cta-btn-ghost, .free-question-btn'
+  ).forEach(b => b.setAttribute('data-pending', 'true'));
+
+  // Scroll-spy: highlight the anchor for the section closest to the top
+  const sections = Object.values(anchorTargets)
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  if (sections.length && anchorBtns.length) {
+    const labelById = {};
+    Object.keys(anchorTargets).forEach(k => { labelById[anchorTargets[k]] = k; });
+    let ticking = false;
+    function updateSpy() {
+      const offset = 100;
+      let current = sections[0];
+      sections.forEach(s => {
+        if (s.getBoundingClientRect().top <= offset) current = s;
+      });
+      const label = labelById[current.id];
+      anchorBtns.forEach(b => b.classList.toggle('active', b.textContent.trim() === label));
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(updateSpy); ticking = true; }
+    });
+  }
+})();
 </script>
+<script src="./public/site.js"></script>
 </body>
 </html>
