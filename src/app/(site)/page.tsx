@@ -4,15 +4,61 @@ import { TRAINERS, TRAINER_TOTAL } from "@/lib/trainers";
 import TrainerCard from "@/components/TrainerCard";
 import { categoryCount, type TrainerCategory } from "@/lib/trainers";
 
-const GOALS: { goal: TrainerCategory; emoji: string; title: string }[] = [
-  { goal: "diet", emoji: "local_fire_department", title: "ダイエット・体脂肪を落としたい" },
-  { goal: "muscle", emoji: "fitness_center", title: "筋肉をつけたい・体型を変えたい" },
-  { goal: "postpartum", emoji: "child_friendly", title: "産後ボディメイク・体力回復" },
-  { goal: "sport", emoji: "emoji_events", title: "競技向け・スポーツパフォーマンス" },
-  { goal: "posture", emoji: "self_improvement", title: "姿勢矯正・腰痛・肩こり改善" },
-  { goal: "nutrition", emoji: "restaurant", title: "食事管理・栄養指導" },
-  { goal: "health", emoji: "favorite", title: "健康維持・体力づくり" },
-  { goal: "senior", emoji: "stars", title: "シニア向け・ゆるやかに始めたい" },
+const GOALS: {
+  goal: TrainerCategory;
+  emoji: string;
+  title: string;
+  /** Unsplash hot-link for the card background photo */
+  image: string;
+}[] = [
+  {
+    goal: "diet",
+    emoji: "local_fire_department",
+    title: "ダイエット・体脂肪を落としたい",
+    image: "https://images.unsplash.com/photo-1576678927484-cc907957088c?w=600&auto=format&fit=crop&q=70",
+  },
+  {
+    goal: "muscle",
+    emoji: "fitness_center",
+    title: "筋肉をつけたい・体型を変えたい",
+    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&auto=format&fit=crop&q=70",
+  },
+  {
+    goal: "postpartum",
+    emoji: "child_friendly",
+    title: "産後ボディメイク・体力回復",
+    image: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=600&auto=format&fit=crop&q=70",
+  },
+  {
+    goal: "sport",
+    emoji: "emoji_events",
+    title: "競技向け・スポーツパフォーマンス",
+    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&auto=format&fit=crop&q=70",
+  },
+  {
+    goal: "posture",
+    emoji: "self_improvement",
+    title: "姿勢矯正・腰痛・肩こり改善",
+    image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&auto=format&fit=crop&q=70",
+  },
+  {
+    goal: "nutrition",
+    emoji: "restaurant",
+    title: "食事管理・栄養指導",
+    image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&auto=format&fit=crop&q=70",
+  },
+  {
+    goal: "health",
+    emoji: "favorite",
+    title: "健康維持・体力づくり",
+    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=600&auto=format&fit=crop&q=70",
+  },
+  {
+    goal: "senior",
+    emoji: "stars",
+    title: "シニア向け・ゆるやかに始めたい",
+    image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&auto=format&fit=crop&q=70",
+  },
 ];
 
 const popularTrainers = TRAINERS.slice(0, 6);
@@ -207,7 +253,9 @@ export default function Home() {
                 key={g.goal}
                 href={`/trainers?goal=${g.goal}`}
                 className="goal-card"
+                style={{ backgroundImage: `url(${g.image})` }}
               >
+                <span className="goal-card-overlay" aria-hidden="true" />
                 <span className="material-icons goal-emoji">{g.emoji}</span>
                 <div className="goal-title">{g.title}</div>
                 <div className="goal-count">{categoryCount(g.goal)}名のトレーナー</div>
