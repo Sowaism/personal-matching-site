@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLink from "./BrandLink";
 
 export default function SiteFooter() {
   return (
@@ -6,10 +7,8 @@ export default function SiteFooter() {
       <div className="container">
         <div className="footer-inner">
           <div className="footer-brand">
-            <span className="logo">
-              TIDA<span>.</span>Personal
-            </span>
-            <p>
+            <BrandLink variant="footer" />
+            <p style={{ marginTop: 16 }}>
               あなたの目標に合うプロのパーソナルトレーナーを、オンラインでマッチング。
               ダイエット・筋トレ・産後ケアなど、127名のトレーナーから自分だけの1人を見つけよう。
             </p>

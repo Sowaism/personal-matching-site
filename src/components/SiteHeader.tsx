@@ -1,15 +1,13 @@
-import Link from "next/link";
 import NavLink from "./NavLink";
+import BrandLink from "./BrandLink";
 
 export default function SiteHeader() {
   return (
     <header className="site-header">
       <div className="container">
         <div className="header-inner">
-          <Link href="/" className="logo">
-            TIDA<span>.</span>Personal
-          </Link>
-          <nav className="site-nav">
+          <BrandLink />
+          <nav className="site-nav" aria-label="メイン">
             <NavLink href="/trainers">トレーナーを探す</NavLink>
             <NavLink href="/plans">プランを見る</NavLink>
             <NavLink href="/quiz">診断してみる</NavLink>

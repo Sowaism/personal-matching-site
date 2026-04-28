@@ -250,6 +250,148 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section comparison">
+        <div className="container">
+          <h2 className="section-title">他サービスとの違い</h2>
+          <p className="section-sub">
+            「合う人を選べる×オンライン×中価格帯」の3軸で立ち位置を整理しました
+          </p>
+          <div className="compare-table-wrap">
+            <table className="compare-table">
+              <thead>
+                <tr>
+                  <th />
+                  <th className="compare-us">
+                    <span className="compare-tag">TIDA Personal</span>
+                  </th>
+                  <th>大手パーソナルジム</th>
+                  <th>動画トレーニングサービス</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">月額の目安</th>
+                  <td className="compare-us-cell">
+                    <strong>¥8,000〜</strong>
+                  </td>
+                  <td>¥150,000〜</td>
+                  <td>¥980〜</td>
+                </tr>
+                <tr>
+                  <th scope="row">指導スタイル</th>
+                  <td className="compare-us-cell">
+                    <strong>マンツーマン・オンライン</strong>
+                  </td>
+                  <td>マンツーマン・対面</td>
+                  <td>動画視聴・自習</td>
+                </tr>
+                <tr>
+                  <th scope="row">トレーナー選択</th>
+                  <td className="compare-us-cell">
+                    <strong>127名から自由に選べる</strong>
+                  </td>
+                  <td>店舗側が割り当て</td>
+                  <td>選択不可</td>
+                </tr>
+                <tr>
+                  <th scope="row">入会金</th>
+                  <td className="compare-us-cell">
+                    <strong>なし</strong>
+                  </td>
+                  <td>¥30,000〜</td>
+                  <td>なし</td>
+                </tr>
+                <tr>
+                  <th scope="row">解約</th>
+                  <td className="compare-us-cell">
+                    <strong>いつでも</strong>
+                  </td>
+                  <td>契約期間あり</td>
+                  <td>いつでも</td>
+                </tr>
+                <tr>
+                  <th scope="row">食事・体調フィードバック</th>
+                  <td className="compare-us-cell">
+                    <strong>あり（プランによる）</strong>
+                  </td>
+                  <td>あり</td>
+                  <td>基本なし</td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="compare-note">
+              ※価格・条件は2026年4月時点の各サービス公開情報を基に当社調べ
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section voices">
+        <div className="container">
+          <h2 className="section-title">受講者の声</h2>
+          <p className="section-sub">
+            実際にトレーナーと出会った方々のリアルな声
+          </p>
+          <div className="voices-grid">
+            <article className="voice-card">
+              <div className="voice-stars" aria-label="5 / 5">★★★★★</div>
+              <p className="voice-quote">
+                「3ヶ月通って体重−6kg。家から出ずにできるので続けられました。トレーナーさんが食事の写真にすぐ反応してくれるのが助かる」
+              </p>
+              <div className="voice-meta">
+                <span className="voice-avatar va-1">A</span>
+                <div>
+                  <div className="voice-name">A.S さん</div>
+                  <div className="voice-spec">30代女性 / ダイエット目的</div>
+                </div>
+              </div>
+            </article>
+            <article className="voice-card">
+              <div className="voice-stars" aria-label="5 / 5">★★★★★</div>
+              <p className="voice-quote">
+                「産後の体力回復で利用。子どもがいてもオンラインだから始められた。週2回の30分でも体が変わるのを実感しています」
+              </p>
+              <div className="voice-meta">
+                <span className="voice-avatar va-2">M</span>
+                <div>
+                  <div className="voice-name">M.K さん</div>
+                  <div className="voice-spec">30代女性 / 産後ケア</div>
+                </div>
+              </div>
+            </article>
+            <article className="voice-card">
+              <div className="voice-stars" aria-label="4 / 5">★★★★☆</div>
+              <p className="voice-quote">
+                「ジム通いが続かなかった自分でも、相性のいいトレーナーに出会えてからは習慣化できた。月¥10,000以下なのも続けやすい理由」
+              </p>
+              <div className="voice-meta">
+                <span className="voice-avatar va-3">T</span>
+                <div>
+                  <div className="voice-name">T.N さん</div>
+                  <div className="voice-spec">40代男性 / 健康維持</div>
+                </div>
+              </div>
+            </article>
+            <article className="voice-card">
+              <div className="voice-stars" aria-label="5 / 5">★★★★★</div>
+              <p className="voice-quote">
+                「競技選手向けのトレーナーが見つかったのが大きい。動作解析と数値管理が本格的で、競技パフォーマンスが目に見えて伸びました」
+              </p>
+              <div className="voice-meta">
+                <span className="voice-avatar va-4">K</span>
+                <div>
+                  <div className="voice-name">K.H さん</div>
+                  <div className="voice-spec">20代男性 / 競技向け</div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <p className="voices-note">
+            ※2026年4月時点 体験後アンケートより当社調べ
+          </p>
+        </div>
+      </section>
+
       <section className="final-cta">
         <div className="container">
           <div className="final-cta-label">

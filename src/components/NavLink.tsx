@@ -15,7 +15,11 @@ export default function NavLink({
   const active =
     href === "/" ? pathname === "/" : pathname.startsWith(href);
   return (
-    <Link href={href} className={active ? "nav-link active" : "nav-link"}>
+    <Link
+      href={href}
+      className={active ? "nav-link active" : "nav-link"}
+      aria-current={active ? "page" : undefined}
+    >
       {children}
     </Link>
   );
