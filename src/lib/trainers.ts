@@ -19,10 +19,12 @@ export type TrainerCategory =
 export type Trainer = {
   id: string;
   name: string;
-  /** First kanji of last name, used in the avatar swatch */
+  /** First kanji of last name, used in the avatar swatch fallback */
   avatarChar: string;
   /** Avatar gradient key (av1..av12) */
   avatarVariant: number;
+  /** Optional remote photo URL (used when present, otherwise the avatar gradient is shown) */
+  photoUrl?: string;
   subtitle: string;
   contracts: number;
   isOnline: boolean;
@@ -56,6 +58,7 @@ export const TRAINERS: Trainer[] = [
     name: "田中 健太 トレーナー",
     avatarChar: "田",
     avatarVariant: 1,
+    photoUrl: "https://i.pravatar.cc/240?img=12",
     subtitle: "指導実績 230名 / オンライン対応",
     contracts: 230,
     isOnline: true,
@@ -75,6 +78,7 @@ export const TRAINERS: Trainer[] = [
     name: "山田 美咲 トレーナー",
     avatarChar: "山",
     avatarVariant: 2,
+    photoUrl: "https://i.pravatar.cc/240?img=47",
     subtitle: "指導実績 180名 / 女性専門",
     contracts: 180,
     isOnline: true,
@@ -94,6 +98,7 @@ export const TRAINERS: Trainer[] = [
     name: "鈴木 大輔 トレーナー",
     avatarChar: "鈴",
     avatarVariant: 3,
+    photoUrl: "https://i.pravatar.cc/240?img=33",
     subtitle: "指導実績 310名 / NSCA-CSCS",
     contracts: 310,
     isOnline: true,
@@ -113,6 +118,7 @@ export const TRAINERS: Trainer[] = [
     name: "佐藤 ゆり トレーナー",
     avatarChar: "佐",
     avatarVariant: 4,
+    photoUrl: "https://i.pravatar.cc/240?img=49",
     subtitle: "指導実績 95名 / 食事管理専門",
     contracts: 95,
     isOnline: true,
@@ -132,6 +138,7 @@ export const TRAINERS: Trainer[] = [
     name: "中村 隆太 トレーナー",
     avatarChar: "中",
     avatarVariant: 5,
+    photoUrl: "https://i.pravatar.cc/240?img=15",
     subtitle: "指導実績 415名 / JATI認定",
     contracts: 415,
     isOnline: false,
@@ -151,6 +158,7 @@ export const TRAINERS: Trainer[] = [
     name: "伊藤 千尋 トレーナー",
     avatarChar: "伊",
     avatarVariant: 6,
+    photoUrl: "https://i.pravatar.cc/240?img=44",
     subtitle: "指導実績 142名 / ヨガ指導士",
     contracts: 142,
     isOnline: true,
@@ -170,6 +178,7 @@ export const TRAINERS: Trainer[] = [
     name: "小林 翔 トレーナー",
     avatarChar: "小",
     avatarVariant: 7,
+    photoUrl: "https://i.pravatar.cc/240?img=68",
     subtitle: "指導実績 87名 / 男性向け筋トレ",
     contracts: 87,
     isOnline: true,
@@ -188,6 +197,7 @@ export const TRAINERS: Trainer[] = [
     name: "松本 れいか トレーナー",
     avatarChar: "松",
     avatarVariant: 8,
+    photoUrl: "https://i.pravatar.cc/240?img=23",
     subtitle: "指導実績 256名 / 美ボディ専門",
     contracts: 256,
     isOnline: true,

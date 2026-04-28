@@ -115,12 +115,23 @@ export default function PlansClient() {
                       </h3>
                       {trainer && (
                         <div className="plan-trainer-row">
-                          <div
-                            className="mini-avatar"
-                            style={{ background: avatarGradient(trainer.avatarVariant) }}
-                          >
-                            {trainer.avatarChar}
-                          </div>
+                          {trainer.photoUrl ? (
+                            <img
+                              className="mini-avatar mini-avatar-photo"
+                              src={trainer.photoUrl}
+                              alt={trainer.name}
+                              width={40}
+                              height={40}
+                            />
+                          ) : (
+                            <div
+                              className="mini-avatar"
+                              style={{ background: avatarGradient(trainer.avatarVariant) }}
+                              aria-hidden="true"
+                            >
+                              {trainer.avatarChar}
+                            </div>
+                          )}
                           <div className="trainer-mini">
                             <h4>{trainer.name}</h4>
                             <p>{trainer.subtitle}</p>

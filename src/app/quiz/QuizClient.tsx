@@ -358,6 +358,15 @@ export default function QuizClient() {
               {matchedTrainers.map((t) => (
                 <div key={t.id} className="q-result-card">
                   <div className={`q-rank rank-${t.rank}`}>{t.rank}</div>
+                  {t.photoUrl && (
+                    <img
+                      className="q-result-photo"
+                      src={t.photoUrl}
+                      alt={t.name}
+                      width={54}
+                      height={54}
+                    />
+                  )}
                   <div className="q-result-info">
                     <div className="q-result-name">
                       {t.name}

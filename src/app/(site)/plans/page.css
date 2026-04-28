@@ -4,7 +4,12 @@
   min-height: 100vh;
 }
 .page-plans .page-hero {
-  background: linear-gradient(135deg, #042f2e, #115e59);
+  background-color: #042f2e;
+  background-image:
+    linear-gradient(135deg, rgba(4, 47, 46, 0.88), rgba(15, 118, 110, 0.84)),
+    url('https://images.unsplash.com/photo-1583500178690-f7fd39f6d2bb?w=1600&auto=format&fit=crop&q=80');
+  background-size: cover;
+  background-position: center;
   color: #fff;
   padding: 48px 0 40px;
 }
@@ -144,6 +149,10 @@
   font-weight: 900;
   color: #fff;
   flex-shrink: 0;
+}
+.page-plans .mini-avatar-photo {
+  object-fit: cover;
+  background: var(--c-bg-light);
 }
 .page-plans .trainer-mini h4 {
   font-size: 14px;

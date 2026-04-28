@@ -46,7 +46,14 @@
   font-weight: 900;
   color: #fff;
   flex-shrink: 0;
-  box-shadow: 0 4px 20px rgba(13, 148, 136, .3);
+  box-shadow:
+    0 0 0 4px #ffffff,
+    0 0 0 5px rgba(13, 148, 136, .25),
+    0 8px 24px rgba(13, 148, 136, .25);
+}
+.page-trainer-detail .trainer-big-avatar-photo {
+  object-fit: cover;
+  background: var(--c-bg-light);
 }
 .page-trainer-detail .trainer-hero-info h1 {
   font-size: 22px;

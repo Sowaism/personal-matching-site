@@ -389,6 +389,15 @@
   flex-shrink: 0;
   margin-top: 2px;
 }
+.page-quiz .q-result-photo {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--q-tint);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(13,148,136,.18);
+}
 .page-quiz .rank-1 {
   background: linear-gradient(135deg, var(--q-primary), var(--q-deep));
 }

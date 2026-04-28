@@ -31,12 +31,24 @@ export default function TrainerCard({ trainer }: { trainer: Trainer }) {
           })}
         </div>
         <div className="card-profile">
-          <div
-            className="avatar"
-            style={{ background: avatarGradient(trainer.avatarVariant) }}
-          >
-            {trainer.avatarChar}
-          </div>
+          {trainer.photoUrl ? (
+            <img
+              className="avatar avatar-photo"
+              src={trainer.photoUrl}
+              alt={trainer.name}
+              loading="lazy"
+              width={60}
+              height={60}
+            />
+          ) : (
+            <div
+              className="avatar"
+              style={{ background: avatarGradient(trainer.avatarVariant) }}
+              aria-hidden="true"
+            >
+              {trainer.avatarChar}
+            </div>
+          )}
           <div className="profile-info">
             <h3>{trainer.name}</h3>
             <div className="sub">{trainer.subtitle}</div>

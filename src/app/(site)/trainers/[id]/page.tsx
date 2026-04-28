@@ -60,12 +60,23 @@ export default async function TrainerDetailPage({
           <main>
             <section id="sec-profile" className="trainer-header">
               <div className="trainer-hero">
-                <div
-                  className="trainer-big-avatar"
-                  style={{ background: "linear-gradient(135deg,#2dd4bf,#0d9488)" }}
-                >
-                  {trainer.avatarChar}
-                </div>
+                {trainer.photoUrl ? (
+                  <img
+                    className="trainer-big-avatar trainer-big-avatar-photo"
+                    src={trainer.photoUrl}
+                    alt={trainer.name}
+                    width={100}
+                    height={100}
+                  />
+                ) : (
+                  <div
+                    className="trainer-big-avatar"
+                    style={{ background: "linear-gradient(135deg,#2dd4bf,#0d9488)" }}
+                    aria-hidden="true"
+                  >
+                    {trainer.avatarChar}
+                  </div>
+                )}
                 <div className="trainer-hero-info">
                   <h1>{trainer.name}</h1>
                   <p className="tagline">{trainer.subtitle}</p>

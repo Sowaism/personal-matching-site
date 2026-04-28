@@ -331,6 +331,10 @@ button { font-family: inherit; }
     0 0 0 4px rgba(13, 148, 136, 0.18),
     0 6px 16px rgba(13, 148, 136, 0.18);
 }
+.trainer-card .avatar-photo {
+  object-fit: cover;
+  background: var(--c-bg-light);
+}
 .trainer-card .profile-info h3 {
   font-size: 14px;
   font-weight: 800;
