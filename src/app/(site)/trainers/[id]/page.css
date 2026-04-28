@@ -1,0 +1,379 @@
+/* ===== Trainer detail page ===== */
+.page-trainer-detail {
+  background: var(--c-bg-light);
+  min-height: 100vh;
+}
+.page-trainer-detail .container { padding-top: 16px; padding-bottom: 80px; }
+.page-trainer-detail .breadcrumb {
+  font-size: 13px;
+  color: var(--c-muted);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 16px 0 12px;
+}
+.page-trainer-detail .breadcrumb a:hover { color: var(--c-primary); }
+
+.page-trainer-detail .detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+
+.page-trainer-detail .trainer-header {
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-sm);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+.page-trainer-detail .trainer-hero {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.page-trainer-detail .trainer-big-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(13, 148, 136, .3);
+}
+.page-trainer-detail .trainer-hero-info h1 {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--c-navy);
+  margin-bottom: 6px;
+}
+.page-trainer-detail .trainer-hero-info .tagline {
+  font-size: 14px;
+  color: var(--c-muted);
+  margin-bottom: 12px;
+}
+.page-trainer-detail .hero-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.page-trainer-detail .stats-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.page-trainer-detail .stat-box { text-align: center; }
+.page-trainer-detail .stat-big {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--c-navy);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.page-trainer-detail .stat-small {
+  font-size: 12px;
+  color: var(--c-muted);
+  margin-top: 3px;
+}
+.page-trainer-detail .trainer-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.page-trainer-detail .tag {
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--c-bg-light);
+  color: var(--c-muted);
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--c-border);
+}
+
+/* Anchor nav */
+.page-trainer-detail .anchor-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--c-border);
+  margin-bottom: 24px;
+  background: #fff;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border: 1px solid var(--c-border);
+  overflow: hidden;
+}
+.page-trainer-detail .anchor-btn {
+  flex: 1;
+  padding: 14px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+  text-align: center;
+}
+.page-trainer-detail .anchor-btn:hover {
+  color: var(--c-primary);
+  background: var(--c-bg-green);
+}
+.page-trainer-detail .anchor-btn.active {
+  color: var(--c-primary);
+  border-bottom-color: var(--c-primary);
+}
+
+.page-trainer-detail .section-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-sm);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+.page-trainer-detail .section-card h2 {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--c-navy);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--c-border);
+}
+.page-trainer-detail .about-text {
+  font-size: 15px;
+  color: var(--c-text);
+  line-height: 1.9;
+}
+.page-trainer-detail .about-text.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.page-trainer-detail .read-more {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-primary);
+  cursor: pointer;
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+}
+
+.page-trainer-detail .cando-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.page-trainer-detail .cando-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--c-bg-green);
+  border-radius: 10px;
+}
+.page-trainer-detail .cando-check {
+  color: var(--c-primary);
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.page-trainer-detail .cando-text {
+  font-size: 14px;
+  color: var(--c-text);
+  font-weight: 600;
+}
+
+/* Course card */
+.page-trainer-detail .course-card {
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin-bottom: 14px;
+}
+.page-trainer-detail .course-card.recommended {
+  border-color: var(--c-primary);
+  background: var(--c-bg-green);
+}
+.page-trainer-detail .course-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.page-trainer-detail .course-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--c-navy);
+}
+.page-trainer-detail .course-rec-tag {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--c-primary);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.page-trainer-detail .course-price-big {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--c-primary);
+  white-space: nowrap;
+}
+.page-trainer-detail .course-price-big span {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--c-muted);
+}
+.page-trainer-detail .course-features {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.page-trainer-detail .cf {
+  font-size: 13px;
+  color: var(--c-text);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+}
+.page-trainer-detail .course-desc {
+  font-size: 13px;
+  color: var(--c-muted);
+  line-height: 1.8;
+}
+.page-trainer-detail .course-cta {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+.page-trainer-detail .btn-course-primary {
+  background: var(--c-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.page-trainer-detail .btn-course-secondary {
+  background: #fff;
+  color: var(--c-primary);
+  border: 1.5px solid var(--c-primary);
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Sidebar CTA */
+.page-trainer-detail .cta-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  position: sticky;
+  top: 80px;
+}
+.page-trainer-detail .cta-card-header {
+  background: linear-gradient(135deg, #0d9488, #115e59);
+  color: #fff;
+  padding: 20px 24px;
+}
+.page-trainer-detail .cta-card-header h3 {
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+.page-trainer-detail .cta-card-header p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, .8);
+}
+.page-trainer-detail .cta-card-body { padding: 20px 24px; }
+.page-trainer-detail .cta-btn-main {
+  width: 100%;
+  background: var(--c-accent);
+  color: #134e4a;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.page-trainer-detail .cta-btn-sub {
+  width: 100%;
+  background: var(--c-bg-green);
+  color: var(--c-primary);
+  border: 1.5px solid var(--c-primary);
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Reviews */
+.page-trainer-detail .review-summary {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  padding: 24px;
+  background: var(--c-bg-green);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+}
+.page-trainer-detail .review-rating-big {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--c-navy);
+  line-height: 1;
+}
+.page-trainer-detail .review-item {
+  border-top: 1px solid var(--c-border);
+  padding: 16px 0;
+}
+.page-trainer-detail .review-locked {
+  background: rgba(255, 255, 255, .92);
+  border: 1px dashed var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+}
+.page-trainer-detail .btn-unlock {
+  background: var(--c-primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+@media (max-width: 880px) {
+  .page-trainer-detail .detail-layout { grid-template-columns: 1fr; }
+  .page-trainer-detail .cta-card { position: static; }
+}
