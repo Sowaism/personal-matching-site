@@ -1,0 +1,382 @@
+/* ===== Top page (route '/') only ===== */
+
+.page-top .hero {
+  background: linear-gradient(135deg, #042f2e 0%, #115e59 55%, #0f766e 100%);
+  color: #fff;
+  padding: 80px 0 72px;
+  position: relative;
+  overflow: hidden;
+}
+.page-top .hero::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(11, 110, 79, .4) 0%, transparent 70%);
+}
+.page-top .hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -60px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(94, 234, 212, .15) 0%, transparent 70%);
+}
+.page-top .hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.page-top .hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  color: #99f6e4;
+  margin-bottom: 20px;
+}
+.page-top .hero-title {
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+.page-top .hero-title em {
+  font-style: normal;
+  color: #2dd4bf;
+}
+.page-top .hero-desc {
+  font-size: 16px;
+  color: rgba(255, 255, 255, .75);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+.page-top .hero-cta-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.page-top .hero-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 22px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .9);
+  letter-spacing: .3px;
+}
+.page-top .hero-trust-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.page-top .hero-trust-row .material-icons {
+  font-size: 16px;
+  color: #99f6e4;
+}
+.page-top .hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.page-top .stat-item {
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  text-align: center;
+}
+.page-top .stat-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.page-top .stat-num span {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 2px;
+}
+.page-top .stat-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, .6);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* Hero right column visual cards */
+.page-top .hero-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.page-top .trainer-card-demo {
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+  transition: transform .3s ease;
+}
+.page-top .trainer-card-demo:hover { transform: translateX(4px); }
+.page-top .trainer-avatar-demo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2dd4bf, #0d9488);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.page-top .trainer-info-demo h4 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.page-top .trainer-info-demo p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, .65);
+}
+.page-top .trainer-meta-demo {
+  margin-left: auto;
+  text-align: right;
+  font-size: 12px;
+}
+.page-top .trainer-rating-demo {
+  color: #fcd34d;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.page-top .trainer-price-demo {
+  color: #99f6e4;
+  font-weight: 700;
+}
+
+/* Quiz banner */
+.page-top .quiz-banner {
+  background: var(--c-bg-green);
+  padding: 32px 0;
+  border-bottom: 1px solid #99f6e4;
+}
+.page-top .quiz-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.page-top .quiz-banner-text h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--c-navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.page-top .quiz-banner-text p {
+  font-size: 13px;
+  color: var(--c-muted);
+  margin-top: 4px;
+}
+
+/* Reasons */
+.page-top .reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.page-top .reason-card {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.page-top .reason-icon {
+  display: inline-flex;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--c-bg-green);
+  color: var(--c-primary);
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.page-top .reason-num {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--c-primary);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.page-top .reason-num span {
+  font-size: 16px;
+  margin-left: 2px;
+}
+.page-top .reason-label {
+  font-size: 12px;
+  color: var(--c-muted);
+  margin-top: 6px;
+}
+.page-top .reason-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--c-navy);
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+.page-top .reason-desc {
+  font-size: 13px;
+  color: var(--c-muted);
+  line-height: 1.8;
+}
+
+/* Goals */
+.page-top .goals { background: #fff; }
+.page-top .goals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 48px;
+}
+.page-top .goal-card {
+  border: 2px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  background: #fff;
+  display: block;
+}
+.page-top .goal-card:hover {
+  border-color: var(--c-primary);
+  background: var(--c-bg-green);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.page-top .goal-emoji {
+  font-size: 32px;
+  color: var(--c-primary);
+  margin-bottom: 10px;
+  display: block;
+}
+.page-top .goal-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--c-navy);
+}
+.page-top .goal-count {
+  font-size: 12px;
+  color: var(--c-muted);
+  margin-top: 5px;
+}
+.page-top .goals-cta {
+  margin-top: 36px;
+  text-align: center;
+}
+.page-top .goals-cta-note {
+  font-size: 13px;
+  color: var(--c-muted);
+  margin-top: 12px;
+}
+
+/* Popular trainers */
+.page-top .trainers { background: var(--c-bg-light); }
+.page-top .trainers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 32px;
+}
+.page-top .trainers-header-text { text-align: left; }
+.page-top .trainers-all-link {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-primary);
+}
+.page-top .trainers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* Final CTA */
+.page-top .final-cta {
+  background: linear-gradient(135deg, #0d9488 0%, #115e59 100%);
+  color: #fff;
+  text-align: center;
+  padding: 96px 0;
+}
+.page-top .final-cta-label {
+  display: inline-block;
+  background: rgba(255, 255, 255, .15);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.page-top .final-cta h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 900;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+.page-top .final-cta p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, .8);
+  margin-bottom: 32px;
+}
+.page-top .final-cta-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.page-top .final-cta-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, .6);
+}
+.page-top .final-cta-note a {
+  color: #99f6e4;
+  text-decoration: underline;
+}
+
+@media (max-width: 880px) {
+  .page-top .hero-inner { grid-template-columns: 1fr; }
+  .page-top .hero-visual { display: none; }
+  .page-top .reasons-grid { grid-template-columns: 1fr; }
+  .page-top .goals-grid { grid-template-columns: repeat(2, 1fr); }
+  .page-top .trainers-grid { grid-template-columns: 1fr; }
+  .page-top .quiz-banner-inner { flex-direction: column; align-items: flex-start; }
+}

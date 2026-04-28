@@ -10,9 +10,9 @@
     body { font-family: 'Hiragino Kaku Gothic ProN','Noto Sans JP','メイリオ',sans-serif; color: #1a1a2e; background: #f8fafc; line-height: 1.7; }
     a { text-decoration: none; color: inherit; }
     :root {
-      --c-primary:#0b6e4f;--c-primary-dark:#084d38;--c-accent:#ff6548;
+      --c-primary:#0d9488;--c-primary-dark:#0f766e;--c-accent:#5eead4;
       --c-navy:#0f172a;--c-text:#1a1a2e;--c-muted:#64748b;
-      --c-border:#e2e8f0;--c-bg-light:#f8fafc;--c-bg-green:#f0faf5;
+      --c-border:#e2e8f0;--c-bg-light:#f8fafc;--c-bg-green:#f0fdfa;
       --radius-sm:8px;--radius-md:16px;
       --shadow-sm:0 1px 4px rgba(0,0,0,.06);--shadow-md:0 4px 20px rgba(0,0,0,.10);--shadow-lg:0 8px 40px rgba(0,0,0,.14);
     }
@@ -46,7 +46,7 @@
     .detail-main{}
     .trainer-header{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);padding:32px;margin-bottom:24px;}
     .trainer-hero{display:flex;gap:24px;align-items:flex-start;margin-bottom:24px;}
-    .trainer-big-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#6ee7b7,#059669);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 4px 20px rgba(11,110,79,.3);}
+    .trainer-big-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#2dd4bf,#0d9488);display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 4px 20px rgba(13,148,136,.3);}
     .trainer-hero-info h1{font-size:22px;font-weight:900;color:var(--c-navy);margin-bottom:6px;}
     .trainer-hero-info .tagline{font-size:14px;color:var(--c-muted);margin-bottom:12px;}
     .hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
@@ -119,7 +119,7 @@
     .review-item:last-child{border-bottom:none;padding-bottom:0;}
     .review-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
     .review-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;}
-    .ra1{background:linear-gradient(135deg,#86efac,#16a34a)}
+    .ra1{background:linear-gradient(135deg,#fed7aa,#ea580c)}
     .ra2{background:linear-gradient(135deg,#93c5fd,#2563eb)}
     .ra3{background:linear-gradient(135deg,#fca5a5,#dc2626)}
     .ra4{background:linear-gradient(135deg,#fde68a,#d97706)}
@@ -138,7 +138,7 @@
     .other-plans{display:flex;flex-direction:column;gap:12px;}
     .other-plan-row{display:flex;align-items:center;gap:16px;padding:14px 16px;background:var(--c-bg-light);border:1px solid var(--c-border);border-radius:10px;cursor:pointer;transition:all .15s;}
     .other-plan-row:hover{border-color:var(--c-primary);background:var(--c-bg-green);}
-    .opr-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6ee7b7,#059669);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;flex-shrink:0;}
+    .opr-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2dd4bf,#0d9488);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;flex-shrink:0;}
     .opr-info{flex:1;}
     .opr-info h4{font-size:14px;font-weight:700;color:var(--c-navy);line-height:1.3;}
     .opr-info p{font-size:12px;color:var(--c-muted);margin-top:2px;}
@@ -148,12 +148,12 @@
     /* SIDEBAR */
     .sidebar-sticky{position:sticky;top:80px;display:flex;flex-direction:column;gap:16px;}
     .cta-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-md);overflow:hidden;}
-    .cta-card-header{background:linear-gradient(135deg,#0b6e4f,#064e36);color:#fff;padding:20px 24px;}
+    .cta-card-header{background:linear-gradient(135deg,#0d9488,#115e59);color:#fff;padding:20px 24px;}
     .cta-card-header h3{font-size:16px;font-weight:900;margin-bottom:6px;}
     .cta-card-header p{font-size:13px;color:rgba(255,255,255,.75);}
     .cta-card-body{padding:20px 24px;}
     .cta-btn-main{width:100%;background:var(--c-accent);color:#fff;border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:all .15s;}
-    .cta-btn-main:hover{background:#e5502f;transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,101,72,.3);}
+    .cta-btn-main:hover{background:#0f766e;transform:translateY(-1px);box-shadow:0 4px 16px rgba(94,234,212,.3);}
     .cta-btn-sub{width:100%;background:var(--c-bg-green);color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:all .15s;}
     .cta-btn-sub:hover{background:var(--c-primary);color:#fff;}
     .cta-btn-ghost{width:100%;background:transparent;color:var(--c-muted);border:1.5px solid var(--c-border);border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
@@ -162,7 +162,7 @@
     /* PROFILE CARD */
     .profile-card{background:#fff;border-radius:var(--radius-md);border:1px solid var(--c-border);box-shadow:var(--shadow-sm);padding:24px;}
     .profile-card-header{display:flex;gap:14px;align-items:center;margin-bottom:18px;}
-    .profile-mini-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#6ee7b7,#059669);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;flex-shrink:0;}
+    .profile-mini-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#2dd4bf,#0d9488);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;flex-shrink:0;}
     .profile-mini-info h4{font-size:15px;font-weight:800;color:var(--c-navy);}
     .profile-mini-info p{font-size:12px;color:var(--c-muted);margin-top:3px;}
     .trust-badges{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
@@ -205,11 +205,11 @@
         <a href="tida_personal_trainers.html" class="nav-link">トレーナーを探す</a>
         <a href="tida_personal_plans.html" class="nav-link">プランを見る</a>
         <a href="tida_personal_quiz.html" class="nav-link">診断してみる</a>
-        <a href="#" class="nav-link">使い方</a>
+        <a href="#" class="nav-link" data-pending="true">使い方</a>
       </nav>
       <div class="header-actions">
-        <a href="#" class="btn-login">ログイン</a>
-        <a href="#" class="btn-register">無料登録</a>
+        <a href="#" class="btn-login" data-pending="true">ログイン</a>
+        <a href="#" class="btn-register" data-pending="true">無料登録</a>
       </div>
     </div>
   </div>
@@ -549,9 +549,9 @@
       <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:12px;">
         <span>© 2026 TIDA Personal</span>
         <div style="display:flex;gap:20px;">
-          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">利用規約</a>
-          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">プライバシーポリシー</a>
-          <a href="#" style="color:rgba(255,255,255,.4);font-size:12px;">お問い合わせ</a>
+          <a href="#" data-pending="true" style="color:rgba(255,255,255,.4);font-size:12px;">利用規約</a>
+          <a href="#" data-pending="true" style="color:rgba(255,255,255,.4);font-size:12px;">プライバシーポリシー</a>
+          <a href="#" data-pending="true" style="color:rgba(255,255,255,.4);font-size:12px;">お問い合わせ</a>
         </div>
       </div>
     </div>
@@ -559,15 +559,83 @@
 </footer>
 
 <script>
-  function setActive(el){document.querySelectorAll('.anchor-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
-  let expanded=false;
-  function toggleAbout(){
-    const t=document.getElementById('aboutText');
-    const btn=document.querySelector('.read-more');
-    if(!expanded){t.classList.remove('collapsed');btn.textContent='▲ 閉じる';}
-    else{t.classList.add('collapsed');btn.textContent='続きを読む ▼';}
-    expanded=!expanded;
+(function () {
+  const anchorTargets = {
+    'プラン説明': 'sec-about',
+    'コース一覧': 'sec-courses',
+    'レビュー': 'sec-reviews',
+    'プロフィール': 'sec-profile',
+  };
+
+  // Tag the trainer-header so the プロフィール anchor has a destination
+  const trainerHeader = document.querySelector('.trainer-header');
+  if (trainerHeader && !trainerHeader.id) trainerHeader.id = 'sec-profile';
+
+  const anchorBtns = Array.from(document.querySelectorAll('.anchor-btn'));
+  function setActive(btn) {
+    anchorBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
   }
+
+  anchorBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = anchorTargets[btn.textContent.trim()];
+      const el = id ? document.getElementById(id) : null;
+      setActive(btn);
+      if (el) {
+        const offset = 72;
+        const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+  // Strip legacy onclick handlers; the listener above handles everything now
+  anchorBtns.forEach(b => b.removeAttribute('onclick'));
+
+  // Read-more toggle for the about block
+  const aboutText = document.getElementById('aboutText');
+  const readMoreBtn = document.querySelector('.read-more');
+  if (aboutText && readMoreBtn) {
+    readMoreBtn.removeAttribute('onclick');
+    let expanded = false;
+    readMoreBtn.addEventListener('click', () => {
+      expanded = !expanded;
+      aboutText.classList.toggle('collapsed', !expanded);
+      readMoreBtn.textContent = expanded ? '▲ 閉じる' : '続きを読む ▼';
+    });
+  }
+
+  // Course CTAs, review unlock, sidebar CTAs and the free-question button
+  // all require auth/booking — defer them via the shared pending toast
+  document.querySelectorAll(
+    '.btn-course-primary, .btn-course-secondary, .btn-unlock, ' +
+    '.cta-btn-main, .cta-btn-sub, .cta-btn-ghost, .free-question-btn'
+  ).forEach(b => b.setAttribute('data-pending', 'true'));
+
+  // Scroll-spy: highlight the anchor for the section closest to the top
+  const sections = Object.values(anchorTargets)
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  if (sections.length && anchorBtns.length) {
+    const labelById = {};
+    Object.keys(anchorTargets).forEach(k => { labelById[anchorTargets[k]] = k; });
+    let ticking = false;
+    function updateSpy() {
+      const offset = 100;
+      let current = sections[0];
+      sections.forEach(s => {
+        if (s.getBoundingClientRect().top <= offset) current = s;
+      });
+      const label = labelById[current.id];
+      anchorBtns.forEach(b => b.classList.toggle('active', b.textContent.trim() === label));
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(updateSpy); ticking = true; }
+    });
+  }
+})();
 </script>
+<script src="./public/site.js"></script>
 </body>
 </html>
